@@ -14,8 +14,8 @@ const usersRouter = {
   children: [
     {
       path: 'addUsers',
-      component: () => import('@/views/charts/keyboard'),
-      name: 'KeyboardChart',
+      component: () => import('@/views/adduser/adduser'),
+      name: 'adduser',
       meta: { title: 'addUsers', noCache: true }
     },
     {
