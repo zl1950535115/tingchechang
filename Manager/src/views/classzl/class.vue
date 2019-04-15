@@ -43,6 +43,7 @@ export default {
     }
   },
   methods: {
+    // 头部颜色
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
