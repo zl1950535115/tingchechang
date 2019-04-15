@@ -16,7 +16,7 @@
                     <div class="confim"><el-button type="primary" class="success" @click="adduser">确定</el-button><el-button class="reset" plain>重置</el-button></div>
                 </div>
                 <div v-if="ind==1" class="addUser">
-                   <el-select class="select" v-model="userselect" slot="prepend" placeholder="请选择身份ID">
+                   <el-select class="select" v-model="userselect" @change="new_user" slot="prepend" placeholder="请选择身份ID">
                       <el-option label="餐厅名" value="1"></el-option>
                       <el-option label="订单号" value="2"></el-option>
                       <el-option label="用户电话" value="3"></el-option>
@@ -121,7 +121,6 @@ export default {
       if(this.name==""||this.addUserValue==null||this.pwd==""){
         this.$message.error('请检查未填写值');
       }else{
-          console.log(this.name,this.pwd,this.addUserValue)
           //点击之后取消文本框值
           this.name="",this.pwd="",this.addUserValue=""
           this.$message({
@@ -129,6 +128,9 @@ export default {
           type: 'success'//这是我新提交的
         });
       }
+    },
+    new_user(){//更新用户的操作
+        console.log(this.userselect)
     }
   }
 }
