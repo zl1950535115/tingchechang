@@ -32,30 +32,30 @@
           </span>
         </div>
       </div>
-      <el-table :data="tableData" :header-cell-style="tableHeaderColor" style="width:100%">
-        <el-table-column label="试卷信息" width="500">
+      <el-table :data="tableData" :header-cell-style="tableHeaderColor" style="width: 100%">
+        <el-table-column label="试卷信息">
           <template slot-scope="scope">
             <p>{{ scope.row.date }}</p>
             <p>123</p>
           </template>
         </el-table-column>
-        <el-table-column label="班级" width="500">
+        <el-table-column label="班级">
           <template slot-scope="scope">
             <p>{{ scope.row.name }}</p>
             <p>{{ scope.row.name }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="创建人" width="189">
+        <el-table-column label="创建人">
           <template :width="flexColumnWidth(column)">
             <span>详情</span>
           </template>
         </el-table-column>
-        <el-table-column label="开始时间" width="216">
+        <el-table-column label="开始时间">
           <template>
             <span>详情</span>
           </template>
         </el-table-column>
-        <el-table-column label="结束时间" width="226">
+        <el-table-column label="结束时间">
           <template>
             <span>详情</span>
           </template>
@@ -174,7 +174,7 @@ export default {
   color: blue
 }
 .type{
-  margin-left: 88%;
+  /* margin-left: 88%; */
   span{
     border:1px solid #f4f7f9;
     padding:5px 15px;
@@ -186,6 +186,8 @@ export default {
   }
 }
 .nav{
+  display: flex;
+  justify-content: space-between;
   padding-bottom: 40px;
 }
 </style>
