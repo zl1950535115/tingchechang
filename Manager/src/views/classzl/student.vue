@@ -4,14 +4,14 @@
     <div class="content">
       <div class="content-cont">
         <div class="content_input">
-          <el-input placeholder="输入学生姓名" class="el_flex"></el-input>
+          <el-input placeholder="输入学生姓名" class="el_flex" />
           <el-select v-model="value" placeholder="请选择教室号" class="el_flex">
             <el-option
               v-for="item in options"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
+            />
           </el-select>
           <el-select v-model="value" placeholder="班级号" class="el_flex">
             <el-option
@@ -19,30 +19,30 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
+            />
           </el-select>
           <el-button type="primary">搜索</el-button>
           <el-button type="primary">重置</el-button>
         </div>
         <div class="content_table">
           <el-table :data="tableData" style="width: 100%" :header-cell-style="tableHeaderColor">
-            <el-table-column prop="date" label="姓名" width="150"></el-table-column>
-            <el-table-column prop="name" label="学号" width="240"></el-table-column>
-            <el-table-column prop="address" label="班级" width="130"></el-table-column>
-            <el-table-column prop="classroom" label="教室" width="150"></el-table-column>
-            <el-table-column prop="paw" label="密码" width="300"></el-table-column>
-            <el-table-column prop="operation" label="操作"></el-table-column>
+            <el-table-column prop="date" label="姓名" width="150" />
+            <el-table-column prop="name" label="学号" width="240" />
+            <el-table-column prop="address" label="班级" width="130" />
+            <el-table-column prop="classroom" label="教室" width="150" />
+            <el-table-column prop="paw" label="密码" width="300" />
+            <el-table-column prop="operation" label="操作" />
           </el-table>
         </div>
         <div class="block_wrap">
           <div class="block">
             <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
               :current-page.sync="currentPage3"
               :page-size="10"
               :total="100"
-            ></el-pagination>
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+            />
           </div>
         </div>
       </div>
