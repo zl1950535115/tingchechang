@@ -8,9 +8,9 @@
         </div>
         <div class="content_tables">
           <el-table :data="tableData" style="width: 100%" :header-cell-style="tableHeaderColor">
-            <el-table-column prop="date" label="班级名" width="200"></el-table-column>
-            <el-table-column prop="name" label="课程名" width="380"></el-table-column>
-            <el-table-column prop="address" label="教室号"></el-table-column>
+            <el-table-column prop="date" label="班级名" width="200" />
+            <el-table-column prop="name" label="课程名" width="380" />
+            <el-table-column prop="address" label="教室号" />
             <el-table-column prop="xiugai" label="操作"><a style="color: #0139FD;">修改</a>|<a style="color: #0139FD;">删除</a></el-table-column>
           </el-table>
         </div>
@@ -49,7 +49,7 @@ export default {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
     }
-  },
+  }
 }
 </script>
 
