@@ -13,20 +13,20 @@ const classesRouter = {
   },
   children: [
     {
-      path: 'classManagement',
-      component: () => import('@/views/charts/keyboard'),
+      path: 'class',
+      component: () => import('@/views/classzl/class'),
       name: 'KeyboardChart',
       meta: { title: 'classManagement', noCache: true }
     },
     {
       path: 'classroom',
-      component: () => import('@/views/charts/line'),
+      component: () => import('@/views/classzl/classroom'),
       name: 'LineChart',
       meta: { title: 'classroom', noCache: true }
     },
     {
       path: 'student',
-      component: () => import('@/views/charts/mixChart'),
+      component: () => import('@/views/classzl/student'),
       name: 'MixChart',
       meta: { title: 'student', noCache: true }
     }
