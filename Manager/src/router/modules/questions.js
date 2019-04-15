@@ -14,13 +14,13 @@ const questionsRouter = {
   children: [
     {
       path: 'addItem',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/Questions/addItems'),
       name: 'KeyboardChart',
       meta: { title: 'addItem', noCache: true }
     },
     {
       path: 'questionClassification',
-      component: () => import('@/views/charts/line'),
+      component: () => import('@/views/Questions/addlist'),
       name: 'LineChart',
       meta: { title: 'questionClassification', noCache: true }
     },
