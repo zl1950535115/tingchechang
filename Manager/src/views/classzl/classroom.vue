@@ -31,24 +31,24 @@
 
 <script>
 export default {
-  name: "ClassChart",
+  name: 'ClassChart',
   data() {
     return {
       tableData: [
         {
-          date: "1610C"
+          date: '1610C'
         },
         {
-          date: "1610C"
+          date: '1610C'
         },
         {
-          date: "1610C"
+          date: '1610C'
         },
         {
-          date: "1610C"
+          date: '1610C'
         }
       ]
-    };
+    }
   },
   methods: {
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
@@ -56,8 +56,8 @@ export default {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
