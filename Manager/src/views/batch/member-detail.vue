@@ -43,11 +43,9 @@ export default {
   },
   methods: {
     handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {})
+      this.$confirm('确认关闭？').then(_ => {
+        done()
+      }).catch(_ => {})
     },
     formatTooltip(val) {
       return val / 100

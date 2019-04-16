@@ -5,7 +5,7 @@
       <div class="curriculumtype">
         <span>课程类型: </span>
         <span :class="isTrue?&quot;all backblue&quot;:&quot;all&quot;" @click="tapAll">All</span>
-        <!-- <span v-for="(item,index) in currtype" v-if="isTrue===false" :key="index" :class="clickindex==index?&quot;currsps backblue&quot;:&quot;currsps&quot;" @click="tapAll(item,index)"> {{ item }}</span>
+        <!-- <span v-for="(item,index) in currtype" v-if="isTrue===false" :key="index" :class="clickindex==index?&quot;currsps backblue&quot;:&quot;currsps&quot;" @click="bindtap(item,index)"> {{ item }}</span>
         <span v-for="(item,index) in currtype" v-if="isTrue" :key="index" class="currsps backblue" @click="bindtap(item,index)">{{ item }}</span> -->
       </div>
       <div class="studytype">

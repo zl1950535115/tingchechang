@@ -11,19 +11,20 @@ const usersRouter = {
     title: 'exams',
     icon: 'excel'
   },
-  children: [
-    {
-      path: 'addTheTest',
-      component: () => import('@/views/charts/keyboard'),
-      name: 'KeyboardChart',
-      meta: { title: 'addTheTest', noCache: true }
-    },
-    {
-      path: 'examinationPaperList',
-      component: () => import('@/views/charts/line'),
-      name: 'LineChart',
-      meta: { title: 'examinationPaperList', noCache: true }
-    }
+  children: [{
+    path: 'addTheTest',
+    component: () =>
+                import('@/views/exams/addTheTest'),
+    name: 'AddTheTest',
+    meta: { title: 'addTheTest', noCache: true }
+  },
+  {
+    path: 'examinationPaperList',
+    component: () =>
+                import('@/views/exams/examinationPaperList'),
+    name: 'ExaminationPaperList',
+    meta: { title: 'examinationPaperList', noCache: true }
+  }
   ]
 }
 
