@@ -1,59 +1,58 @@
 <template>
-    <div class="box">
-        <h2 class="tit">阅卷</h2>
-        <div class='main'>
-            <div class="main_left">
-
-            </div>
-            <div class="main_right">
-                <h2 class="name">{{name}}</h2>
-                <div class="score">
-                    <p>得分:</p>
-                    <h1>{{score}}</h1>
-                </div>
-                 <div class="block">
-                    <el-slider class="slider" v-model="score"></el-slider>
-                </div>
-                <div>
-                    <el-button class="button" type="submit" @click="dialogVisible = true">确定</el-button>
-                    <el-dialog
-                        title="提示"
-                        :visible.sync="dialogVisible"
-                        width="30%"
-                        :before-close="handleClose">
-                        <span>这是一段信息</span>
-                        <span slot="footer" class="dialog-footer">
-                            <el-button @click="dialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-                        </span>
-                    </el-dialog>
-                </div>
-            </div>
+  <div class="box">
+    <h2 class="tit">阅卷</h2>
+    <div class="main">
+      <div class="main_left" />
+      <div class="main_right">
+        <h2 class="name">{{ name }}</h2>
+        <div class="score">
+          <p>得分:</p>
+          <h1>{{ score }}</h1>
         </div>
+        <div class="block">
+          <el-slider v-model="score" class="slider" />
+        </div>
+        <div>
+          <el-button class="button" type="submit" @click="dialogVisible = true">确定</el-button>
+          <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="handleClose"
+          >
+            <span>这是一段信息</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+          </el-dialog>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            name:'王子音',
-            score:0,
-            dialogVisible: false
-        }
-    },
-    methods:{
-        handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
-      formatTooltip(val) {
-        return val / 100;
-      }
+  data() {
+    return {
+      name: '王子音',
+      score: 0,
+      dialogVisible: false
     }
+  },
+  methods: {
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    },
+    formatTooltip(val) {
+      return val / 100
+    }
+  }
 }
 </script>
 
