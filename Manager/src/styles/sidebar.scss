@@ -13,10 +13,10 @@
     transition: width 0.28s;
     width: $sideBarWidth !important;
     background-color: $menuBg;
-    // height: 96.5%;
+    height: 100%;
     position: fixed;
     font-size: 0px;
-    top: 64px;
+    top: 0;
     bottom: 0;
     left: 0;
     z-index: 1001;
