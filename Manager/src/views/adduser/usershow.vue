@@ -1,6 +1,6 @@
 <template>
   <div class="usershow">
-    <p class="title_size">用户展示</p>
+    <titleinfo :title="Title_info" />
     <div class="btndivs">
       <el-radio-group v-model="radioValue" @change="selectValue"><el-radio-button v-for="(item,index) in topbutton" :key="index" :label="item">{{ item }}</el-radio-button></el-radio-group>
     </div>
@@ -60,9 +60,11 @@
 </template>
 
 <script>
+import titles from '../../components/Title_info/Title.vue'
 export default {
   data() {
     return {
+      Title_info: '用户展示',
       topbutton: ['用户数据', '身份数据', 'api接口权限', '身份和api接口关系', '视图接口权限', '身份和视图权限关系'],
       radioValue: '用户数据',
       boxind: 0,
@@ -85,6 +87,9 @@ export default {
     selectValue(e) {
       this.boxind = this.topbutton.indexOf(e)
     }
+  },
+  components: {
+    titleinfo: titles
   }
 }
 </script>
@@ -95,8 +100,7 @@ export default {
     width: 100%;
     height: calc(100vh - 84px);
     background: #f0f2f5;
-    padding: 24px;
-    box-sizing: border-box;
+    margin-top:-17px;
   }
   .right_pagin{
     float:right;
@@ -119,5 +123,7 @@ export default {
   .center{
     width:60%;
   }
-
+  .btndivs{
+    padding-left:20px;
+  }
 </style>
