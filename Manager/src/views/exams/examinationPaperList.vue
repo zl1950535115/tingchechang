@@ -112,52 +112,41 @@ export default {
   background: #f0f2f5;
   padding: 24px;
   box-sizing: border-box;
-
 }
-
 .text {
   line-height: 0;
   font-size: 20px;
   padding: 20px 0;
 }
-
 .content {
   padding: 24px;
   box-sizing: border-box;
   background: #fff;
   border-radius: 10px;
 }
-
 .from {
   padding-bottom: 24px;
   box-sizing: border-box;
 }
-
 .btn {
   width: 150px;
   margin-left: -50px;
   background: blue;
 }
-
 .select {
   margin-right: 100px;
   width: 16.1%;
   min-width: 150px;
   margin-left: 10px;
 }
-
 .one {
   margin-left: 5%;
 }
-
 .content:nth-child(3) {
   margin-top: 20px;
 }
-
 .type {
   display: inline-block;
- 
- 
 }
 .active {
     color: blue;
@@ -176,7 +165,6 @@ export default {
 }
 .type .active_span{
   /* margin-left: 88%; */
-
     color: blue;
     border-color:blue;
 }

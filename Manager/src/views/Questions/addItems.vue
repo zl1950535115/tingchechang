@@ -5,7 +5,7 @@
       <div class="inp">
         <p>题目信息</p>
         <p>题干</p>
-        <el-input placeholder="请输入题目标题,不超过20个字" v-model="input10" clearable class="elinput" />
+        <el-input v-model="input10" placeholder="请输入题目标题,不超过20个字" clearable class="elinput" />
       </div>
       <div class="textear">
         <p>题目主题</p>
@@ -33,7 +33,7 @@
       </div>
       <div class="select">
         <P>选择题目类型</P>
-        <el-select  slot="prepend" v-model="select" placeholder="请选择" class="sel">
+        <el-select slot="prepend" v-model="select" placeholder="请选择" class="sel">
           <el-option label="周考1" value="1" />
           <el-option label="周考2" value="2" />
           <el-option label="周考3" value="3" />
