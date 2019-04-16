@@ -6,7 +6,7 @@
       <!-- 导航 -->
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
-        <!-- <tags-view v-if="needTagsView" /> -->
+        <tags-view v-if="needTagsView" />
       </div>
       <!--  二级路由区域 -->
       <app-main />
