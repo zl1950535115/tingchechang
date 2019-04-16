@@ -21,10 +21,9 @@ export default {
     color: rgba(0, 0, 0, 0.85);
     font-weight: 500;
     font-size:20px;
-    padding:15px;
+    padding-top:24px;
   }
   .top{
     box-sizing:border-box;
-    padding-top:15px;
   }
 </style>
