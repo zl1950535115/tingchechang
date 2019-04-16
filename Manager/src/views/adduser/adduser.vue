@@ -1,24 +1,21 @@
 <template>
   <div class="containter">
-    <div class="top">
-      <p class="title_name">添加用户</p>
-    </div>
+    <titleinfo :title="Title_info" />
     <div class="top_title">
       <div class="infos">
-        <el-button v-for="(item,index) in addList" :key="index" plain :class="index==ind?'active':'' " @click="tab(index)"> {{ item }} </el-button>
+        <el-button v-for="(item,index) in addList" :key="index" plain :class="index==ind?'active':''" @click="tab(index)">{{ item }}</el-button>
         <div v-if="ind==0" class="addUser">
           <el-input v-model="name" class="name_1" placeholder="请输入用户名" clearable />
           <el-input v-model="pwd" class="pwd" placeholder="请输入密码" show-password />
+
           <el-select slot="prepend" v-model="select" class="select" placeholder="请选择身份id">
             <el-option v-for="(item,index) in list" :key="index" :label="item" :value="index" />
           </el-select>
-          <div class="confim">
-            <el-button type="primary" class="success" @click="adduser">确定</el-button>
-            <el-button class="reset" plain>重置</el-button>
-          </div>
+          <div class="confim"><el-button type="primary" class="success" @click="adduser">确定</el-button><el-button class="reset" plain>重置</el-button></div>
         </div>
+
         <div v-if="ind==1" class="addUser">
-          <el-select slot="prepend" v-model="userselect" placeholder="请选择身份ID" class="select" @change="new_user">
+          <el-select slot="prepend" v-model="userselect" class="select" placeholder="请选择身份ID" @change="new_user">
             <el-option label="餐厅名" value="1" />
             <el-option label="订单号" value="2" />
             <el-option label="用户电话" value="3" />
@@ -32,30 +29,23 @@
             <el-option label="订单号" value="2" />
             <el-option label="用户电话" value="3" />
           </el-select>
-          <div class="confim">
-            <el-button type="primary" class="success">确定</el-button>
-            <el-button class="reset" plain>重置</el-button>
-          </div>
+          <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
         </div>
+
       </div>
       <div class="person">
         <el-button class="active add_person">添加身份</el-button>
-        <el-input v-model="person" class="name_2" placeholder="请输入身份" clearable />
-        <div class="confim">
-          <el-button type="primary" class="success">确定</el-button>
-          <el-button class="reset" plain>重置</el-button>
-        </div>
+        <el-input v-model="person" clearable class="name_2" placeholder="请输入身份" />
+        <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
       <div class="add_api">
         <el-button class="active add_person">添加api接口权限</el-button>
         <el-input v-model="api_name" class="name_2" placeholder="请输入api接口权限名称" clearable />
         <el-input v-model="api_url" class="name_2" placeholder="请输入api接口权限url" clearable />
         <el-input v-model="api_fun" class="name_2" placeholder="请输入api接口权限方法" clearable />
-        <div class="confim">
-          <el-button type="primary" class="success">确定</el-button>
-          <el-button class="reset" plain>重置</el-button>
-        </div>
+        <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
+
       <div class="add_view">
         <el-button class="active view">添加视图接口权限</el-button>
         <el-select slot="prepend" v-model="view_select" class="select" placeholder="请输入已有视图">
@@ -63,10 +53,7 @@
           <el-option label="订单号" value="2" />
           <el-option label="用户电话" value="3" />
         </el-select>
-        <div class="confim">
-          <el-button type="primary" class="success">确定</el-button>
-          <el-button class="reset" plain>重置</el-button>
-        </div>
+        <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
       <div class="add_api_seting">
         <el-button class="active apibtn">给身份设置api接口权限</el-button>
@@ -80,11 +67,9 @@
           <el-option label="订单号" value="2" />
           <el-option label="用户电话" value="3" />
         </el-select>
-        <div class="confim">
-          <el-button type="primary" class="success">确定</el-button>
-          <el-button class="reset" plain>重置</el-button>
-        </div>
+        <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
+
       <div class="add_api_seting">
         <el-button class="active view_api">给身份设置视图权限</el-button>
         <el-select v-model="user_view_manger" class="select" placeholder="请选择身份id">
@@ -97,19 +82,21 @@
           <el-option label="订单号" value="2" />
           <el-option label="用户电话" value="3" />
         </el-select>
-        <div class="confim">
-          <el-button type="primary" class="success">确定</el-button>
-          <el-button class="reset" plain>重置</el-button>
-        </div>
+        <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import titles from '../../components/Title_info/Title.vue'
 export default {
+  components: {
+    titleinfo: titles
+  },
   data() {
     return {
+      Title_info: '添加用户',
       addList: ['添加用户', '更新用户'],
       select: '', // 用于添加用户的下拉框下标
       addUserValue: null, // 根据下标处理添加用户
@@ -133,25 +120,24 @@ export default {
     }
   },
   methods: {
-    tab(index) { // 用于第一个盒子tab切换
+    tab(index) {
       this.ind = index
     },
-    adduser() { // 添加用户方法及取值
+    adduser() { // 添加用户的逻辑
       this.addUserValue = this.list[this.select]
       if (this.name === '' || this.addUserValue === null || this.pwd === '') {
         this.$message.error('请检查未填写值')
       } else {
-        // 点击之后取消文本框值
         this.name = ''
         this.pwd = ''
         this.addUserValue = ''
         this.$message({
           message: '恭喜你，这是一条成功消息',
-          type: 'success' // 这是我新提交的
+          type: 'success'
         })
       }
     },
-    new_user() { // 更新用户的操作
+    new_user() {
       console.log(this.userselect)
     }
   }
@@ -167,14 +153,8 @@ export default {
   .view_api {
     width: 160px;
   }
-
-  .top {
-    box-sizing: border-box;
-    padding-top: 15px;
-  }
-
-  .add_person {
-    margin-bottom: 10px;
+  .add_person{
+    margin-bottom:10px;
   }
 
   .name_2 {
@@ -245,16 +225,7 @@ export default {
     display: flex;
     flex-direction: column;
   }
-
-  .title_name {
-    margin-left: 20px;
-    color: rgba(0, 0, 0, 0.85);
-    font-weight: 500;
-    font-size: 20px;
-    padding: 15px;
-  }
-
-  .infos {
+  .infos{
     width: 33.3%;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;

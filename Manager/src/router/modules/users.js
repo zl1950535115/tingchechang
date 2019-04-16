@@ -20,7 +20,7 @@ const usersRouter = {
     },
     {
       path: 'theUserDisplay',
-      component: () => import('@/views/charts/line'),
+      component: () => import('@/views/adduser/usershow'),
       name: 'LineChart',
       meta: { title: 'theUserDisplay', noCache: true }
     }
