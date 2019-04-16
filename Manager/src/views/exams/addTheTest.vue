@@ -132,12 +132,12 @@ export default {
 
   .content p {
     display: flex;
-    span {
+  }
+  .centent  span {
       padding-top: 3px;
       padding-right: 5px;
       color: red;
     }
-  }
 
   .item {
     width: 185px;
