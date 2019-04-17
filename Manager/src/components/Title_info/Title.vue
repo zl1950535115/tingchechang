@@ -1,16 +1,16 @@
 <template>
   <div class="top">
-    <p class="title_name">{{title}}</p>
+    <p class="title_name">{{ title }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  props:{
-      title:{
-        type:String,
-        default:null
-      }
+  props: {
+    title: {
+      type: String,
+      default: null
+    }
   }
 }
 </script>

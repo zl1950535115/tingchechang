@@ -90,7 +90,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.ruleForm)
+          console.log(this.ruleForm,'vaild')
         } else {
           console.log('error submit!!')
           return false
@@ -132,12 +132,12 @@ export default {
 
   .content p {
     display: flex;
-    span {
+  }
+  .centent  span {
       padding-top: 3px;
       padding-right: 5px;
       color: red;
     }
-  }
 
   .item {
     width: 185px;

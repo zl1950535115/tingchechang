@@ -1,9 +1,7 @@
 <template>
   <div class="navbar">
-    <!-- 控制菜单的展开收起 -->
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
-    <!-- 路由面包屑 -->
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">

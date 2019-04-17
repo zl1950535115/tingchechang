@@ -1,6 +1,6 @@
 <template>
   <div class="containter">
-   <titleinfo :title="Title_info" />
+    <titleinfo :title="Title_info" />
     <div class="top_title">
       <div class="infos">
         <el-button v-for="(item,index) in addList" :key="index" plain :class="index==ind?'active':''" @click="tab(index)">{{ item }}</el-button>
@@ -62,7 +62,6 @@
           <el-option label="订单号" value="2" />
           <el-option label="用户电话" value="3" />
         </el-select>
-
         <el-select v-model="user_add_manger" class="select" placeholder="请选择api接口权限">
           <el-option label="餐厅名" value="1" />
           <el-option label="订单号" value="2" />
@@ -92,6 +91,9 @@
 <script>
 import titles from '../../components/Title_info/Title.vue'
 export default {
+  components: {
+    titleinfo: titles
+  },
   data() {
     return {
       Title_info: '添加用户',
@@ -138,107 +140,120 @@ export default {
     new_user() {
       console.log(this.userselect)
     }
-  },
-  components: {
-    titleinfo: titles
   }
 }
 </script>
 
 <style>
-  .apibtn{
-    width:180px;
-    text-align:center;
+  .apibtn {
+    width: 180px;
+    text-align: center;
   }
-  .view_api{
-    width:160px;
+
+  .view_api {
+    width: 160px;
   }
   .add_person{
     margin-bottom:10px;
   }
-  .name_2{
-    margin-bottom:15px;
+
+  .name_2 {
+    margin-bottom: 15px;
   }
-  .add_view{
-    display:flex;
-    flex-direction:column;
-    border-left:1px solid #ccc;
+
+  .add_view {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #ccc;
   }
-  .view{
-    width:150px;
+
+  .view {
+    width: 150px;
   }
-  .active{
-    color:#295eff;
-    font-weight:800;
-    border:1px solid #0139fd;
+
+  .active {
+    color: #295eff;
+    font-weight: 800;
+    border: 1px solid #0139fd;
   }
-  .containter{
+
+  .containter {
     position: relative;
     width: 100%;
-    background:#f0f2f5;
-    margin-top:-17px;
+    background: #f0f2f5;
+    margin-top: -17px;
   }
-  .name_1{
-    margin-top:10px;
+
+  .name_1 {
+    margin-top: 10px;
   }
-  .person{
+
+  .person {
     width: 33.3%;
-    border-right: 1px solid #ccc ;
-    border-bottom: 1px solid #ccc ;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
   }
-  .top_title{
-    border-left: 1px solid #ccc ;
-    border-top: 1px solid #ccc ;
-    width:100%;
+
+  .top_title {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    width: 100%;
     box-sizing: border-box;
-    display:flex;
-    flex-wrap:wrap;
-    padding-left:15px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 15px;
   }
-  .top_title>div{
-    width:33.3%;
-    border-right: 1px solid #ccc ;
-    border-bottom: 1px solid #ccc ;
+
+  .top_title>div {
+    width: 33.3%;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
   }
-  .addUser{
+
+  .addUser {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
   }
-  .add_api_seting{
-    display:flex;
-    flex-direction:column;
+
+  .add_api_seting {
+    display: flex;
+    flex-direction: column;
   }
   .infos{
     width: 33.3%;
-    border-right: 1px solid #ccc ;
-    border-bottom: 1px solid #ccc ;
-    border-left:1px solid #ccc ;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
   }
-  .select{
-    margin-top:17px;
-    margin-bottom:17px;
-    color:#bfbfbf;
-    width:140px;
+
+  .select {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    color: #bfbfbf;
+    width: 140px;
   }
-  .pwd{
-    margin-top:15px;
+
+  .pwd {
+    margin-top: 15px;
   }
-  .success{
-    width:120px;
-    background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
-    font-weight:500;
+
+  .success {
+    width: 120px;
+    background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
+    font-weight: 500;
   }
-  .reset{
-    background-color:white;
-    color:rgba(0, 0, 0, 0.65);
+
+  .reset {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.65);
   }
 </style>
