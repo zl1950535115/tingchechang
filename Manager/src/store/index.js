@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
-import exams from './modules/exams/index'
+import exams from './modules/exams'
 import user from './modules/user'
 Vue.use(Vuex)
 
