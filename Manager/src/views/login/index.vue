@@ -125,7 +125,7 @@ export default {
   methods: {
     ...mapActions({
       login: 'user/login',
-      generateRoutes:'permission/generateRoutes'
+      generateRoutes: 'permission/generateRoutes'
     }),
     checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
@@ -153,8 +153,8 @@ export default {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           // 调用登录接口
-          let res = await this.login(this.loginForm)
-          if(res.code === 1){
+          const res = await this.login(this.loginForm)
+          if (res.code === 1) {
             this.generateRoutes([])
             this.$router.push({ path: this.redirect || '/' })
           }
