@@ -1,5 +1,6 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 
+// 用来添加路由
 /**
  * 通过meta.role判断是否与当前用户权限匹配
  * @param roles
