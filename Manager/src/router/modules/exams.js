@@ -24,6 +24,22 @@ const usersRouter = {
                 import('@/views/exams/examinationPaperList'),
     name: 'ExaminationPaperList',
     meta: { title: 'examinationPaperList', noCache: true }
+  },
+  {
+    path: 'detail',
+    hidden: true,
+    component: () =>
+                import('@/views/exams/detail'),
+    name: 'detail',
+    meta: { title: 'detail', noCache: true }
+  },
+  {
+    path: 'createExam',
+    hidden: true,
+    component: () =>
+                import('@/views/exams/createExam'),
+    name: 'createExam',
+    meta: { title: 'createExam', noCache: true }
   }
   ]
 }

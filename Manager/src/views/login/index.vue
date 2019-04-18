@@ -155,8 +155,9 @@ export default {
           // 调用登录接口
           let res = await this.login(this.loginForm)
           if(res.code === 1){
+            //  this.redirect ||  上次结束的页面
+            this.$router.push({ path:'/' })
             this.generateRoutes([])
-            this.$router.push({ path: this.redirect || '/' })
           }
         } else {
           console.log('error submit!!')
@@ -164,24 +165,6 @@ export default {
         }
       })
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>

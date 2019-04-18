@@ -1,22 +1,33 @@
-import { getExamsList } from '@/api/exams'
+import { examType, subject, exam } from '@/api/exams'
 
 const state = {
-
+  examTypeList: [],
+  subjectList: [],
+  info: {}
 }
 
 const mutations = {
-  updateState(payload) {
-    for (let key in payload) {
+  updateState(state, payload) {
+    console.log(payload)
+    for (var key in payload) {
       state[key] = payload[key]
     }
   }
 }
 
 const actions = {
-  async getExamsList({ commit }, payload) {
-    let res = await getExamsList()
+  async examType({ commit }, payload) {
+    var res = await examType()
+    commit('updateState', { examTypeList: res.data })
+  },
+  async subject({ commit }, payload) {
+    var res = await subject()
     console.log(res)
-    commit('updateState', { examsList: res.data })
+    commit('updateState', { subjectList: res.data })
+  },
+  async exam({ commit }, payload) {
+    var res = await exam(payload)
+    return res
   }
 }
 
