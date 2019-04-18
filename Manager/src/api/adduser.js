@@ -42,3 +42,10 @@ export function addApi(data) {
     params: {...data}
   })
 }
+export function addView(data) {
+  return request({
+    url: '/user/view_authority',
+    method: 'get',
+    params: {...data}
+  })
+}

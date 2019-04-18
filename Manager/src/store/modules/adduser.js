@@ -1,12 +1,12 @@
-import {addUser,userData,userName,updateusername,addUserCard,addApi} from "@/api/adduser"
-import { stat } from "fs";
+import {addUser,userData,userName,updateusername,addUserCard,addApi,addView} from "@/api/adduser"
 const state={
     user_Data:'', // 用户身份名称
     code:"",  //接口返回的code码
     username:'', // 用户名称数据用于更新用户
     userCode:'', // 更新用户的code码
     adduserCode:'', // 添加身份的code码
-    addapiCode:'' // 添加api接口code码
+    addapiCode:'', // 添加api接口code码
+    viewList:'', // 视图权限列表
 }
 const actions={
   userdata({commit}){
@@ -73,6 +73,20 @@ addapi({commit},payload){
           state.addapiCode=0
           res()
         }
+    })
+  })
+},
+addview({commit},payload){
+  return new Promise((res,rej)=>{
+    addView(payload).then((result)=>{
+      if(result){
+        state.viewList=result.data
+      }else{
+        this.$notify({
+          title: '失败',
+          message: '数据库或网络原因导致获取视图权限失败'
+        })
+      }
     })
   })
 }

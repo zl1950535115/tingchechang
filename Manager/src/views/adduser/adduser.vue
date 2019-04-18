@@ -45,9 +45,7 @@
       <div class="add_view">
         <el-button class="active view">添加视图接口权限</el-button>
         <el-select slot="prepend" v-model="view_select" class="select" placeholder="请输入已有视图">
-          <el-option label="餐厅名" value="1" />
-          <el-option label="订单号" value="2" />
-          <el-option label="用户电话" value="3" />
+                <el-option v-for="(item,index) in viewList" :key="index" :label="item.view_authority_text" :value="index" />
         </el-select>
         <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
@@ -123,12 +121,14 @@ export default {
       usernamelist:state=>state.adduser.username,
       UserCode:state=>state.adduser.userCode,
       adduserCode:state=>state.adduser.adduserCode,
-      apicode:state=>state.adduser.addapiCode
+      apicode:state=>state.adduser.addapiCode,
+      viewList:state=>state.adduser.viewList
     })
   },
   created() {
       this.userdata() // 获取身份数据
       this.username() // 获取身份名称name
+      this.addview()  // 获取用户视图权限列表
   },
   methods: {
     ...mapActions({
@@ -137,7 +137,8 @@ export default {
       username:'adduser/username',
       updateusername:'adduser/updateusername',
       addusercrad:'adduser/addusercard',
-      addapi:'adduser/addapi'
+      addapi:'adduser/addapi',
+      addview:'adduser/addview'
     }),
     tab(index) {
       this.ind = index
@@ -315,7 +316,7 @@ export default {
     margin-top: 17px;
     margin-bottom: 17px;
     color: #bfbfbf;
-    width: 140px;
+    width: 180px;
   }
 
   .pwd {
