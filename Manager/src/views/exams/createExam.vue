@@ -10,17 +10,15 @@
         </div>
         <div class="list">
           <div v-for="(item , index) in pageDetail.questions" class="content-list-style">
-            <h4>{{index + 1}}.{{item.title}} <span href="javascript:;" style="float: right;color:#0139FD">删除</span></h4>
+            <h4>{{index + 1}}.{{item.title}}  <el-button type="text" @click="del">删除</el-button></h4>
             <p class="text"></p>
-              <pre class="pre">
-                <code class="code">
-                    {{item.questions_stem}}
-                </code>
-              </pre>
+            <div class="code">
+            {{item.questions_stem}}
+            </div>
           </div>
         </div>
       </div>
-      <el-button type="primary">创建试卷</el-button>
+      <el-button type="primary" @click='create'>创建试卷</el-button>
     </div>
     <!-- <div v-show="flag" class="add-drawer">
       <div class="mask" />
@@ -49,10 +47,50 @@ export default {
   created() {
     this.pageDetail = JSON.parse(window.localStorage.getItem('exam'))
     console.log(this.pageDetail)
+    let h = this.pageDetail.end_time - this.pageDetail.start_time;
+    // var t1=moment(1411641720000).format('YYYY-MM-DD HH:mm:ss');
+    console.log(moment(this.pageDetail.end_time).format('YYYY-MM-DD HH:mm'))
+    let arr = [];
+    this.pageDetail.questions.forEach(item => {
+      arr.push(item.questions_id)
+    });
+    this.question_ids =  JSON.stringify(arr);
+    console.log(JSON.stringify(arr))
   },
   methods: {
+    ...mapActions({
+      delText: 'exams/del',
+      renewal: 'exams/renewal'
+    }),
     showDialog() {
       // this.flag = !this.flag
+    },
+    del() {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
+        console.log('success')
+        this.delText()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    async create() {
+      // 要用exam_exam_id 的字符串
+      let data = {question_ids:this.question_ids}
+      let res = await this.renewal({header: this.pageDetail.exam_exam_id,data })
+      console.log(res)
+      // this.$router.push({ path:'examinationPaperList' })
     }
   }
 }
@@ -135,6 +173,8 @@ h3,h4{
 }
 h4{
   font-size: 1.0em;
+  display: flex;
+  justify-content: space-between;
 }
 .content-list {
   width: 100%;

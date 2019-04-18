@@ -21,3 +21,29 @@ export function exam(data) {
     data
   })
 }
+// 删除试题
+// export function del() {
+//   return request({
+//     url: '/exam/exam/w5tcy-g2dts',
+//     method: 'DELETE'
+//   })
+// }
+
+// 创建试题
+
+// 获取试题列表
+export function examlist() {
+  return request({
+    url: '/exam/exam',
+    method: 'get'
+  })
+}
+
+// 获取试题列表
+export function renewal(str, data) {
+  return request({
+    url: '/exam/exam' + '/' + str,
+    method: 'put',
+    data
+  })
+}

@@ -2,26 +2,30 @@
   <div class="wrapper">
     <p class="text">试卷列表</p>
     <div class="content">
-      <div class="from">
-        <span class="one">考试类型:</span>
-        <el-select v-model="search.type" class="select">
-          <el-option label="周考1" value="zhoukao1" />
-          <el-option label="周考2" value="zhoukao2" />
-          <el-option label="周考3" value="zhoukao3" />
-          <el-option label="月考" value="yuekao" />
-        </el-select>
-        <span>课程:</span>
-        <el-select v-model="search.course" class="select">
-          <el-option label="周考1" value="zhoukao1" />
-          <el-option label="周考2" value="zhoukao2" />
-          <el-option label="周考3" value="zhoukao3" />
-          <el-option label="月考" value="yuekao" />
-        </el-select>
-        <el-button class="btn" type="primary">
+        <el-form ref="info" :model="info" :rules="rules" class="demo-info">
+            <el-form-item class="babels" label="考试类型:" prop="exam_id">
+              <el-select v-model="info.exam_id" class="select" style="width: 150px;">
+                  <el-option
+                  v-for='( item, index) in examTypeList'
+                  :key="item.exam_id"
+                  :label="item.exam_name"
+                  :value="item.exam_id" />
+              </el-select>
+            </el-form-item>
+            <el-form-item class="babels" label="课程:" prop="subject_id">
+              <el-select v-model="info.subject_id" class="select" style="width: 150px;">
+                <el-option 
+                v-for='( item, index) in subjectList' 
+                :key="item.subject_id"
+                :label="item.subject_text"
+                :value="item.subject_id" />
+              </el-select>
+            </el-form-item>
+          </el-form>
+      <el-button class="btn" type="primary">
           <i class="el-icon-search" />
           查询
         </el-button>
-      </div>
     </div>
     <div class="content">
       <div class="nav">
@@ -32,23 +36,23 @@
           </span>
         </div>
       </div>
-      <el-table :data="tableData" :header-cell-style="tableHeaderColor" style="width: 100%">
+      <el-table :data="list" :header-cell-style="tableHeaderColor" style="width: 100%">
         <el-table-column label="试卷信息">
           <template slot-scope="scope">
-            <p>{{ scope.row.date }}</p>
-            <p>123</p>
+            <p>{{scope.row.title}}</p>
+            <p>考试时间:{{0}} {{scope.row.number}}道题{{scope.row.status}}分</p>
           </template>
         </el-table-column>
         <el-table-column label="班级">
           <template slot-scope="scope">
-            <p>{{ scope.row.name }}</p>
-            <p>{{ scope.row.name }}</p>
+            <p>教室班级</p>
+            <p>{{ scope.row.grade_name[0] }}</p>
           </template>
         </el-table-column>
         <el-table-column label="创建人">
-          <template :width="flexColumnWidth(column)">
-            <span>详情</span>
-          </template>
+            <template slot-scope="scope">
+                <p>{{ scope.row.user_name }}</p>
+              </template>
         </el-table-column>
         <el-table-column label="开始时间">
           <template>
@@ -78,15 +82,40 @@ export default {
     return {
       spanList: ['全部', '进行中', '已结束'],
       isIndex: '',
-      search: {
-        type: '',
-        course: ''
+      info: {
+        exam_id: '',
+        subject_id: ''
+      },
+      rules: {
+        exam_id: [
+          { required: false, message: '请选择考试类型', trigger: 'change' }
+        ],
+        subject_id: [
+          { required: false, message: '请选择课程', trigger: 'change' }
+        ]
       },
       tableData: []
     }
   },
+  created() {
+    this.examType()
+    this.subject()
+    this.getList()
+    console.log(this.list)
+  },
+  computed: {
+    ...mapState({
+      examTypeList: state => state.exams.examTypeList,
+      subjectList: state => state.exams.subjectList,
+      list: state => state.exams.list
+    })
+  },
   methods: {
-  
+    ...mapActions({
+      examType: 'exams/examType',
+      subject: 'exams/subject',
+      getList: 'exams/getList'
+    }),
     // 点击改变样式
     changeType(type) {
       this.isIndex = type
@@ -109,6 +138,7 @@ export default {
   background: #f0f2f5;
   padding: 24px;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 .text {
   line-height: 0;
