@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createLogger from 'vuex/dist/logger'
 import getters from './getters'
 import exams from './modules/exams/index'
 import user from './modules/user'
-import classroom from './modules/classroom'
+import classmanagement from './modules/classmanagement'
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -24,7 +25,8 @@ const store = new Vuex.Store({
   getters,
   exams,
   user,
-  classroom
+  classmanagement,
+  plugins: [createLogger()]
 })
 
 export default store
