@@ -22,7 +22,7 @@
           <el-input v-model="new_name" class="new_name" placeholder="请输入用户名" clearable />
           <el-input v-model="new_pwd" class="pwd" placeholder="请输入密码" show-password />
 
-          <el-select slot="prepend" v-model="manger" class="select" placeholder="请选择他/她的身份">
+          <el-select slot="prepend" v-model="manger" class="select" @change="selectnew" placeholder="请选择他/她的身份">
                 <el-option v-for="(item,index) in userData" :key="index" :label="item.identity_text" :value="index" />
           </el-select>
           <div class="confim"><el-button type="primary" class="success" @click="stateuser">确定</el-button><el-button class="reset" plain>重置</el-button></div>
@@ -39,7 +39,7 @@
         <el-input v-model="api_name" class="name_2" placeholder="请输入api接口权限名称" clearable />
         <el-input v-model="api_url" class="name_2" placeholder="请输入api接口权限url" clearable />
         <el-input v-model="api_fun" class="name_2" placeholder="请输入api接口权限方法" clearable />
-        <div class="confim"><el-button type="primary" class="success" @click="apiadd">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="apiadds">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
 
       <div class="add_view">
@@ -104,11 +104,11 @@ export default {
       user_view_manger: '', // 试图全线给身份id下拉框下标
       user_view_id: '', // 用户视图权限id
       view_select_value: '', //拿到视图权限下拉框的值
-      list: ['我的', '你的', '他的'],
       api_one_select:'',
       api_two_select:"",
       view_api_select:'',
-      view_api_two_select:''
+      view_api_two_select:'',
+      select1:''
     }
   },
   computed: {
@@ -174,15 +174,20 @@ export default {
               this.name = ''
               this.pwd = ''
               this.addUserValue = null
+          }else{
+            this.$message.error('用户已经存在')
           }
         })
       }
     },
+    selectnew(e){
+      this.select1=this.userData[e].identity_id
+    },
     stateuser() {
-      if(this.new_name==""||this.usernamelist[this.userselect].user_id==""||this.new_pwd==""||this.userid==""){
+      if(this.new_name==""||this.usernamelist[this.userselect].user_id==""||this.new_pwd==""||this.userid==""||this.select1==''){
          this.$message.error('请检查未填写值')
       }else{
-         this.updateusername({user_id:this.usernamelist[this.userselect].user_id,user_name: this.new_name,user_pwd:this.new_pwd,identity_id:this.userData[this.manger].identity_id})
+         this.updateusername({user_id:this.usernamelist[this.userselect].user_id,user_name: this.new_name,user_pwd:this.new_pwd,identity_id:this.select1})
          .then(()=>{
            if(this.UserCode==1){
              this.$message({
@@ -212,7 +217,8 @@ export default {
         this.person=""
       }
     },
-    apiadd(){
+    apiadds(){
+      console.log('确定')
       if(this.api_name==""||this.api_url==""||this.api_fun==""){
         this.$message.error('不可以为空')
       }else{
@@ -273,7 +279,7 @@ export default {
         this.viewaddApi({identity_id:this.view_api_select,view_authority_id:this.view_api_two_select})
         .then(()=>{
           if(this.perSonCode==1){
-
+            this.$message({message: '添加成功',type: 'success'})
           }else{
             this.$message.error('权限重复!重新选择')
           }
