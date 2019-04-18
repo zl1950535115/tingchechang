@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <el-button type="primary">创建试卷</el-button>
+      <el-button type="primary" @click="create">创建试卷</el-button>
     </div>
     <!-- <div v-show="flag" class="add-drawer">
       <div class="mask" />
@@ -47,8 +47,8 @@ export default {
   },
   created() {
     this.pageDetail = JSON.parse(window.localStorage.getItem('exam'))
-    console.log(this.pageDetail)
     let h = this.pageDetail.end_time - this.pageDetail.start_time;
+    this.getQuestion()
   },
   methods: {
     ...mapActions({
@@ -69,7 +69,8 @@ export default {
           type: 'success',
           message: '删除成功!'
         });
-      this.pageDetail.questions.splice(index,1)
+        this.pageDetail.questions.splice(index,1)
+        this.getQuestion()
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -82,15 +83,13 @@ export default {
       let data = {question_ids:this.question_ids}
       let res = await this.renewal({header: this.pageDetail.exam_exam_id,data })
       console.log(res)
-      this.getQuestion()
-      // this.$router.push({ path:'examinationPaperList' })
+      this.$router.push({ path:'examinationPaperList' })
     },
     getQuestion(){
       let arr = [];
       this.pageDetail.questions.forEach(item => {
         arr.push(item.questions_id)
       });
-      console.log(arr)
       this.question_ids = JSON.stringify(arr);
     }
   }
