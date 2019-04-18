@@ -33,6 +33,7 @@ const questionsRouter = {
     meta: { title: 'checkTheItem', noCache: true }
   }, {
     path: 'detial',
+    hidden: true,
     component: () =>
                 import('@/views/Questions/detial'),
     meta: { title: '', noCache: true }

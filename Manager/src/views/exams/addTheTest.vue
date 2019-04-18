@@ -2,95 +2,125 @@
   <div class="wrapper">
     <p class="text">添加考试</p>
     <div class="content">
-      <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="demo-ruleForm">
-        <el-form-item class="babels" label="试卷名称" prop="name">
+      <el-form ref="info" :model="info" :rules="rules" class="demo-info">
+        <el-form-item class="babels" label="试卷名称" prop="title">
           <br>
-          <el-input v-model="ruleForm.name" class="name" />
+          <el-input v-model="info.title" class="name" />
         </el-form-item>
-        <el-form-item class="babels" label="选择考试类型" prop="region1">
+        <el-form-item class="babels" label="选择考试类型" prop="exam_id">
           <br>
-          <el-select v-model="ruleForm.region1" class="select" style="width: 120px;">
-            <el-option label="周考1" value="zhoukao1" />
-            <el-option label="周考2" value="zhoukao2" />
-            <el-option label="周考3" value="zhoukao3" />
-            <el-option label="月考" value="yuekao" />
+          <el-select v-model="info.exam_id" class="select" style="width: 150px;">
+              <el-option
+              v-for='( item, index) in examTypeList'
+              :key="item.exam_id"
+              :label="item.exam_name"
+              :value="item.exam_id" />
           </el-select>
         </el-form-item>
-        <el-form-item class="babels" label="选择课程" prop="region2">
+        <el-form-item class="babels" label="选择课程" prop="subject_id">
           <br>
-          <el-select v-model="ruleForm.region2" class="select" style="width: 120px;">
-            <el-option label="周考1" value="zhoukao1" />
-            <el-option label="周考2" value="zhoukao2" />
-            <el-option label="周考3" value="zhoukao3" />
-            <el-option label="月考" value="yuekao" />
+          <el-select v-model="info.subject_id" class="select" style="width: 150px;">
+              <el-option 
+              v-for='( item, index) in subjectList' 
+              :key="item.subject_id"
+              :label="item.subject_text"
+              :value="item.subject_id" />
           </el-select>
         </el-form-item>
-        <el-form-item class="babels" label="设置题量" prop="num">
+        <el-form-item class="babels" label="设置题量" prop="number">
           <br>
-          <el-input-number v-model="ruleForm.num" style="width: 90px" controls-position="right" :min="3" :max="10" />
+          <el-input-number v-model="info.number" style="width: 90px" controls-position="right" :min="4" :max="10" />
         </el-form-item>
         <el-form-item class="babels" label="考试时间" required>
           <br>
-          <el-col :span="11" class="item">
-            <el-form-item prop="date1">
-              <el-date-picker v-model="ruleForm.date1" type="date" style="width:100%;" />
+          <el-col :span="14" class="item">
+            <el-form-item prop="start_time">
+              <el-date-picker v-model="info.start_time" type="datetime" style="width:200px;" />
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2">-</el-col>
-          <el-col :span="11" class="item">
-            <el-form-item prop="date2">
-              <el-date-picker v-model="ruleForm.date2" type="date" style="width:100%;" />
+          <el-col :span="14" class="item">
+            <el-form-item prop="end_time">
+              <el-date-picker v-model="info.end_time" type="datetime" style="width:200px;" />
             </el-form-item>
           </el-col>
         </el-form-item>
-        <el-button class="btn" type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+        <el-button class="btn" type="primary" @click="submitForm('info')">立即创建</el-button>
       </el-form>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState, mapMutations } from 'vuex'
+let moment = require('moment');
 export default {
   name: 'AddTheTest',
   data() {
     return {
-      ruleForm: {
-        num: 3,
-        name: '',
-        region1: '',
-        region2: '',
-        date1: '',
-        date2: '',
-        delivery: false
+      info: {
+        number: 4,
+        title: '什么报错都有',
+        exam_id: '',
+        subject_id: '',
+        start_time: '',
+        end_time: ''
       },
       rules: {
-        name: [
+        title: [
           { required: true, message: '请输入试卷名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { min: 3, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        region1: [
+        exam_id: [
           { required: true, message: '请选择考试类型', trigger: 'change' }
         ],
-        region2: [
+        subject_id: [
           { required: true, message: '请选择课程', trigger: 'change' }
         ],
-        num: [
+        number: [
           { required: true, message: '请选择题量', trigger: 'change' }
         ],
-        date1: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        start_time: [
+          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
         ],
-        date2: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        end_time: [
+          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
         ]
       }
     }
   },
+  computed: {
+    ...mapState({
+      examTypeList: state => state.exams.examTypeList,
+      subjectList: state => state.exams.subjectList
+    })
+  },
+  created() {
+    this.examType()
+    this.subject()
+  },
   methods: {
+    ...mapMutations({
+      updateState: 'exams/updateState',
+    }),
+    ...mapActions({
+      examType: 'exams/examType',
+      subject: 'exams/subject',
+      exam: 'exams/exam'
+    }),
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          console.log(this.ruleForm)
+          // 转成毫秒
+          let start_time = moment(this.info.start_time).unix()
+          let end_time = moment(this.info.end_time).unix()
+          var localstorage = window.localStorage;
+          let info = {...this.info, end_time, start_time}
+          let res = await this.exam(info)
+          // 本地存放提交成功的数据
+          window.localStorage.setItem('exam',JSON.stringify(res.data))
+          this.$router.push({ path:'createExam' })
+
         } else {
           console.log('error submit!!')
           return false
@@ -146,9 +176,10 @@ export default {
 
   .line {
     margin-top: 10px;
-    width: 30px;
+    width: 50px;
     text-align: center;
     height: 32px;
+    margin-left: 10px;
   }
 
   .babels {

@@ -4,15 +4,15 @@
     <div class="content">
       <div class="content-cont">
         <div class="container">
-          <el-button type="primary" class="container_btn">添加班级</el-button>
+          <el-button type="primary" class="container_btn" @click="dialogFormVisible = true">添加班级</el-button>
         </div>
         <div class="content_tables">
-          <el-table :data="tableData" style="width: 100%" :header-cell-style="tableHeaderColor">
-            <el-table-column prop="date" label="班级名" width="200" />
-            <el-table-column prop="name" label="课程名" width="380" />
-            <el-table-column prop="address" label="教室号" />
+          <el-table :data="grade" style="width: 100%" :header-cell-style="tableHeaderColor">
+            <el-table-column prop="grade_name" label="班级名" width="200" />
+            <el-table-column prop="subject_text" label="课程名" width="380" />
+            <el-table-column prop="room_text" label="教室号" />
             <el-table-column prop="xiugai" label="操作">
-              <a style="color: #0139FD;" @click="dialogFormVisible = true">修改</a>|
+              <a style="color: #0139FD;">修改</a>|
               <a style="color: #0139FD;">删除</a>
             </el-table-column>
           </el-table>
@@ -23,8 +23,7 @@
             <el-input v-model="ruleForm.name" />
             <el-form-item label="教室号：" prop="region" style="margin-left:-20px" />
             <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width:100%;">
-              <el-option label="区域一" value="shanghai" />
-              <el-option label="区域二" value="beijing" />
+              <el-option v-for="(item,index) in room" :key="index" :label="item.room_text" value="shanghai" />
             </el-select>
             <el-form-item label="课程名：" prop="course" style="margin-left:-20px" />
             <el-select v-model="ruleForm.course" placeholder="请选择活动区域" style="width:100%;">
@@ -43,31 +42,10 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: '1610C',
-          name: '渐进式开发(react)',
-          address: '34308'
-        },
-        {
-          date: '1610C',
-          name: '渐进式开发(react)',
-          address: '34308'
-        },
-        {
-          date: '1610C',
-          name: '渐进式开发(react)',
-          address: '34308'
-        },
-        {
-          date: '1610C',
-          name: '渐进式开发(react)',
-          address: '34308'
-        }
-      ],
       dialogTableVisible: false,
       dialogFormVisible: false,
       ruleForm: {
@@ -89,7 +67,22 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      grade: state => state.classmanagement.grade,
+      room: state => state.classmanagement.room
+    })
+  },
+  created() {
+    this.getgrade()
+    this.getroom()
+    console.log(this.room)
+  },
   methods: {
+    ...mapActions({
+      getgrade: 'classmanagement/getgrade',
+      getroom: 'classmanagement/getroom'
+    }),
     // 头部颜色
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
@@ -106,7 +99,6 @@ export default {
   flex-direction: column;
   position: relative;
   width: 100%;
-  height: calc(100vh - 84px);
   background: #f0f2f5;
 }
 h2 {
@@ -132,10 +124,5 @@ h2 {
 .el-form-item{
   margin-bottom:0;
 }
-// .container{
-//   width: 100%;
-//   height: 100%;
-//   display: flex;
-//   flex-direction: column;
-// }
+
 </style>
