@@ -14,9 +14,21 @@ const markRouter = {
   children: [
     {
       path: 'awaitingApprovalClass',
-      component: () => import('@/views/batch/member-detail'),
+      component: () => import('@/views/batch/batchRoll'),
       name: 'KeyboardChart',
       meta: { title: 'awaitingApprovalClass', noCache: true }
+    },
+    {
+      path: 'member',
+      component: () => import('@/views/batch/member'),
+      name: 'KeyboardChart',
+      meta: { title: '', noCache: true }
+    },
+    {
+      path: 'member-detail',
+      component: () => import('@/views/batch/member-detail'),
+      name: 'KeyboardChart',
+      meta: { title: '', noCache: true }
     }
   ]
 }

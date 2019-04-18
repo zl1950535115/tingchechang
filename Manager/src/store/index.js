@@ -4,7 +4,11 @@ import createLogger from 'vuex/dist/logger'
 import getters from './getters'
 import exams from './modules/exams/index'
 import user from './modules/user'
+<<<<<<< HEAD
 import classmanagement from './modules/classmanagement'
+=======
+import batchStore from './modules/batchStore'
+>>>>>>> 1bc4ae93b32098a9bb61972160deb8429a4a2340
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -25,8 +29,12 @@ const store = new Vuex.Store({
   getters,
   exams,
   user,
+<<<<<<< HEAD
   classmanagement,
   plugins: [createLogger()]
+=======
+  batchStore
+>>>>>>> 1bc4ae93b32098a9bb61972160deb8429a4a2340
 })
 
 export default store
