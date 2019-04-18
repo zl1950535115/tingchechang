@@ -41,3 +41,20 @@ export function getStudent(params) {
     method: 'get'
   })
 }
+
+// 获取全部的试卷
+export function getSubject() {
+  return request({
+    url: '/exam/subject',
+    method: 'get'
+  })
+}
+
+// 添加班级信息
+export function setGrade(params) {
+  return request({
+    url: '/manger/grade',
+    method: 'post',
+    data: params
+  })
+}

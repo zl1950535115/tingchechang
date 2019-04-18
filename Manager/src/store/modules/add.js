@@ -17,22 +17,22 @@ const mutations = {
 const actions = {
   async classify({ commit }, payload) {
     const data = await classify()
-    console.log(data.data)
+    // console.log(data.data)
     commit('classif', { data: data.data })
   },
   async examType({ commit }, payload) {
     const type = await examType()
-    console.log(type)
+    // console.log(type)
     commit('classif', { type: type.data })
   },
   async subject({ commit }, payload) {
     const sub = await subject()
-    console.log(sub)
+    // console.log(sub)
     commit('classif', { sub: sub.data })
   },
   async getQuestionsType({ commit }, payload) {
     const getQuestions = await getQuestionsType()
-    console.log(getQuestions)
+    // console.log(getQuestions)
     commit('classif', { getQuestions: getQuestions.data })
   }
 

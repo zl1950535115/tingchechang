@@ -22,18 +22,17 @@
             <el-form-item label="班级名：" prop="name" style="margin-left:-20px" />
             <el-input v-model="ruleForm.name" />
             <el-form-item label="教室号：" prop="region" style="margin-left:-20px" />
-            <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width:100%;">
-              <el-option v-for="(item,index) in room" :key="index" :label="item.room_text" value="shanghai" />
+            <el-select v-model="ruleForm.region" placeholder="请选择教室号" style="width:100%;">
+              <el-option v-for="(item,index) in room" :key="index" :label="item.room_text" :value="item.room_id" />
             </el-select>
             <el-form-item label="课程名：" prop="course" style="margin-left:-20px" />
-            <el-select v-model="ruleForm.course" placeholder="请选择活动区域" style="width:100%;">
-              <el-option label="区域一" value="shanghai" />
-              <el-option label="区域二" value="beijing" />
+            <el-select v-model="ruleForm.course" placeholder="课程名" style="width:100%;">
+              <el-option v-for="(item,index) in subject" :key="index" :label="item.subject_text" :value="item.subject_id" />
             </el-select>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">提 交</el-button>
+            <el-button @click="hidemask">取 消</el-button>
+            <el-button type="primary" @click="submitForm(ruleForm)">提 交</el-button>
           </div>
         </el-dialog>
       </div>
@@ -46,7 +45,6 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      dialogTableVisible: false,
       dialogFormVisible: false,
       ruleForm: {
         name: '',
@@ -70,24 +68,36 @@ export default {
   computed: {
     ...mapState({
       grade: state => state.classmanagement.grade,
-      room: state => state.classmanagement.room
+      room: state => state.classmanagement.room,
+      subject: state => state.classmanagement.subject
     })
   },
   created() {
     this.getgrade()
     this.getroom()
-    console.log(this.room)
+    this.getsubject()
   },
   methods: {
     ...mapActions({
       getgrade: 'classmanagement/getgrade',
-      getroom: 'classmanagement/getroom'
+      getroom: 'classmanagement/getroom',
+      getsubject: 'classmanagement/getsubject',
+      set_grade: 'classmanagement/set_grade'
     }),
     // 头部颜色
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
+    },
+    // 弹窗框隐藏
+    hidemask() {
+      this.dialogFormVisible = false
+    },
+    async submitForm(formName) {
+      this.dialogFormVisible = false
+      await this.set_grade({ grade_name: formName.name, room_id: formName.region, subject_id: formName.course })
+      await this.getgrade()
     }
   }
 }

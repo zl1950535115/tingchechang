@@ -1,4 +1,4 @@
-import { getGrade, getRoom, setRoom, deleteRoom, getStudent } from '@/api/classroom'
+import { getGrade, getRoom, setRoom, deleteRoom, getStudent, getSubject, setGrade } from '@/api/classroom'
 
 const state = {
   // 全部班级
@@ -7,7 +7,9 @@ const state = {
   room: null,
   // 教室id
   roomid: null,
-  studentlist: null
+  studentlist: null,
+  // 全部试卷
+  subject: null
 }
 
 const mutations = {
@@ -24,6 +26,7 @@ const actions = {
     // console.log(payload)
     const data = await getGrade(payload)
     commit('updataState', { grade: data.data })
+    // console.log('班级...', data)
   },
 
   // 获取教室信息
@@ -49,7 +52,19 @@ const actions = {
   async getstudent({ commit }, payload) {
     const data = await getStudent()
     commit('updataState', { studentlist: data.data })
-    console.log(data)
+    // console.log(data)
+  },
+
+  // 获取全部的试卷
+  async getsubject({ commit }, payload) {
+    const data = await getSubject()
+    commit('updataState', { subject: data.data })
+    // console.log(data.data)
+  },
+
+  // 添加班级信息
+  async set_grade({ commit }, payload) {
+    await setGrade(payload)
   }
 }
 
