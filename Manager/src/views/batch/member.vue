@@ -123,7 +123,7 @@ export default {
     .box{
         position: relative;
         width: 100%;
-        height: calc(100vh - 64px);
+        height: calc(100vh - 84px);
         box-sizing: border-box;
         padding:60px 24px 30px 24px;
         background: #f0f2f5;
