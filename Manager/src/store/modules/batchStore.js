@@ -20,7 +20,7 @@ const mutations = {
   },
   updataStudentDetail(state, payload) {
     console.log('updataStudentDetail...', payload)
-    state.StudentDetails = payload.exam
+    // state.StudentDetails = payload.exam
   }
 }
 
@@ -34,10 +34,8 @@ const actions = {
     commit('updataStudentListData', getStudentListDatay)
   },
   async getStudentDetail({ commit }, payload) {
-    console.log('getStudentDetail...', payload)
     const getStudentDetaily = await StudentDetail(payload)
     commit('updataStudentDetail', getStudentDetaily)
-    // console.log('updataStudentDetail...', getStudentDetail)
   }
 }
 

@@ -17,7 +17,7 @@ export function StudentList(params) {
 
 export function StudentDetail(params) {
   return request({
-    url: '/exam/exam',
+    url: '/exam/student',
     method: 'get',
     params
   })

@@ -44,7 +44,7 @@
         <el-table-column label="操作" width="117">
           <template slot-scope="scope">
             <el-button type="text" size="small" class="options" @click="handleClick(scope.row)"><router-link
-              :to="{path:'member-detail',query:{id:scope.row.exam_exam_id}}"
+              :to="{path:'member-detail',query:{id:scope.row.exam_exam_id	}}"
             >批卷</router-link></el-button>
           </template>
         </el-table-column>
