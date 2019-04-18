@@ -6,28 +6,28 @@
     </div>
     <p class="Title">{{ radioValue }}</p>
     <div v-if="boxind==0" class="box_1">
-      <el-table :data="tableData.slice((currentpage-1)*showsize,currentpage*showsize)" show-overflow-tooltip="true" style="width: 100%">
-        <el-table-column prop="username" label="用户名" width="360" />
-        <el-table-column min-width="500" prop="pwd" label="密码" />
-        <el-table-column prop="userasign" label="身份" />
+      <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))"  style="width: 100%">
+        <el-table-column prop="user_name" label="用户名" width="360" />
+        <el-table-column prop="user_pwd" min-width="500" label="密码" />
+        <el-table-column prop="identity_text" label="身份" />
       </el-table>
-      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="userlist.length*1" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
     <div v-if="boxind==1" class="box_1">
-      <el-table :data="tableData.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
-        <el-table-column prop="username" label="身份名称" />
+      <el-table :data="userperson.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
+        <el-table-column prop="identity_text" label="身份名称" />
       </el-table>
-      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="userperson.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
     <div v-if="boxind==2" class="box_2">
-      <el-table :data="tableData.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
-        <el-table-column align="center" prop="username" label="api权限名称" width="360" />
-        <el-table-column align="center" prop="pwd" label="api权限url" />
-        <el-table-column align="center" prop="userasign" label="api权限方法" />
+      <el-table :data="apilist.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
+        <el-table-column align="center" prop="api_authority_text" label="api权限名称" width="360" />
+        <el-table-column align="center" prop="api_authority_url" label="api权限url" />
+        <el-table-column align="center" prop="api_authority_method" label="api权限方法" />
       </el-table>
-      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="apilist.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
     <div v-if="boxind==3" class="box_3">
@@ -40,26 +40,27 @@
     </div>
 
     <div v-if="boxind==4" class="box_4">
-      <el-table :data="tableData.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
-        <el-table-column align="center" prop="username" label="视图权限名称" width="360" />
-        <el-table-column align="center" prop="pwd" label="视图id" />
+      <el-table :data="Viewlist.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
+        <el-table-column align="center" prop="view_authority_text" label="视图权限名称" width="360" />
+        <el-table-column align="center" prop="view_id" label="视图id" />
       </el-table>
-      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="Viewlist.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
     <div v-if="boxind==5" class="box_5">
-      <el-table :data="tableData.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
-        <el-table-column cell-class-name="a" align="center" prop="username" label="身份" width="360" />
-        <el-table-column align="center" prop="pwd" label="视图名称" />
-        <el-table-column align="center" prop="pwd" label="视图id" />
+      <el-table :data="Array.from(view_person_list.slice((currentpage-1)*showsize,currentpage*showsize))" style="width: 100%">
+        <el-table-column align="center" prop="identity_text" label="身份" width="360" />
+        <el-table-column align="center" prop="view_authority_text" label="视图名称" />
+        <el-table-column align="center" prop="view_id" label="视图id" />
       </el-table>
-      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="view_person_list.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
   </div>
 </template>
 
 <script>
 import titles from '../../components/Title_info/Title.vue'
+import {mapState, mapActions} from "vuex"
 export default {
   components: {
     titleinfo: titles
@@ -123,11 +124,37 @@ export default {
       currentpage: 1 // 身份和视图权限关系的当前页
     }
   },
+    created(){
+    this.Userlist()
+    this.userData()
+    this.userapi()
+    this.personorserver()
+    this.ViewPerson()
+    this.View_serverPerson()
+  },
+  computed:{
+    ...mapState({
+      userlist:state=>state.usershow.username,
+      userperson:state=>state.usershow.userperson,
+      apilist:state=>state.usershow.apilist,
+      Viewlist:state=>state.usershow.Viewlist,
+      view_person_list:state=>state.usershow.view_person_list
+    })
+  },
   methods: {
+    ...mapActions({
+      Userlist:'usershow/userlist',
+      userData:'usershow/userData',
+      userapi:'usershow/userapi',
+      personorserver:'usershow/personorserver',
+      ViewPerson:'usershow/ViewPerson',
+      View_serverPerson:'usershow/View_serverPerson'
+    }),
     selectValue(e) {
       this.boxind = this.topbutton.indexOf(e)
       this.showsize = 5
       this.currentpage = 1
+
     },
     handleSizeChange(e) {
       this.showsize = e

@@ -1,4 +1,4 @@
-import {addUser,userData,userName,updateusername,addUserCard,addApi,addView,addView_person,api_authorityList,personApi} from "@/api/adduser"
+import {addUser,userData,userName,updateusername,addUserCard,addApi,addView,addView_person,api_authorityList,personApi,viewaddApi} from "@/api/adduser"
 const state={
     user_Data:'', // 用户身份名称
     code:"",  //接口返回的code码
@@ -9,14 +9,18 @@ const state={
     viewList:[], // 视图权限列表
     apilist:[], //api接口权限列表
     apiCode:'', // 身份设置api接口权限返回code码
-    addViewCode: ''//添加视图接口权限code码
+    addViewCode: '', //添加视图接口权限code码
+    perSonCode:'' // 身份设置视图权限code码
 }
 const actions={
   userdata({commit}){
     return new Promise((res,rej)=>{
       userData().then(result=>{
-          state.user_Data=result.data
         if(result){
+          state.user_Data=result.data
+          res()
+        }else{
+          state.user_Data=result.data
           res()
         }
       })
@@ -91,6 +95,7 @@ addview({commit},payload){
 addViewPerson({commit},payload){
     return new Promise((res,rej)=>{
       addView_person(payload).then((result)=>{
+        console.log(result)
         if(result){
           state.addViewCode=result.code
           res()
@@ -117,6 +122,19 @@ api_authorityList({commit},payload){
           res()
         }else{
           state.apiCode=0
+          res()
+        }
+      })
+      })
+  },
+  viewaddApi({commit},payload){
+    return new Promise((res,rej)=>{
+      viewaddApi(payload).then((result)=>{
+        if(result){
+          state.perSonCode=result.code
+          res()
+        }else{
+          state.perSonCode=0
           res()
         }
       })

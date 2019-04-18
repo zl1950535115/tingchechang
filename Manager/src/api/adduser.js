@@ -69,4 +69,10 @@ export function personApi(data) {
     data:{...data}
   })
 }
-
+export function viewaddApi(data) {
+  return request({
+    url: '/user/setIdentityView',
+    method: 'post',
+    data:{...data}
+  })
+}

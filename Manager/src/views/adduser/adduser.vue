@@ -62,13 +62,13 @@
 
       <div class="add_api_seting">
         <el-button class="active view_api">给身份设置视图权限</el-button>
-        <el-select v-model="user_view_manger" class="select" placeholder="请选择身份id">
+        <el-select v-model="user_view_manger" class="select" @change="selectviewone" placeholder="请选择身份id">
           <el-option v-for="(item,index) in userData" :key="index" :label="item.identity_text" :value="index" />
         </el-select>
-        <el-select v-model="user_view_id" class="select" placeholder="请选择视图权限id">
+        <el-select v-model="user_view_id" class="select" @change="selectviewtwo" placeholder="请选择视图权限id">
           <el-option v-for="(item,index) in viewList" :key="index" :label="item.view_authority_text" :value="index" />
         </el-select>
-        <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="addview">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
     </div>
   </div>
@@ -106,7 +106,9 @@ export default {
       view_select_value: '', //拿到视图权限下拉框的值
       list: ['我的', '你的', '他的'],
       api_one_select:'',
-      api_two_select:""
+      api_two_select:"",
+      view_api_select:'',
+      view_api_two_select:''
     }
   },
   computed: {
@@ -120,7 +122,8 @@ export default {
       viewList:state=>state.adduser.viewList,
       apilist:state=>state.adduser.apilist,
       apiCode:state=>state.adduser.apiCode,
-      addViewCode:state=>state.adduser.addViewCode
+      addViewCode:state=>state.adduser.addViewCode,
+      perSonCode:state=>state.adduser.perSonCode
     })
   },
   created() {
@@ -140,7 +143,8 @@ export default {
       viewlist:'adduser/addview',
       addViewPerson:'adduser/addViewPerson',
       api_authorityList:'adduser/api_authorityList',
-      personApi:'adduser/personApi'
+      personApi:'adduser/personApi',
+      viewaddApi:'adduser/viewaddApi'
     }),
     tab(index) {
       this.ind = index
@@ -150,7 +154,7 @@ export default {
       var Reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
       var blone=Reg.test(this.pwd)
       var userblone=uPattern.test(this.name)
-      this.addUserValue = this.list[this.select]
+      this.addUserValue = this.userData[this.select]
       if (this.name == '' || this.addUserValue == null || this.pwd == '') {
         this.$message.error('请检查未填写值')
       } else if(blone == false){
@@ -254,6 +258,26 @@ export default {
            this.$message.error('权限重复!重新选择')
         }
       })
+      }
+    },
+    selectviewone(e){
+      this.view_api_select=this.userData[e].identity_id
+    },
+     selectviewtwo(e){
+      this.view_api_two_select=this.viewList[e].view_authority_id
+    },
+    addview(){
+      if(this.view_api_select==''||this.view_api_two_select==''){
+        this.$message.error('请先做出选择')
+      }else{
+        this.viewaddApi({identity_id:this.view_api_select,view_authority_id:this.view_api_two_select})
+        .then(()=>{
+          if(this.perSonCode==1){
+
+          }else{
+            this.$message.error('权限重复!重新选择')
+          }
+        })
       }
     }
   }
