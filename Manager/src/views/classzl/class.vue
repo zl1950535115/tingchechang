@@ -4,7 +4,7 @@
     <div class="content">
       <div class="content-cont">
         <div class="container">
-          <el-button type="primary" class="container_btn">添加班级</el-button>
+          <el-button type="primary" class="container_btn" @click="add">添加班级</el-button>
         </div>
         <div class="content_tables">
           <el-table :data="tableData" style="width: 100%" :header-cell-style="tableHeaderColor">
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -89,12 +90,26 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+
+    })
+  },
+  created() {
+    console.log(this.getclassroom())
+  },
   methods: {
+    ...mapActions({
+      getclassroom: 'classroom/getclassroom'
+    }),
     // 头部颜色
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
+    },
+    add() {
+      // console.log(111)
     }
   }
 }
@@ -132,10 +147,5 @@ h2 {
 .el-form-item{
   margin-bottom:0;
 }
-// .container{
-//   width: 100%;
-//   height: 100%;
-//   display: flex;
-//   flex-direction: column;
-// }
+
 </style>

@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import getters from './getters'
 import exams from './modules/exams/index'
 import user from './modules/user'
+import classroom from './modules/classroom'
+import add from './modules/add'
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -22,7 +24,9 @@ const store = new Vuex.Store({
   modules,
   getters,
   exams,
-  user
+  user,
+  classroom,
+  add
 })
 
 export default store
