@@ -124,10 +124,5 @@ h2 {
 .el-form-item{
   margin-bottom:0;
 }
-// .container{
-//   width: 100%;
-//   height: 100%;
-//   display: flex;
-//   flex-direction: column;
-// }
+
 </style>

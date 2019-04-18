@@ -22,14 +22,9 @@
             <span>操作</span>
           </div>
           <div class="count">
-            <div class="count-text">
-              <span>sjfksjkf</span>
-              <span>简答题</span>
-              <span />
-            </div>
-            <div class="count-text">
-              <span>sjfksjkf</span>
-              <span>简答题</span>
+            <div v-for="(item,index) in data" :key="index" class="count-text">
+              <span>{{ item.questions_type_id }}</span>
+              <span>{{ item.questions_type_text }}</span>
               <span />
             </div>
           </div>
@@ -40,6 +35,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -56,8 +52,31 @@ export default {
         resource: '',
         desc: ''
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      list: [
+        {
+          'tittle': 'sfjsdkjfk',
+          'name': '简答题'
+        },
+        {
+          'tittle': 'sjjijiji',
+          'name': '理论题'
+        }
+      ]
     }
+  },
+  created() {
+    this.classify()
+  },
+  computed: {
+    ...mapState({
+      data: state => state.add.data
+    })
+  },
+  methods: {
+    ...mapActions({
+      classify: 'add/classify'
+    })
   }
 }
 </script>
