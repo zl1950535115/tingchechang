@@ -90,7 +90,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.ruleForm)
+          console.log(this.ruleForm,'vaild')
         } else {
           console.log('error submit!!')
           return false

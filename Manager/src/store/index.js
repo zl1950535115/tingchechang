@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
 import getters from './getters'
-import exams from './modules/exams/index'
+import exams from './modules/exams'
 import user from './modules/user'
 <<<<<<< HEAD
 import classmanagement from './modules/classmanagement'

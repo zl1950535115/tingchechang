@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getAll() {
+export function getExamsList() {
   return request({
     url: '/exam/questions/new',
     method: 'get'

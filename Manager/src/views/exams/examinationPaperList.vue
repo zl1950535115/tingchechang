@@ -71,7 +71,7 @@
 </template>
 
 <script>
-
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'ExaminationPaperList',
   data() {
@@ -82,14 +82,21 @@ export default {
         type: '',
         course: ''
       },
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }]
+      tableData: []
     }
   },
+  created() {
+    this.getExamsList()
+  },
+  computed: {
+    ...mapState({
+      
+    })
+  },
   methods: {
+    ...mapActions({
+      getExamsList: 'exams/getExamsList'
+    }),
     // 点击改变样式
     changeType(type) {
       this.isIndex = type
