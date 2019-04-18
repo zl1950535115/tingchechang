@@ -17,7 +17,6 @@
         <P>请选择考试类型</P>
         <el-select slot="prepend" v-model="select" placeholder="请选择" class="sel" @change="Type">
           <el-option v-for="(item,index) in type" :key="index" :label="item.exam_name" :value="item.exam_id" />
-
         </el-select>
       </div>
       <div class="select">
