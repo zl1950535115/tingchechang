@@ -1,7 +1,7 @@
 <template>
-    <div>
-        初始页面
-    </div>
+  <div>
+    初始页面
+  </div>
 </template>
 
 <script>

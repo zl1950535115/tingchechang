@@ -1,4 +1,4 @@
-import {addUser,userData,userName,updateusername,addUserCard,addApi,addView} from "@/api/adduser"
+import {addUser,userData,userName,updateusername,addUserCard,addApi,addView,addView_person,api_authorityList,personApi} from "@/api/adduser"
 const state={
     user_Data:'', // 用户身份名称
     code:"",  //接口返回的code码
@@ -6,7 +6,10 @@ const state={
     userCode:'', // 更新用户的code码
     adduserCode:'', // 添加身份的code码
     addapiCode:'', // 添加api接口code码
-    viewList:'', // 视图权限列表
+    viewList:[], // 视图权限列表
+    apilist:[], //api接口权限列表
+    apiCode:'', // 身份设置api接口权限返回code码
+    addViewCode: ''//添加视图接口权限code码
 }
 const actions={
   userdata({commit}){
@@ -81,15 +84,44 @@ addview({commit},payload){
     addView(payload).then((result)=>{
       if(result){
         state.viewList=result.data
-      }else{
-        this.$notify({
-          title: '失败',
-          message: '数据库或网络原因导致获取视图权限失败'
-        })
       }
     })
   })
-}
+},
+addViewPerson({commit},payload){
+    return new Promise((res,rej)=>{
+      addView_person(payload).then((result)=>{
+        if(result){
+          state.addViewCode=result.code
+          res()
+        }else{
+          state.addViewCode=0
+          res()
+        }
+      })
+    })
+},
+api_authorityList({commit},payload){
+  return new Promise((res,rej)=>{
+    api_authorityList().then((result)=>{
+      state.apilist=result.data
+      res()
+    })
+    })
+  },
+  personApi({commit},payload){
+    return new Promise((res,rej)=>{
+      personApi(payload).then((result)=>{
+        if(result){
+          state.apiCode=result.code
+          res()
+        }else{
+          state.apiCode=0
+          res()
+        }
+      })
+      })
+  }
 }
 
 

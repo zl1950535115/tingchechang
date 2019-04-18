@@ -49,3 +49,24 @@ export function addView(data) {
     params: {...data}
   })
 }
+export function addView_person(data) {
+  return request({
+    url: '/user/authorityView/edit',
+    method: 'get',
+    params: {...data}
+  })
+}
+export function api_authorityList() {
+  return request({
+    url: '/user/api_authority',
+    method: 'get',
+  })
+}
+export function personApi(data) {
+  return request({
+    url: '/user/setIdentityApi',
+    method: 'post',
+    data:{...data}
+  })
+}
+

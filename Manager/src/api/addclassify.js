@@ -1,5 +1,12 @@
 import request from '@/utils/request'
 
+export function classify() {
+  return request({
+    url: '/exam/getQuestionsType',
+    method: 'get'
+  })
+}
+
 export function examType() {
   return request({
     url: '/exam/examType',
@@ -13,11 +20,10 @@ export function subject() {
     method: 'get'
   })
 }
-// 创建试卷
-export function exam(data) {
+
+export function getQuestionsType() {
   return request({
-    url: '/exam/exam',
-    method: 'post',
-    data
+    url: '/exam/getQuestionsType',
+    method: 'get'
   })
 }

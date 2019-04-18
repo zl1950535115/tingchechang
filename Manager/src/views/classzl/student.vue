@@ -25,12 +25,12 @@
           <el-button type="primary">重置</el-button>
         </div>
         <div class="content_table">
-          <el-table :data="tableData" style="width: 100%" :header-cell-style="tableHeaderColor">
-            <el-table-column prop="date" label="姓名" width="150" />
-            <el-table-column prop="name" label="学号" width="240" />
-            <el-table-column prop="address" label="班级" width="130" />
-            <el-table-column prop="classroom" label="教室" width="150" />
-            <el-table-column prop="paw" label="密码" width="300" />
+          <el-table :data="studentlist.slice((currentpage-1)*pagesize,currentpage*pagesize)" style="width: 100%" :header-cell-style="tableHeaderColor">
+            <el-table-column prop="student_name" label="姓名" width="150" />
+            <el-table-column prop="student_id" label="学号" width="240" />
+            <el-table-column prop="grade_name" label="班级" width="130" />
+            <el-table-column prop="room_text" label="教室" width="150" />
+            <el-table-column prop="student_pwd" label="密码" width="300" />
             <el-table-column prop="operation" label="操作" />
           </el-table>
         </div>
@@ -38,9 +38,8 @@
           <div class="block">
             <el-pagination
               :current-page.sync="currentPage3"
-              :page-size="10"
-              :total="100"
-              @size-change="handleSizeChange"
+              :page-size="pagesize"
+              :total="studentlist.length"
               @current-change="handleCurrentChange"
             />
           </div>
@@ -51,24 +50,12 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'ClassChart',
   data() {
     return {
-      tableData: [
-        {
-          date: '1610C'
-        },
-        {
-          date: '1610C'
-        },
-        {
-          date: '1610C'
-        },
-        {
-          date: '1610C'
-        }
-      ],
       options: [
         {
           value: '选项1',
@@ -90,14 +77,31 @@ export default {
           value: '选项5',
           label: '北京烤鸭'
         }
-      ]
+      ],
+      currentpage: 1,
+      pagesize: 10
     }
   },
+  computed: {
+    ...mapState({
+      studentlist: state => state.classmanagement.studentlist
+    })
+  },
+  created() {
+    this.getstudent()
+  },
   methods: {
+    ...mapActions({
+      getstudent: 'classmanagement/getstudent'
+    }),
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`)
+      this.currentpage = val
     }
   }
 }
@@ -109,7 +113,6 @@ export default {
   flex-direction: column;
   position: relative;
   width: 100%;
-  height: calc(100vh - 84px);
   background: #f0f2f5;
 }
 h2 {

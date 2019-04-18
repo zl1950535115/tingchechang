@@ -44,37 +44,29 @@
 
       <div class="add_view">
         <el-button class="active view">添加视图接口权限</el-button>
-        <el-select slot="prepend" v-model="view_select" class="select" placeholder="请输入已有视图">
+        <el-select slot="prepend" v-model="view_select" class="select" @change="select_event" placeholder="请输入已有视图">
                 <el-option v-for="(item,index) in viewList" :key="index" :label="item.view_authority_text" :value="index" />
         </el-select>
-        <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="addview_person">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
       <div class="add_api_seting">
         <el-button class="active apibtn">给身份设置api接口权限</el-button>
-        <el-select v-model="user_add_api" class="select" placeholder="请选择身份id">
-          <el-option label="餐厅名" value="1" />
-          <el-option label="订单号" value="2" />
-          <el-option label="用户电话" value="3" />
+        <el-select v-model="user_add_api" class="select" @change="apiselect" placeholder="请选择身份id">
+          <el-option v-for="(item,index) in userData" :key="index" :label="item.identity_text" :value="index" />
         </el-select>
-        <el-select v-model="user_add_manger" class="select" placeholder="请选择api接口权限">
-          <el-option label="餐厅名" value="1" />
-          <el-option label="订单号" value="2" />
-          <el-option label="用户电话" value="3" />
+        <el-select v-model="user_add_manger" class="select" @change="apiselecttwo" placeholder="请选择api接口权限">
+          <el-option v-for="(item,index) in apilist" :key="index" :label="item.api_authority_text" :value="index" />
         </el-select>
-        <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="apiadd">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
 
       <div class="add_api_seting">
         <el-button class="active view_api">给身份设置视图权限</el-button>
         <el-select v-model="user_view_manger" class="select" placeholder="请选择身份id">
-          <el-option label="餐厅名" value="1" />
-          <el-option label="订单号" value="2" />
-          <el-option label="用户电话" value="3" />
+          <el-option v-for="(item,index) in userData" :key="index" :label="item.identity_text" :value="index" />
         </el-select>
         <el-select v-model="user_view_id" class="select" placeholder="请选择视图权限id">
-          <el-option label="餐厅名" value="1" />
-          <el-option label="订单号" value="2" />
-          <el-option label="用户电话" value="3" />
+          <el-option v-for="(item,index) in viewList" :key="index" :label="item.view_authority_text" :value="index" />
         </el-select>
         <div class="confim"><el-button type="primary" class="success">确定</el-button><el-button class="reset" plain>重置</el-button></div>
       </div>
@@ -111,7 +103,10 @@ export default {
       user_add_manger: '', // 添加api接口权限的下拉框下标
       user_view_manger: '', // 试图全线给身份id下拉框下标
       user_view_id: '', // 用户视图权限id
-      list: ['我的', '你的', '他的']
+      view_select_value: '', //拿到视图权限下拉框的值
+      list: ['我的', '你的', '他的'],
+      api_one_select:'',
+      api_two_select:""
     }
   },
   computed: {
@@ -122,13 +117,17 @@ export default {
       UserCode:state=>state.adduser.userCode,
       adduserCode:state=>state.adduser.adduserCode,
       apicode:state=>state.adduser.addapiCode,
-      viewList:state=>state.adduser.viewList
+      viewList:state=>state.adduser.viewList,
+      apilist:state=>state.adduser.apilist,
+      apiCode:state=>state.adduser.apiCode,
+      addViewCode:state=>state.adduser.addViewCode
     })
   },
   created() {
       this.userdata() // 获取身份数据
       this.username() // 获取身份名称name
-      this.addview()  // 获取用户视图权限列表
+      this.viewlist() // 获取用户视图权限列表
+      this.api_authorityList() // 获取api接口权限列表
   },
   methods: {
     ...mapActions({
@@ -138,7 +137,10 @@ export default {
       updateusername:'adduser/updateusername',
       addusercrad:'adduser/addusercard',
       addapi:'adduser/addapi',
-      addview:'adduser/addview'
+      viewlist:'adduser/addview',
+      addViewPerson:'adduser/addViewPerson',
+      api_authorityList:'adduser/api_authorityList',
+      personApi:'adduser/personApi'
     }),
     tab(index) {
       this.ind = index
@@ -164,6 +166,7 @@ export default {
               message: '恭喜你，添加成功',
               type: 'success'
           })
+              this.userdata()
               this.name = ''
               this.pwd = ''
               this.addUserValue = null
@@ -197,6 +200,7 @@ export default {
         this.addusercrad({identity_text:this.person}).then(()=>{
          if(this.adduserCode==1){
           this.$message({message: '恭喜你，添加成功',type: 'success'})
+          this.userdata()
          }else{
           this.$message.error('该身份已存在')
          }
@@ -211,10 +215,45 @@ export default {
         this.addapi({api_authority_text:this.api_name,api_authority_url:this.api_url,api_authority_method:this.api_fun}).then(()=>{
          if(this.apicode==1){
             this.$message({message: '恭喜你，添加成功',type: 'success'})
+            this.api_authorityList()
          }else{
             this.$message.error('该权限已存在')
          }
         })
+      }
+    },
+    select_event(){
+      this.view_select_value=this.viewList[this.view_select]
+    },
+    addview_person(){
+      if(this.view_select_value=== ''){
+        this.$message.error('请先选择')
+      }else{
+        var content=this.view_select_value
+        if(this.addViewCode==1){
+        this.addViewPerson({view_authority_text:content.view_authority_text,view_id:content.view_authority_id})
+        }else{
+          this.$message.error('权限名称重复')
+        }
+      }
+    },
+    apiselect(){
+      this.api_one_select=this.userData[this.user_add_api].identity_id
+    },
+    apiselecttwo(){
+      this.api_two_select=this.apilist[this.user_add_manger].api_authority_id
+    },
+    apiadd(){
+      if(this.api_one_select==''||this.api_two_select==''){
+        this.$message.error('缺少必要参数')
+      }else{
+      this.personApi({identity_id:this.api_one_select,api_authority_id:this.api_two_select}).then(()=>{
+        if(this.apiCode==1){
+           this.$message({message: '添加成功',type: 'success'})
+        }else{
+           this.$message.error('权限重复!重新选择')
+        }
+      })
       }
     }
   }
@@ -253,7 +292,6 @@ export default {
     font-weight: 800;
     border: 1px solid #0139fd;
   }
-
   .containter {
     position: relative;
     width: 100%;
