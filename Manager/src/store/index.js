@@ -25,8 +25,8 @@ const store = new Vuex.Store({
   getters,
   exams,
   user,
-  classmanagement,
-  plugins: [createLogger()]
+  classmanagement
+  // plugins: [createLogger()]
 })
 
 export default store
