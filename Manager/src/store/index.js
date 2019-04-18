@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createLogger from 'vuex/dist/logger'
 import getters from './getters'
 import exams from './modules/exams'
 import user from './modules/user'
 import classmanagement from './modules/classmanagement'
 import batchStore from './modules/batchStore'
 import adduser from './modules/adduser'
+// import createLogger from 'vuex/dist/logger'
+
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext

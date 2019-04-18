@@ -85,18 +85,8 @@ export default {
       tableData: []
     }
   },
-  created() {
-    this.getExamsList()
-  },
-  computed: {
-    ...mapState({
-      
-    })
-  },
   methods: {
-    ...mapActions({
-      getExamsList: 'exams/getExamsList'
-    }),
+  
     // 点击改变样式
     changeType(type) {
       this.isIndex = type
