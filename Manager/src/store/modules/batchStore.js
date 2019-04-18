@@ -12,8 +12,11 @@ const mutations = {
     state.classLists = payload.data
   },
   updataStudentListData(state, payload) {
-    console.log('updataStudentListData', payload)
-    state.StudentListDatas = payload.exam
+    if (payload) {
+      state.StudentListDatas = payload.exam
+    } else {
+      state.StudentListDatas = []
+    }
   },
   updataStudentDetail(state, payload) {
     console.log('updataStudentDetail...', payload)
