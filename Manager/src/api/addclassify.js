@@ -35,7 +35,10 @@ export function userIfo() {
   })
 }
 
-export const questions = params => {
-  return request.post('/exam/questions', params)
+export const questions = data => {
+  return request.post('/exam/questions', data)
 }
 
+export const condition = params => {
+  return request.get('/exam/questions/condition', { params })
+}

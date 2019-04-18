@@ -1,10 +1,11 @@
-import { classify, examType, subject, getQuestionsType, questions, userIfo } from '@/api/addclassify'
+import { classify, examType, subject, getQuestionsType, questions, userIfo, condition } from '@/api/addclassify'
 const state = {
   data: [],
   type: [],
   sub: [],
   getQuestions: [],
-  user: []
+  user: [],
+  cond: []
 }
 
 const mutations = {
@@ -50,8 +51,13 @@ const actions = {
   async questions({ commit }, payload) {
     const addquest = await questions(payload)
     console.log('aaa...', addquest)
+  },
+  // 查询接口
+  async condition({ commit }, payload) {
+    const cond = await condition(payload)
+    console.log(cond)
+    commit('classif', { cond: cond.data })
   }
-
 }
 
 export default {

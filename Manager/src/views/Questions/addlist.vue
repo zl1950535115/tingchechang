@@ -4,33 +4,37 @@
     <div class="topbox">
       <div class="curriculumtype">
         <span>课程类型: </span>
-        <span :class="isTrue?&quot;all backblue&quot;:&quot;all&quot;" @click="tapAll">All</span>
-        <!-- <span v-for="(item,index) in currtype" v-if="isTrue===false" :key="index" :class="clickindex==index?&quot;currsps backblue&quot;:&quot;currsps&quot;" @click="bindtap(item,index)"> {{ item }}</span>
-        <span v-for="(item,index) in currtype" v-if="isTrue" :key="index" class="currsps backblue" @click="bindtap(item,index)">{{ item }}</span> -->
+        <span :class="isTrue?'all backblue':'all'" @click="tapAll">All</span>
+        <div v-if="isTrue===false" style="display: inline-block">
+          <span v-for="(item,index) in sub" :key="index" :class="clickindex==index?'currsps backblue':'currsps'" @click="bindtap(item,index,item.subject_id)">{{ item.subject_text }}</span>
+        </div>
+        <div v-if="isTrue" style="display: inline-block">
+          <span v-for="(item,index) in sub" :key="index" class="currsps backblue" @click="bindtap(item,index)">{{ item.subject_text }}</span>
+        </div>
       </div>
       <div class="studytype">
         <div class="select">
           <span>考试类型 : </span>
-          <el-select slot="prepend" v-model="studytypevalue" placeholder="" class="sel">
-            <el-option v-for="item in studyType" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select slot="prepend" v-model="studytypevalue" placeholder="" class="sel" @change="Type">
+            <el-option v-for="(item,index) in type" :key="index" :label="item.exam_name" :value="item.exam_id" />
           </el-select>
         </div>
         <div class="select">
           <span>题目类型 : </span>
-          <el-select slot="prepend" v-model="messtypevalue" placeholder="" class="sel">
-            <el-option v-for="item in messType" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select slot="prepend" v-model="messtypevalue" placeholder="" class="sel" @change="Question">
+            <el-option v-for="(item,index) in getQuestions" :key="index" :label="item.questions_type_text" :value="item.questions_type_id" />
           </el-select>
         </div>
         <div>
-          <el-button type="primary" class="btn" icon="el-icon-search">查询</el-button>
+          <el-button type="primary" class="btn" icon="el-icon-search" @click="search">查询</el-button>
         </div>
       </div>
     </div>
     <div class="bottombox">
       <div class="bottomlittle">
         <router-link :to="{path:'detial'}">
-          <div v-for="(item,index) in options" :key="index" class="childrenbox">
-            <p class="stem">{{ item.questions_stem }}</p>
+          <div v-for="(item,index) in cond" :key="index" class="childrenbox">
+            <p class="stem">{{ item.title }}</p>
             <div class="text">
               <span class="type_text">{{ item.questions_type_text }}</span>
               <span class="subject_text">{{ item.subject_text }}</span>
@@ -47,41 +51,20 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
       clickindex: null,
-      currtype: ['JavaScript上', 'JavaScript下', '模块化开发', '移动端开发', 'node基础', '组件化开发(vue)'],
       currType: '',
       isTrue: false,
       studytypevalue: '',
       messtypevalue: '',
-      studyType: [{
-        value: '选项1',
-        label: '周考1'
-      }, {
-        value: '选项2',
-        label: '周考2'
-      }, {
-        value: '选项3',
-        label: '周考3'
-      }, {
-        value: '选项4',
-        label: '月考'
-      }],
-      messType: [{
-        value: '选项1',
-        label: '简答题'
-      }, {
-        value: '选项2',
-        label: '代码阅读题'
-      }, {
-        value: '选项3',
-        label: '代码补全'
-      }, {
-        value: '选项4',
-        label: '修改bug'
-      }],
+      el: {
+        exam_id: '',
+        questions_type_id: ''
+      },
+      subjec: '',
       options: [{
         subject_text: 'javaScript上',
         exam_name: '周考1',
@@ -106,16 +89,51 @@ export default {
       }]
     }
   },
+  computed: {
+    ...mapState({
+      sub: state => state.add.sub,
+      getQuestions: state => state.add.getQuestions,
+      type: state => state.add.type,
+      cond: state => state.add.cond
+    })
+  },
+  created() {
+    this.subject()
+    this.examType()
+    this.getQuestionsType()
+  },
   methods: {
-    bindtap(item, index) {
+    bindtap(item, index, subject_id) {
       this.currType = item
       this.clickindex = index
+      this.subjec = subject_id
     },
     tapAll(e) {
       this.currType = e.target.innerHTML
       this.isTrue = !this.isTrue
+    },
+
+    Type(e) {
+      this.el.exam_id = e
+    },
+    Question(e) {
+      this.el.questions_type_id = e
+    },
+    ...mapActions({
+      subject: 'add/subject',
+      examType: 'add/examType',
+      getQuestionsType: 'add/getQuestionsType',
+      condition: 'add/condition'
+    }),
+    search() {
+      this.condition({
+        questions_type_id: this.el.questions_type_id,
+        subject_id: this.subjec,
+        exam_id: this.el.exam_id
+      })
     }
   }
+
 }
 </script>
 
