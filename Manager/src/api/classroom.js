@@ -1,26 +1,19 @@
 import request from '@/utils/request'
 
-// 获取班级信息
-export function getGrade(params) {
+// 获取班级信息或添加班级信息
+export function getGrade(params, methods) {
   return request({
     url: '/manger/grade',
-    method: 'get'
+    method: methods,
+    data: params
   })
 }
 
-// 获取教室信息
-export function getRoom(params) {
+// 获取教室信息或添加教室
+export function getRoom(params, methods) {
   return request({
     url: '/manger/room',
-    method: 'get'
-  })
-}
-
-// 添加教室
-export function setRoom(params) {
-  return request({
-    url: '/manger/room',
-    method: 'post',
+    method: methods,
     data: params
   })
 }
@@ -50,11 +43,20 @@ export function getSubject() {
   })
 }
 
-// 添加班级信息
-export function setGrade(params) {
+// 删除班级
+export function deleteGrade(params) {
   return request({
-    url: '/manger/grade',
-    method: 'post',
+    url: '/manger/grade/delete',
+    method: 'delete',
+    data: params
+  })
+}
+
+// 更新班级信息
+export function updateGrade(params) {
+  return request({
+    url: '/manger/grade/update',
+    method: 'put',
     data: params
   })
 }

@@ -12,8 +12,10 @@
             <el-table-column prop="subject_text" label="课程名" width="380" />
             <el-table-column prop="room_text" label="教室号" />
             <el-table-column prop="xiugai" label="操作">
-              <a style="color: #0139FD;">修改</a>|
-              <a style="color: #0139FD;">删除</a>
+              <template slot-scope="scope">
+                <a style="color: #0139FD;" @click="showModal(scope.row)">修改</a>|
+                <a style="color: #0139FD;">删除</a>
+              </template>
             </el-table-column>
           </el-table>
         </div>
@@ -35,6 +37,30 @@
             <el-button type="primary" @click="submitForm(ruleForm)">提 交</el-button>
           </div>
         </el-dialog>
+
+        <!-- 修改 -->
+        <el-dialog title="添加班级" :visible.sync="modal">
+          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="班级名：" prop="name" style="margin-left:-20px" />
+            <el-input
+              v-model="input"
+              placeholder="请输入内容"
+              :disabled="true"
+            />
+            <el-form-item label="教室号：" prop="region" style="margin-left:-20px" />
+            <el-select v-model="region_text" placeholder="请选择教室号" style="width:100%;">
+              <el-option v-for="(item,index) in room" :key="index" :label="item.room_text" :value="item.room_id" />
+            </el-select>
+            <el-form-item label="课程名：" prop="course" style="margin-left:-20px" />
+            <el-select v-model="course_text" placeholder="课程名" style="width:100%;">
+              <el-option v-for="(item,index) in subject" :key="index" :label="item.subject_text" :value="item.subject_id" />
+            </el-select>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="modal = false">取 消</el-button>
+            <el-button type="primary" @click="addgrade">提 交</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -46,6 +72,7 @@ export default {
   data() {
     return {
       dialogFormVisible: false,
+      modal: false,
       ruleForm: {
         name: '',
         region: '',
@@ -62,7 +89,10 @@ export default {
         course: [
           { required: true, message: '请选择活动区域', trigger: 'change' }
         ]
-      }
+      },
+      input: '',
+      region_text: '',
+      course_text: ''
     }
   },
   computed: {
@@ -98,6 +128,16 @@ export default {
       this.dialogFormVisible = false
       await this.set_grade({ grade_name: formName.name, room_id: formName.region, subject_id: formName.course })
       await this.getgrade()
+    },
+    showModal(row) {
+      this.modal = true
+      this.input = row.grade_name
+      this.region_text = row.room_text
+      this.course_text = row.subject_text
+      console.log(row)
+    },
+    addgrade() {
+      this.modal = false
     }
   }
 }
