@@ -2,8 +2,8 @@
   <div class="wrapper">
     <p class="text">试卷列表</p>
     <div class="content">
-        <el-form ref="info" :model="info" :rules="rules" class="demo-info">
-            <el-form-item class="babels" label="考试类型:" prop="exam_id">
+        <el-form :inline="true" ref="info" :model="info" :rules="rules" class="demo-form-inline">
+          <el-form-item class="babels" label="考试类型:" prop="exam_id">
               <el-select v-model="info.exam_id" class="select" style="width: 150px;">
                   <el-option
                   v-for='( item, index) in examTypeList'
@@ -12,7 +12,7 @@
                   :value="item.exam_id" />
               </el-select>
             </el-form-item>
-            <el-form-item class="babels" label="课程:" prop="subject_id">
+          <el-form-item class="babels" label="课程:" prop="subject_id">
               <el-select v-model="info.subject_id" class="select" style="width: 150px;">
                 <el-option 
                 v-for='( item, index) in subjectList' 
@@ -21,11 +21,13 @@
                 :value="item.subject_id" />
               </el-select>
             </el-form-item>
-          </el-form>
-      <el-button class="btn" type="primary">
-          <i class="el-icon-search" />
-          查询
-        </el-button>
+          <el-form-item>
+              <el-button class="btn" type="primary" @click="submitForm('info')" >
+                  <i class="el-icon-search" />
+                  查询
+                </el-button>
+          </el-form-item>
+        </el-form>
     </div>
     <div class="content">
       <div class="nav">
@@ -46,7 +48,7 @@
         <el-table-column label="班级">
           <template slot-scope="scope">
             <p>教室班级</p>
-            <p>{{ scope.row.grade_name[0] }}</p>
+            <p><span v-for="(item, index) in scope.row.grade_name">{{item}}</span></p>
           </template>
         </el-table-column>
         <el-table-column label="创建人">
@@ -65,8 +67,8 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" width="87">
-          <template>
-            <span class="detail" @click='gotoDetail'>详情</span>
+          <template slot-scope="scope">
+            <span class="detail" @click='gotoDetail(scope.row.exam_exam_id)'>详情</span>
           </template>
         </el-table-column>
       </el-table>
@@ -88,20 +90,18 @@ export default {
       },
       rules: {
         exam_id: [
-          { required: false, message: '请选择考试类型', trigger: 'change' }
+          { required: true, message: '请选择考试类型', trigger: 'change' }
         ],
         subject_id: [
-          { required: false, message: '请选择课程', trigger: 'change' }
-        ]
+          { required: true, message: '请选择课程', trigger: 'change' }
+        ],
       },
-      tableData: []
     }
   },
   created() {
     this.examType()
     this.subject()
     this.getList()
-    console.log(this.list)
   },
   computed: {
     ...mapState({
@@ -114,11 +114,12 @@ export default {
     ...mapActions({
       examType: 'exams/examType',
       subject: 'exams/subject',
-      getList: 'exams/getList'
+      getList: 'exams/getList',
     }),
     // 点击跳转详情
-    gotoDetail(){
-      console.log(1)
+    gotoDetail(exam_exam_id){
+      // console.log(exam_exam_id)
+      this.$router.push({path:'detail' + '?id=' + exam_exam_id})
     },
     // 点击改变样式
     changeType(type) {
@@ -128,6 +129,20 @@ export default {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          // 转成毫秒
+        this.getList(this.info)
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
     }
   }
 }
@@ -135,6 +150,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .content:nth-child(1){
+    background: red;
+  display: flex;
+  }
 .wrapper {
   position: relative;
   width: 100%;

@@ -32,11 +32,8 @@ export function exam(data) {
 // 创建试题
 
 // 获取试题列表
-export function examlist() {
-  return request({
-    url: '/exam/exam',
-    method: 'get'
-  })
+export function examlist(data) {
+  return request.get('/exam/exam', { params: data })
 }
 
 // 获取试题列表
@@ -45,5 +42,13 @@ export function renewal(str, data) {
     url: '/exam/exam' + '/' + str,
     method: 'put',
     data
+  })
+}
+// exam/exam/w5tcy-g2dts
+// 获取详情
+export function detail(parmas) {
+  return request({
+    url: '/exam/exam' + '/' + parmas,
+    method: 'get'
   })
 }

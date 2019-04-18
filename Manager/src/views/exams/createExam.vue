@@ -65,18 +65,9 @@ export default {
         center: true,
         customClass:'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
         this.pageDetail.questions.splice(index,1)
         this.getQuestion()
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
+      })
     },
     async create() {
       // 要用exam_exam_id 的字符串
