@@ -66,7 +66,7 @@
         </el-table-column>
         <el-table-column label="操作" width="87">
           <template>
-            <span class="detail">详情</span>
+            <span class="detail" @click='gotoDetail'>详情</span>
           </template>
         </el-table-column>
       </el-table>
@@ -116,6 +116,10 @@ export default {
       subject: 'exams/subject',
       getList: 'exams/getList'
     }),
+    // 点击跳转详情
+    gotoDetail(){
+      console.log(1)
+    },
     // 点击改变样式
     changeType(type) {
       this.isIndex = type
@@ -204,5 +208,8 @@ export default {
   display: flex;
   justify-content: space-between;
   padding-bottom: 40px;
+}
+span{
+  cursor: pointer;
 }
 </style>
