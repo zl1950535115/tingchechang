@@ -16,28 +16,22 @@
       <div class="select">
         <P>请选择考试类型</P>
         <el-select slot="prepend" v-model="select" placeholder="请选择" class="sel">
-          <el-option label="周考1" value="1" />
-          <el-option label="周考2" value="2" />
-          <el-option label="周考3" value="3" />
-          <el-option label="月考" value="3" />
+          <el-option v-for="(item,index) in type" :key="index" :label="item.exam_name" :value="index" />
+
         </el-select>
       </div>
       <div class="select">
         <P>选择课程类型</P>
-        <el-select slot="prepend" v-model="select" placeholder="请选择" class="sel">
-          <el-option label="周考1" value="1" />
-          <el-option label="周考2" value="2" />
-          <el-option label="周考3" value="3" />
-          <el-option label="月考" value="3" />
+        <el-select slot="prepend" v-model="selects" placeholder="请选择" class="sel">
+          <el-option v-for="(item,index) in sub" :key="index" :label="item.subject_text" :value="index" />
+
         </el-select>
       </div>
       <div class="select">
         <P>选择题目类型</P>
-        <el-select slot="prepend" v-model="select" placeholder="请选择" class="sel">
-          <el-option label="周考1" value="1" />
-          <el-option label="周考2" value="2" />
-          <el-option label="周考3" value="3" />
-          <el-option label="月考" value="3" />
+        <el-select slot="prepend" v-model="selectd" placeholder="请选择" class="sel">
+          <el-option v-for="(item,index) in getQuestions" :key="index" :label="item.questions_type_text" :value="index" />
+
         </el-select>
       </div>
       <div class="textear">
@@ -55,6 +49,7 @@
 
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'MarkdownDemo',
   components: {
@@ -66,6 +61,8 @@ export default {
       input4: '',
       input5: '',
       select: '',
+      selects: '',
+      selectd: '',
       input10: '',
       content1: ''
     }
@@ -73,13 +70,28 @@ export default {
   computed: {
     language() {
       return this.languageTypeList[this.$store.getters.language]
-    }
+    },
+    ...mapState({
+      type: state => state.add.type,
+      sub: state => state.add.sub,
+      getQuestions: state => state.add.getQuestions
+    })
+  },
+  created() {
+    this.examType()
+    this.subject()
+    this.getQuestionsType()
   },
   methods: {
     getHtml() {
       this.html = this.$refs.markdownEditor.getHtml()
       console.log(this.html)
-    }
+    },
+    ...mapActions({
+      examType: 'add/examType',
+      subject: 'add/subject',
+      getQuestionsType: 'add/getQuestionsType'
+    })
   }
 }
 </script>

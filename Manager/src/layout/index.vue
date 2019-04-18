@@ -1,39 +1,35 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
+    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
-      <!-- 导航 -->
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
         <tags-view v-if="needTagsView" />
       </div>
-      <!--  二级路由区域 -->
       <app-main />
-      <!-- 悬浮设置菜单 -->
-      <!-- <right-panel v-if="showSettings">
+      <right-panel v-if="showSettings">
         <settings />
-      </right-panel> -->
+      </right-panel>
     </div>
   </div>
 </template>
 
 <script>
-// import RightPanel from '@/components/RightPanel'
-// import { Navbar, Sidebar, AppMain, TagsView, Settings } from './components'
-import { Navbar, Sidebar, AppMain } from './components'
+import RightPanel from '@/components/RightPanel'
+import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
-    // RightPanel,
+    AppMain,
     Navbar,
+    RightPanel,
+    Settings,
     Sidebar,
-    AppMain
-    // TagsView,
-    // Settings
+    TagsView
   },
   mixins: [ResizeMixin],
   computed: {
@@ -54,9 +50,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      generateRoutes: 'permission/generateRoutes'
+    }),
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
+  },
+  created() {
+    this.generateRoutes([])
   }
 }
 </script>

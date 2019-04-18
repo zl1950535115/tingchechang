@@ -25,7 +25,7 @@
           <el-button type="primary">重置</el-button>
         </div>
         <div class="content_table">
-          <el-table :data="studentlist" style="width: 100%" :header-cell-style="tableHeaderColor">
+          <el-table :data="studentlist.slice((currentpage-1)*pagesize,currentpage*pagesize)" style="width: 100%" :header-cell-style="tableHeaderColor">
             <el-table-column prop="student_name" label="姓名" width="150" />
             <el-table-column prop="student_id" label="学号" width="240" />
             <el-table-column prop="grade_name" label="班级" width="130" />
@@ -38,9 +38,8 @@
           <div class="block">
             <el-pagination
               :current-page.sync="currentPage3"
-              :page-size="10"
+              :page-size="pagesize"
               :total="studentlist.length"
-              @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
             />
           </div>
@@ -57,20 +56,6 @@ export default {
   name: 'ClassChart',
   data() {
     return {
-      tableData: [
-        {
-          date: '1610C'
-        },
-        {
-          date: '1610C'
-        },
-        {
-          date: '1610C'
-        },
-        {
-          date: '1610C'
-        }
-      ],
       options: [
         {
           value: '选项1',
@@ -92,7 +77,9 @@ export default {
           value: '选项5',
           label: '北京烤鸭'
         }
-      ]
+      ],
+      currentpage: 1,
+      pagesize: 10
     }
   },
   computed: {
@@ -111,6 +98,10 @@ export default {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`)
+      this.currentpage = val
     }
   }
 }
@@ -122,7 +113,6 @@ export default {
   flex-direction: column;
   position: relative;
   width: 100%;
-  height: calc(100vh - 84px);
   background: #f0f2f5;
 }
 h2 {
