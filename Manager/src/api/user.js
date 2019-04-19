@@ -6,6 +6,14 @@ export function login(data) {
     data
   })
 }
+
+export function logout() {
+  return request({
+    url: '/user/logout',
+    method: 'post'
+  })
+}
+
 // 获取用户信息
 export function getInfo() {
   return request({

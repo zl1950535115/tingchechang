@@ -51,11 +51,6 @@ import markRouter from './modules/mark'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  questionsRouter,
-  usersRouter,
-  examsRouter,
-  classesRouter,
-  markRouter,
   {
     path: '/redirect',
     component: Layout,
@@ -131,6 +126,11 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  questionsRouter,
+  usersRouter,
+  examsRouter,
+  classesRouter,
+  markRouter,
   // {
   //   path: '/permission',
   //   component: Layout,

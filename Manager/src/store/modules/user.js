@@ -30,6 +30,10 @@ const mutations = {
   // 设置用户信息请
   SET_USERINFO: (state, paylpoad) => {
     state.userInfo = paylpoad
+  },
+  // 设置用户权限
+  SET_VIEWAUTHORITY: (state, paylpoad) => {
+    state.viewAuthority = paylpoad
   }
 }
 
@@ -51,7 +55,11 @@ const actions = {
   // 获取用户权限
   async getViewAuthority({ commit }, paylpoad) {
     var data = await getViewAuthority()
-    return data.data
+    if (data.code === 1) {
+      commit('SET_VIEWAUTHORITY', data.data)
+      return data.data
+    }
+    return []
   },
   // remove token
   resetToken({ commit }) {
@@ -63,6 +71,20 @@ const actions = {
     })
   },
 
+  // user logout
+  logout({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      logout(state.token).then(() => {
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        removeToken()
+        resetRouter()
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   // Dynamically modify permissions
   changeRoles({ commit, dispatch }, role) {
     return new Promise(async resolve => {

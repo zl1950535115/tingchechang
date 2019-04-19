@@ -34,8 +34,8 @@ router.beforeEach(async(to, from, next) => {
           // 获取用户权限
           const viewAuthority = await store.dispatch('user/getViewAuthority')
           console.log('权限信息...', viewAuthority)
-          // generate accessible routes map based on roles
-          // const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          // 通过权限生成路由
+          await store.dispatch('permission/generateRoutes', viewAuthority)
 
           // dynamically add accessible routes
           // router.addRoutes(accessRoutes)
