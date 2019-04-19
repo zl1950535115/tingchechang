@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getViewAuthority } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -27,8 +27,13 @@ const mutations = {
   SET_ROLES: (state, roles) => {
     state.roles = roles
   },
-  SET_USERINFO: (state, userInfo) => {
-    state.userInfo = userInfo
+  // 设置用户信息请
+  SET_USERINFO: (state, paylpoad) => {
+    state.userInfo = paylpoad
+  },
+  // 设置用户权限
+  SET_VIEWAUTHORITY: (state, paylpoad) => {
+    state.viewAuthority = paylpoad
   }
 }
 
@@ -36,17 +41,34 @@ const actions = {
   // user login 登录接口
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
-    const res = await login({ user_name: username, user_pwd: password })
+    var res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
     return res
   },
 
-  // get user info
-  async getInfo({ commit }) {
-    const data = await getInfo()
-    console.log('data...', data)
+  // 获取用户信息
+  async getInfo({ commit, state }) {
+    var data = await getInfo()
     commit('SET_USERINFO', data.data)
     return data.data
+  },
+  // 获取用户权限
+  async getViewAuthority({ commit }, paylpoad) {
+    var data = await getViewAuthority()
+    if (data.code === 1) {
+      commit('SET_VIEWAUTHORITY', data.data)
+      return data.data
+    }
+    return []
+  },
+  // remove token
+  resetToken({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      resolve()
+    })
   },
 
   // user logout
@@ -63,17 +85,6 @@ const actions = {
       })
     })
   },
-
-  // remove token
-  resetToken({ commit }) {
-    return new Promise(resolve => {
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      removeToken()
-      resolve()
-    })
-  },
-
   // Dynamically modify permissions
   changeRoles({ commit, dispatch }, role) {
     return new Promise(async resolve => {

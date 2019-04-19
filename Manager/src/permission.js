@@ -23,33 +23,24 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       // determine whether the user has obtained his permission roles through getInfo
-    //   const hasRoles = store.getters.roles && store.getters.roles.length > 0
       const userInfo = store.getters.userInfo
-      //   判断是否获取过用户信息，如果有就不再获取，如果没有就第一次获取
       if (userInfo.user_name) {
         next()
       } else {
         try {
-          // get user info
-          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-        //   如果没有用户信息就去获取用户信息
+          // 获取用户信息
           const userInfo = await store.dispatch('user/getInfo')
-          console.log('userInfo...', userInfo)
-          //   通过身份获取权限
-
+          console.log('用户信息...', userInfo)
+          // 获取用户权限
+          const viewAuthority = await store.dispatch('user/getViewAuthority')
+          console.log('权限信息...', viewAuthority)
           // 通过权限生成路由
-          await store.dispatch('permission/generateRoutes', [])
-          //   // generate accessible routes map based on roles
-          //   const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          const accessRoutes = await store.dispatch('permission/generateRoutes', viewAuthority)
+          // 实现动态路由转为静态路由
+          router.addRoutes(accessRoutes)
 
-          //   // dynamically add accessible routes
-          //   router.addRoutes(accessRoutes)
-
-          //   // hack method to ensure that addRoutes is complete
-          //   // set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
         } catch (error) {
-          console.log('error', error)
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')

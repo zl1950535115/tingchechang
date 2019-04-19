@@ -42,3 +42,37 @@ export function addApi(data) {
     params: {...data}
   })
 }
+export function addView(data) {
+  return request({
+    url: '/user/view_authority',
+    method: 'get',
+    params: {...data}
+  })
+}
+export function addView_person(data) {
+  return request({
+    url: '/user/authorityView/edit',
+    method: 'get',
+    params: {...data}
+  })
+}
+export function api_authorityList() {
+  return request({
+    url: '/user/api_authority',
+    method: 'get',
+  })
+}
+export function personApi(data) {
+  return request({
+    url: '/user/setIdentityApi',
+    method: 'post',
+    data:{...data}
+  })
+}
+export function viewaddApi(data) {
+  return request({
+    url: '/user/setIdentityView',
+    method: 'post',
+    data:{...data}
+  })
+}

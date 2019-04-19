@@ -14,22 +14,22 @@ const usersRouter = {
   children: [{
     path: 'addTheTest',
     component: () =>
-                import('@/views/exams/addTheTest'),
+      import('@/views/exams/addTheTest'),
     name: 'AddTheTest',
-    meta: { title: 'addTheTest', noCache: true }
+    meta: { title: 'addTheTest', noCache: true, view_id: 'main-addExam' }
   },
   {
     path: 'examinationPaperList',
     component: () =>
-                import('@/views/exams/examinationPaperList'),
+      import('@/views/exams/examinationPaperList'),
     name: 'ExaminationPaperList',
-    meta: { title: 'examinationPaperList', noCache: true }
+    meta: { title: 'examinationPaperList', noCache: true, view_id: 'main-addQuestions' }
   },
   {
     path: 'detail',
     hidden: true,
     component: () =>
-                import('@/views/exams/detail'),
+      import('@/views/exams/detail'),
     name: 'detail',
     meta: { title: 'detail', noCache: true }
   },
@@ -37,7 +37,7 @@ const usersRouter = {
     path: 'createExam',
     hidden: true,
     component: () =>
-                import('@/views/exams/createExam'),
+      import('@/views/exams/createExam'),
     name: 'createExam',
     meta: { title: 'createExam', noCache: true }
   }
