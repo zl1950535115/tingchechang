@@ -33,7 +33,7 @@ const actions = {
   async getroom({ commit }, payload) {
     const data = await getRoom(payload, 'get')
     commit('updataState', { room: data.data })
-    console.log(data)
+    // console.log(data)
   },
 
   // 添加教室
