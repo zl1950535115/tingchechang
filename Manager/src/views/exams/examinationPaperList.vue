@@ -2,26 +2,32 @@
   <div class="wrapper">
     <p class="text">试卷列表</p>
     <div class="content">
-      <div class="from">
-        <span class="one">考试类型:</span>
-        <el-select v-model="search.type" class="select">
-          <el-option label="周考1" value="zhoukao1" />
-          <el-option label="周考2" value="zhoukao2" />
-          <el-option label="周考3" value="zhoukao3" />
-          <el-option label="月考" value="yuekao" />
-        </el-select>
-        <span>课程:</span>
-        <el-select v-model="search.course" class="select">
-          <el-option label="周考1" value="zhoukao1" />
-          <el-option label="周考2" value="zhoukao2" />
-          <el-option label="周考3" value="zhoukao3" />
-          <el-option label="月考" value="yuekao" />
-        </el-select>
-        <el-button class="btn" type="primary">
-          <i class="el-icon-search" />
-          查询
-        </el-button>
-      </div>
+        <el-form :inline="true" ref="info" :model="info" :rules="rules" class="demo-form-inline">
+          <el-form-item class="babels" label="考试类型:" prop="exam_id">
+              <el-select v-model="info.exam_id" class="select" style="width: 150px;">
+                  <el-option
+                  v-for='( item, index) in examTypeList'
+                  :key="item.exam_id"
+                  :label="item.exam_name"
+                  :value="item.exam_id" />
+              </el-select>
+            </el-form-item>
+          <el-form-item class="babels" label="课程:" prop="subject_id">
+              <el-select v-model="info.subject_id" class="select" style="width: 150px;">
+                <el-option 
+                v-for='( item, index) in subjectList' 
+                :key="item.subject_id"
+                :label="item.subject_text"
+                :value="item.subject_id" />
+              </el-select>
+            </el-form-item>
+          <el-form-item>
+              <el-button class="btn" type="primary" @click="submitForm('info')" >
+                  <i class="el-icon-search" />
+                  查询
+                </el-button>
+          </el-form-item>
+        </el-form>
     </div>
     <div class="content">
       <div class="nav">
@@ -32,23 +38,23 @@
           </span>
         </div>
       </div>
-      <el-table :data="tableData" :header-cell-style="tableHeaderColor" style="width: 100%">
+      <el-table :data="list" :header-cell-style="tableHeaderColor" style="width: 100%">
         <el-table-column label="试卷信息">
           <template slot-scope="scope">
-            <p>{{ scope.row.date }}</p>
-            <p>123</p>
+            <p>{{scope.row.title}}</p>
+            <p>考试时间:{{0}} {{scope.row.number}}道题{{scope.row.status}}分</p>
           </template>
         </el-table-column>
         <el-table-column label="班级">
           <template slot-scope="scope">
-            <p>{{ scope.row.name }}</p>
-            <p>{{ scope.row.name }}</p>
+            <p>教室班级</p>
+            <p><span v-for="(item, index) in scope.row.grade_name">{{item}}</span></p>
           </template>
         </el-table-column>
         <el-table-column label="创建人">
-          <template :width="flexColumnWidth(column)">
-            <span>详情</span>
-          </template>
+            <template slot-scope="scope">
+                <p>{{ scope.row.user_name }}</p>
+              </template>
         </el-table-column>
         <el-table-column label="开始时间">
           <template>
@@ -61,8 +67,8 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" width="87">
-          <template>
-            <span class="detail">详情</span>
+          <template slot-scope="scope">
+            <span class="detail" @click='gotoDetail(scope.row.exam_exam_id)'>详情</span>
           </template>
         </el-table-column>
       </el-table>
@@ -78,15 +84,43 @@ export default {
     return {
       spanList: ['全部', '进行中', '已结束'],
       isIndex: '',
-      search: {
-        type: '',
-        course: ''
+      info: {
+        exam_id: '',
+        subject_id: ''
       },
-      tableData: []
+      rules: {
+        exam_id: [
+          { required: true, message: '请选择考试类型', trigger: 'change' }
+        ],
+        subject_id: [
+          { required: true, message: '请选择课程', trigger: 'change' }
+        ],
+      },
     }
   },
+  created() {
+    this.examType()
+    this.subject()
+    this.getList()
+  },
+  computed: {
+    ...mapState({
+      examTypeList: state => state.exams.examTypeList,
+      subjectList: state => state.exams.subjectList,
+      list: state => state.exams.list
+    })
+  },
   methods: {
-  
+    ...mapActions({
+      examType: 'exams/examType',
+      subject: 'exams/subject',
+      getList: 'exams/getList',
+    }),
+    // 点击跳转详情
+    gotoDetail(exam_exam_id){
+      // console.log(exam_exam_id)
+      this.$router.push({path:'detail' + '?id=' + exam_exam_id})
+    },
     // 点击改变样式
     changeType(type) {
       this.isIndex = type
@@ -95,6 +129,20 @@ export default {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          // 转成毫秒
+        this.getList(this.info)
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
     }
   }
 }
@@ -102,6 +150,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .content:nth-child(1){
+    background: red;
+  display: flex;
+  }
 .wrapper {
   position: relative;
   width: 100%;
@@ -109,6 +161,7 @@ export default {
   background: #f0f2f5;
   padding: 24px;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 .text {
   line-height: 0;
@@ -174,5 +227,8 @@ export default {
   display: flex;
   justify-content: space-between;
   padding-bottom: 40px;
+}
+span{
+  cursor: pointer;
 }
 </style>

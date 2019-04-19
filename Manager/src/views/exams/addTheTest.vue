@@ -20,16 +20,16 @@
         <el-form-item class="babels" label="选择课程" prop="subject_id">
           <br>
           <el-select v-model="info.subject_id" class="select" style="width: 150px;">
-              <el-option 
-              v-for='( item, index) in subjectList' 
-              :key="item.subject_id"
-              :label="item.subject_text"
-              :value="item.subject_id" />
+            <el-option 
+            v-for='( item, index) in subjectList' 
+            :key="item.subject_id"
+            :label="item.subject_text"
+            :value="item.subject_id" />
           </el-select>
         </el-form-item>
         <el-form-item class="babels" label="设置题量" prop="number">
           <br>
-          <el-input-number v-model="info.number" style="width: 90px" controls-position="right" :min="4" :max="10" />
+          <el-input-number v-model="info.number" style="width: 90px" controls-position="right" :min="3" :max="10" />
         </el-form-item>
         <el-form-item class="babels" label="考试时间" required>
           <br>
