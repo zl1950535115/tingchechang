@@ -117,6 +117,14 @@
     background: #f0f2f5;
     cursor: pointer;
   }
+  @keyframes fade-in {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 40%;
+  }
+}
   .title{
     padding: 10px;
   }
@@ -136,6 +144,8 @@
     background-color: rgba(0, 0, 0, 0.65);
   }
   .add-drawer-right {
+    animation: fade-in;
+    animation-duration: 0.3s;
     width: 40%;
     height: 100%;
     position: relative;
