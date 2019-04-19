@@ -32,20 +32,21 @@
     </div>
     <div class="bottombox">
       <div class="bottomlittle">
-        <div v-if="cond!==''">
+        <div v-if="cond!==''" class="boxtt">
           <!-- <router-link :to="{path:'detial'}"> -->
-          <div v-for="(item,index) in cond" :key="index" class="childrenbox" @click="detial(item)">
-            <p class="stem">{{ item.title }}</p>
-            <div class="text">
-              <span class="type_text">{{ item.questions_type_text }}</span>
-              <span class="subject_text">{{ item.subject_text }}</span>
-              <span class="exam_name">{{ item.exam_name }}</span>
+          <div v-for="(item,index) in cond" :key="index" class="childrenbox">
+            <div @click="detial(item)">
+              <p class="stem">{{ item.title }}</p>
+              <div class="text">
+                <span class="type_text">{{ item.questions_type_text }}</span>
+                <span class="subject_text">{{ item.subject_text }}</span>
+                <span class="exam_name">{{ item.exam_name }}</span>
+              </div>
+              <p class="name">{{ item.user_name }} 发布</p>
             </div>
-            <p class="name">{{ item.user_name }} 发布</p>
-            <!-- <router-link :to="{path:'addItem'}"> -->
-            <div class="abs" @click="write">编辑</div>
-            <!-- </router-link> -->
+            <div class="abs" @click="write(item)">编辑</div>
           </div>
+
         </div>
         <div v-if="cond == ''">
           <div class="elsechildrenbox">
@@ -126,8 +127,8 @@ export default {
     detial(item) {
       this.$router.push({ path: 'detial', query: { list: item.questions_id }})
     },
-    write() {
-
+    write(item) {
+      this.$router.push({ path: 'addItem', query: { list: item.questions_id }})
     }
   }
 
@@ -219,13 +220,15 @@ export default {
         margin-top: 20px;
     }
     .childrenbox {
-        width: 1605px;
-        height: 115px;
+        width: 100%;
+        height: 150px;
         border-bottom: 1px solid #eee;
         position: relative;
         font-size: 14px;
         margin: 0;
         cursor: pointer;
+        display: flex;
+        justify-content: space-between;
     }
     .elsechildrenbox {
     text-align: center;
@@ -239,13 +242,15 @@ export default {
         background: #eae8ee;
     }
     .abs {
-        width: 40px;
-        height: 30px;
-        position: absolute;
+        width: 100px;
+        height: 100px;
+        /* position: absolute;
         right: 30px;
-        top: 50%;
-        margin-top: -15px;
+        top: 20px; */
+         text-align: center;
+         line-height: 100px;
         color: blue;
+        z-index: 9999;
     }
     .stem {
         padding: 15px 0;
@@ -275,4 +280,5 @@ export default {
         border: 1px solid #ffd591;
         font-size: 12px;
     }
+
 </style>

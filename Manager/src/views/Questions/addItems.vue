@@ -80,15 +80,28 @@ export default {
       type: state => state.add.type,
       sub: state => state.add.sub,
       getQuestions: state => state.add.getQuestions,
-      user: state => state.add.user
+      user: state => state.add.user,
+      newquesition: state => state.add.newquesition
     })
   },
   created() {
     this.examType()
     this.subject()
     this.getQuestionsType()
-    console.log(this.user)
     this.userIfo()
+    this.questionsnew()
+    const list = this.$route.query.list
+    console.log(list)
+    this.newquesition.forEach(item => {
+      if (list === item.questions_id) {
+        this.select = item.exam_name
+        this.el.questions_stem = item.questions_stem
+        this.selects = item.subject_text
+        this.selectd = item.questions_type_text
+        this.el.questions_answer = item.questions_answer
+        this.el.title = item.title
+      }
+    })
   },
   methods: {
     Type(e) {
@@ -109,7 +122,8 @@ export default {
       subject: 'add/subject',
       getQuestionsType: 'add/getQuestionsType',
       questions: 'add/questions',
-      userIfo: 'add/userIfo'
+      userIfo: 'add/userIfo',
+      questionsnew: 'add/questionsnew'
     }),
     submit() {
       if (this.el.title && this.el.questions_stem && this.el.questions_answer) {
