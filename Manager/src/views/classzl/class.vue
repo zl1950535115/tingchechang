@@ -14,7 +14,7 @@
             <el-table-column prop="xiugai" label="操作">
               <template slot-scope="scope">
                 <a style="color: #0139FD;" @click="showModal(scope.row)">修改</a>|
-                <a style="color: #0139FD;">删除</a>
+                <a style="color: #0139FD;" @click="deletegrade(scope.row.grade_id)">删除</a>
               </template>
             </el-table-column>
           </el-table>
@@ -48,11 +48,11 @@
               :disabled="true"
             />
             <el-form-item label="教室号：" prop="region" style="margin-left:-20px" />
-            <el-select v-model="region_text" placeholder="请选择教室号" style="width:100%;">
+            <el-select v-model="roomId" placeholder="请选择教室号" style="width:100%;">
               <el-option v-for="(item,index) in room" :key="index" :label="item.room_text" :value="item.room_id" />
             </el-select>
             <el-form-item label="课程名：" prop="course" style="margin-left:-20px" />
-            <el-select v-model="course_text" placeholder="课程名" style="width:100%;">
+            <el-select v-model="subjectId" placeholder="课程名" style="width:100%;">
               <el-option v-for="(item,index) in subject" :key="index" :label="item.subject_text" :value="item.subject_id" />
             </el-select>
           </el-form>
@@ -91,8 +91,9 @@ export default {
         ]
       },
       input: '',
-      region_text: '',
-      course_text: ''
+      roomId: '',
+      subjectId: '',
+      gradeId: ''
     }
   },
   computed: {
@@ -112,7 +113,9 @@ export default {
       getgrade: 'classmanagement/getgrade',
       getroom: 'classmanagement/getroom',
       getsubject: 'classmanagement/getsubject',
-      set_grade: 'classmanagement/set_grade'
+      set_grade: 'classmanagement/set_grade',
+      update_grade: 'classmanagement/update_grade',
+      delete_grade: 'classmanagement/delete_grade'
     }),
     // 头部颜色
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
@@ -132,12 +135,23 @@ export default {
     showModal(row) {
       this.modal = true
       this.input = row.grade_name
-      this.region_text = row.room_text
-      this.course_text = row.subject_text
-      console.log(row)
+      this.roomId = row.room_id
+      this.subjectId = row.subject_id
+      this.gradeId = row.grade_id
+      // console.log(row)
     },
-    addgrade() {
+    // 修改班级
+    async addgrade() {
       this.modal = false
+      // console.log(this.input, this.roomId, this.subjectId, this.gradeId)
+      await this.update_grade({ grade_id: this.gradeId, grade_name: this.input, subject_id: this.ubjectId, room_id: this.roomId })
+      await this.getgrade()
+    },
+    // 删除班级
+    async deletegrade(id) {
+      console.log(id)
+      await this.delete_grade({ grade_id: id })
+      await this.getgrade()
     }
   }
 }
