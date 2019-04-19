@@ -102,7 +102,7 @@ export default {
 
     .little-box {
         width: 95%;
-        height: 80%;
+        height: 75%;
         background: #fff;
         margin: 0 auto;
         margin-bottom: 10px;
@@ -123,32 +123,45 @@ export default {
     }
 
     .head {
-        display: flex;
-        justify-content: space-around;
+         display: flex;
         height: 45px;
         align-items: center;
         background: #ccc;
         width: 95%;
         margin: 0 auto;
     }
-
+      .head span{
+        display:block;
+        width: 33%;
+        text-align: center;
+       }
     .count {
         width: 95%;
+        height: 100%;
         margin: 0 auto;
+
     }
 
     .count-text {
         text-align: center;
         display: flex;
-        justify-content: space-around;
-        height: 45px;
+        align-content: center;
+        height: 10%;
         align-items: center;
         width: 100%;
         margin: 0 auto;
         border-bottom: 1px solid #ccc;
     }
-
+    .count-text span{
+      display:block;
+        width: 33%;
+        text-align: center;
+    }
     .count-text:hover {
         background: #ccc;
+    }
+    .table{
+      width: 100%;
+      height: 100%;
     }
 </style>
