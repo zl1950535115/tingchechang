@@ -3,7 +3,7 @@
     <p class="text">试卷列表</p>
     <div class="content">
         <el-form :inline="true" ref="info" :model="info" :rules="rules" class="demo-form-inline">
-          <el-form-item class="babels" label="考试类型:" prop="exam_id">
+          <el-form-item class="babels" label="考试类型:" prop="exam_id" required>
               <el-select v-model="info.exam_id" class="select" style="width: 150px;">
                   <el-option
                   v-for='( item, index) in examTypeList'
@@ -12,7 +12,7 @@
                   :value="item.exam_id" />
               </el-select>
             </el-form-item>
-          <el-form-item class="babels" label="课程:" prop="subject_id">
+          <el-form-item class="babels" label="课程:" prop="subject_id" required>
               <el-select v-model="info.subject_id" class="select" style="width: 150px;">
                 <el-option 
                 v-for='( item, index) in subjectList' 
@@ -48,7 +48,7 @@
         <el-table-column label="班级">
           <template slot-scope="scope">
             <p>教室班级</p>
-            <p><span v-for="(item, index) in scope.row.grade_name">{{item}}</span></p>
+            <p><span v-for="(item, index) in scope.row.grade_name">{{item}}      </span></p>
           </template>
         </el-table-column>
         <el-table-column label="创建人">
