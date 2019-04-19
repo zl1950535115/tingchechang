@@ -35,10 +35,10 @@ router.beforeEach(async(to, from, next) => {
           const viewAuthority = await store.dispatch('user/getViewAuthority')
           console.log('权限信息...', viewAuthority)
           // 通过权限生成路由
-          await store.dispatch('permission/generateRoutes', viewAuthority)
+          const accessRoutes = await store.dispatch('permission/generateRoutes', viewAuthority)
+          // 实现动态路由转为静态路由
+          router.addRoutes(accessRoutes)
 
-          // dynamically add accessible routes
-          // router.addRoutes(accessRoutes)
           next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
