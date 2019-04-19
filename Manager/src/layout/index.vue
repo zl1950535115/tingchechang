@@ -50,15 +50,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      generateRoutes:'permission/generateRoutes'
-    }),
+    // ...mapActions({
+    //   generateRoutes:'permission/generateRoutes'
+    // }),
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
   },
   created() {
-    this.generateRoutes([])
+    // this.generateRoutes([])
   },
 }
 </script>

@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-
 export function login(data) {
   return request({
     url: '/user/login',
@@ -7,19 +6,18 @@ export function login(data) {
     data
   })
 }
-
-export function getInfo(token) {
+// 获取用户信息
+export function getInfo() {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/user/userInfo',
+    method: 'get'
   })
 }
-
-export function logout() {
+// 获取用户权限
+export function getViewAuthority() {
   return request({
-    url: '/user/logout',
-    method: 'post'
+    url: '/user/view_authority',
+    method: 'get'
   })
 }
 
