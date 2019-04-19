@@ -68,7 +68,7 @@
         <el-select v-model="user_view_id" class="select" @change="selectviewtwo" placeholder="请选择视图权限id">
           <el-option v-for="(item,index) in viewList" :key="index" :label="item.view_authority_text" :value="index" />
         </el-select>
-        <div class="confim"><el-button type="primary" class="success" @click="addview">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="addview">确定</el-button><el-button class="reset" plain @click="returns">重置</el-button></div>
       </div>
     </div>
   </div>
@@ -218,7 +218,6 @@ export default {
       }
     },
     apiadds(){
-      console.log('确定')
       if(this.api_name==""||this.api_url==""||this.api_fun==""){
         this.$message.error('不可以为空')
       }else{
@@ -278,6 +277,7 @@ export default {
       }else{
         this.viewaddApi({identity_id:this.view_api_select,view_authority_id:this.view_api_two_select})
         .then(()=>{
+
           if(this.perSonCode==1){
             this.$message({message: '添加成功',type: 'success'})
           }else{
@@ -285,6 +285,9 @@ export default {
           }
         })
       }
+    },
+    returns(){
+      this.user_view_manger=""
     }
   }
 }

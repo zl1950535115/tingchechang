@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getViewAuthority } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  userInfo: {}
 }
 
 const mutations = {
@@ -25,6 +26,14 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  // 设置用户信息请
+  SET_USERINFO: (state, paylpoad) => {
+    state.userInfo = paylpoad
+  },
+  // 设置用户权限
+  SET_VIEWAUTHORITY: (state, paylpoad) => {
+    state.viewAuthority = paylpoad
   }
 }
 
@@ -32,36 +41,33 @@ const actions = {
   // user login 登录接口
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
-    const res = await login({ user_name: username, user_pwd: password })
+    var res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
     return res
   },
 
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const { roles, name, avatar, introduction } = data
-
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
-
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
+  // 获取用户信息
+  async getInfo({ commit, state }) {
+    var data = await getInfo()
+    commit('SET_USERINFO', data.data)
+    return data.data
+  },
+  // 获取用户权限
+  async getViewAuthority({ commit }, paylpoad) {
+    var data = await getViewAuthority()
+    if (data.code === 1) {
+      commit('SET_VIEWAUTHORITY', data.data)
+      return data.data
+    }
+    return []
+  },
+  // remove token
+  resetToken({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      resolve()
     })
   },
 
@@ -79,17 +85,6 @@ const actions = {
       })
     })
   },
-
-  // remove token
-  resetToken({ commit }) {
-    return new Promise(resolve => {
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      removeToken()
-      resolve()
-    })
-  },
-
   // Dynamically modify permissions
   changeRoles({ commit, dispatch }, role) {
     return new Promise(async resolve => {

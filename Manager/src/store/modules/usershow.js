@@ -5,13 +5,15 @@ const state={
   userperson:'', //身份数据
   apilist:'', // api列表
   Viewlist:'', // 视图权限列表接口
-  view_person_list:'' // 用户与权限的关系列表
+  view_person_list:'', // 用户与权限的关系列表
+  loading0:true
 }
 const actions={
   userlist({commit},payload){   //获取第一个表格的数据
     return new Promise((res,rej)=>{
       Userlist().then((result)=>{
         state.username=result.data
+        state.loading0=false
         res()
       })
     })

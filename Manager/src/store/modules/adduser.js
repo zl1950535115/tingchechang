@@ -13,7 +13,7 @@ const state={
     perSonCode:'' // 身份设置视图权限code码
 }
 const actions={
-  userdata({commit}){
+  userdata(commit){
     return new Promise((res,rej)=>{
       userData().then(result=>{
         if(result){
