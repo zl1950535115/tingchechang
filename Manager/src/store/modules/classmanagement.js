@@ -1,4 +1,4 @@
-import { getGrade, getRoom, deleteRoom, getStudent, getSubject, updateGrade, deleteGrade } from '@/api/classroom'
+import { getGrade, getRoom, deleteRoom, getStudent, getSubject, updateGrade, deleteGrade, deleteStudent } from '@/api/classroom'
 
 const state = {
   // 全部班级
@@ -76,6 +76,13 @@ const actions = {
   // 删除班级信息
   async delete_grade({ commit }, payload) {
     const data = await deleteGrade(payload)
+    console.log(data)
+  },
+
+  // 删除学生信息
+  async delete_student({ commit }, payload) {
+    console.log(payload)
+    const data = await deleteStudent(payload)
     console.log(data)
   }
 }

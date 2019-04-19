@@ -60,3 +60,11 @@ export function updateGrade(params) {
     data: params
   })
 }
+
+// 删除学生信息
+export function deleteStudent(params) {
+  return request({
+    url: '/manger/student/' + params,
+    method: 'delete'
+  })
+}

@@ -21,7 +21,7 @@
               :value="item.grade_name"
             />
           </el-select>
-          <el-button type="primary">搜索</el-button>
+          <el-button type="primary" @click="search(input)">搜索</el-button>
           <el-button type="primary">重置</el-button>
         </div>
         <div class="content_table">
@@ -36,7 +36,7 @@
                 <el-button
                   size="mini"
                   type="danger"
-                  @click="handleDelete(scope.row)"
+                  @click="handleDelete(scope.row.student_id)"
                 >删除</el-button>
               </template>
             </el-table-column>
@@ -75,37 +75,54 @@ export default {
   },
   computed: {
     ...mapState({
-      studentlist: state => state.classmanagement.studentlist,
-      grade: state => state.classmanagement.grade,
-      room: state => state.classmanagement.room
+      studentlist: state => state.classmanagement.studentlist, // 获取全部的学生信息
+      grade: state => state.classmanagement.grade, // 获取班级信息
+      room: state => state.classmanagement.room // 获取教室信息
     })
   },
+  // 初始渲染数据
   async created() {
     await this.getstudent()
     this.getgrade()
     this.getroom()
     this.list_size = this.studentlist.length
+    // 初始分页渲染数据
     this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
   },
   methods: {
     ...mapActions({
       getstudent: 'classmanagement/getstudent',
       getgrade: 'classmanagement/getgrade',
-      getroom: 'classmanagement/getroom'
+      getroom: 'classmanagement/getroom',
+      delete_student: 'classmanagement/delete_student'
     }),
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
     },
+    // 分页器
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`)
       this.currentpage = val
       this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+    },
+    // 删除学生信息
+    async handleDelete(id) {
+      await this.delete_student(id)
+      await this.getstudent()
+      this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+    },
+    search(value) {
+      // console.log(value)
+      if (!value) {
+        this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+      } else {
+        this.list = this.studentlist.filter((item, index) => {
+          return item.student_name.match(value)
+        })
+      }
     }
-    // handleDelete(value) {
-    //   console.log(value)
-    // }
   }
 }
 </script>
