@@ -114,7 +114,6 @@ export default {
       this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
     },
     search(value) {
-      // console.log(value)
       if (!value) {
         this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
       } else {
