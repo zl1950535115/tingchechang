@@ -42,3 +42,10 @@ export const questions = data => {
 export const condition = params => {
   return request.get('/exam/questions/condition', { params })
 }
+
+export function questionsnew() {
+  return request({
+    url: '/exam/questions/new',
+    method: 'get'
+  })
+}

@@ -34,7 +34,7 @@
       <div class="bottomlittle">
         <div v-if="cond!==''">
           <!-- <router-link :to="{path:'detial'}"> -->
-          <div v-for="(item,index) in cond" :key="index" class="childrenbox">
+          <div v-for="(item,index) in cond" :key="index" class="childrenbox" @click="detial(item)">
             <p class="stem">{{ item.title }}</p>
             <div class="text">
               <span class="type_text">{{ item.questions_type_text }}</span>
@@ -42,9 +42,9 @@
               <span class="exam_name">{{ item.exam_name }}</span>
             </div>
             <p class="name">{{ item.user_name }} 发布</p>
-            <router-link :to="{path:'addItem'}">
-              <div class="abs">编辑</div>
-            </router-link>
+            <!-- <router-link :to="{path:'addItem'}"> -->
+            <div class="abs" @click="write">编辑</div>
+            <!-- </router-link> -->
           </div>
         </div>
         <div v-if="cond == ''">
@@ -76,29 +76,7 @@ export default {
         exam_id: '',
         questions_type_id: ''
       },
-      subjec: '',
-      options: [{
-        subject_text: 'javaScript上',
-        exam_name: '周考1',
-        user_name: 'w916peach',
-        questions_type_text: '简答题',
-        questions_stem: '什么是闭包？',
-        questions_answer: '声明在函数内部的函数'
-      }, {
-        subject_text: 'javaScript上',
-        exam_name: '月考',
-        user_name: 'w916peach',
-        questions_type_text: '代码补全',
-        questions_stem: '机器人归为',
-        questions_answer: '声明在函数内部的函数'
-      }, {
-        subject_text: 'node基础',
-        exam_name: '周考1',
-        user_name: 'dingshaoshan',
-        questions_type_text: '代码补全',
-        questions_stem: '解构赋值和数组的map方法',
-        questions_answer: '声明在函数内部的函数'
-      }]
+      subjec: ''
     }
   },
   computed: {
@@ -144,6 +122,12 @@ export default {
         subject_id: this.subjec,
         exam_id: this.el.exam_id
       })
+    },
+    detial(item) {
+      this.$router.push({ path: 'detial', query: { list: item.questions_id }})
+    },
+    write() {
+
     }
   }
 
