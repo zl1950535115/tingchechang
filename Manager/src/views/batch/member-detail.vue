@@ -3,13 +3,13 @@
     <h2 class="tit">阅卷</h2>
     <div class="main">
       <div class="main_left">
-        <div v-for="(item,index) in StudentDetails.questions" :key="index" class="item_exam">
+        <div v-for="(item,index) in StudentDetails?StudentDetails.questions:[]" :key="index" class="item_exam">
           <p>{{ index + 1 }}、{{ item.title }}<span class="type_text">{{ item.questions_type_text }}</span></p>
           <p>{{ item.questions_stem }}</p>
         </div>
       </div>
       <div class="main_right">
-        <h2 class="name">{{ StudentDetails.student_name }}</h2>
+        <h2 class="name">{{ StudentDetails?StudentDetails.student_name:"" }}</h2>
         <div class="score">
           <p>得分:</p>
           <h1>{{ score }}</h1>
@@ -41,7 +41,9 @@ export default {
   },
   created() {
     // this.exam_student_id =
-    this.getStudentDetail(this.$route.query.exam_student_id)
+    this.getStudentDetail({
+      exam_student_id: this.$route.query.exam_student_id
+    })
   },
   methods: {
     open() {

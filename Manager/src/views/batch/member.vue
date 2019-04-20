@@ -24,7 +24,7 @@
         </el-select>
       </div>
       <div class="box_top_button">
-        <el-button class="button" type="submit" icon="el-icon-search">查询</el-button>
+        <el-button class="button" type="submit" icon="el-icon-search" @click="inquire">查询</el-button>
       </div>
     </div>
     <div class="box_bottom">
@@ -91,7 +91,8 @@ export default {
       classvalue: '',
       currentPage4: 1,
       currentPage: 1,
-      pagesize: 5
+      pagesize: 5,
+      newData: []
     }
   },
   computed: {
@@ -100,10 +101,14 @@ export default {
       classLists: state => state.batchStore.classLists
     })
   },
+  watch: {
+
+  },
   created() {
     this.getStudentListData({
       grade_id: this.$route.query.id
     })
+    this.newData = this.StudentListDatas
   },
   methods: {
     ...mapActions({
@@ -117,6 +122,12 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentPage = val
+    },
+    inquire() {
+      this.newData = this.StudentListDatas.filter((item, index) => {
+        return item.grade_id.match(this.classvalue)
+      })
+      console.log(this.newData)
     }
   }
 }
