@@ -112,15 +112,14 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           // 转成毫秒
-          let start_time = moment(this.info.start_time).unix()
-          let end_time = moment(this.info.end_time).unix()
+          let start_time = moment(this.info.start_time).valueOf()
+          let end_time = moment(this.info.end_time).valueOf()
           var localstorage = window.localStorage;
           let info = {...this.info, end_time, start_time}
           let res = await this.exam(info)
-          // 本地存放提交成功的数据
+          本地存放提交成功的数据
           window.localStorage.setItem('exam',JSON.stringify(res.data))
           this.$router.push({ path:'createExam' })
-
         } else {
           console.log('error submit!!')
           return false

@@ -13,7 +13,15 @@ export function subject() {
     method: 'get'
   })
 }
+// 获取所有的试题
+// /exam/questions/new
 // 创建试卷
+export function getAll() {
+  return request({
+    url: '/exam/questions/new',
+    method: 'get'
+  })
+}
 export function exam(data) {
   return request({
     url: '/exam/exam',

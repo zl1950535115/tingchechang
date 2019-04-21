@@ -48,13 +48,13 @@ const actions = {
 
   // 获取用户信息
   async getInfo({ commit, state }) {
-    var data = await getInfo()
+    const data = await getInfo()
     commit('SET_USERINFO', data.data)
     return data.data
   },
   // 获取用户权限
   async getViewAuthority({ commit }, paylpoad) {
-    var data = await getViewAuthority()
+    const data = await getViewAuthority()
     if (data.code === 1) {
       commit('SET_VIEWAUTHORITY', data.data)
       return data.data
