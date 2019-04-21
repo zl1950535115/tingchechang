@@ -53,17 +53,17 @@
         </el-table-column>
         <el-table-column label="创建人">
             <template slot-scope="scope">
-                <p>{{ scope.row.user_name }}</p>
-              </template>
+              <p>{{ scope.row.user_name }}</p>
+            </template>
         </el-table-column>
         <el-table-column label="开始时间">
-          <template>
-            <span>详情</span>
+          <template slot-scope="scope">
+            <span>{{scope.row.start_time}}</span>
           </template>
         </el-table-column>
         <el-table-column label="结束时间">
-          <template>
-            <span>详情</span>
+          <template  slot-scope="scope">
+            <span>{{scope.row.end_time}}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="87">
@@ -133,7 +133,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          // 转成毫秒
+        // 转成毫秒
         this.getList(this.info)
         } else {
           console.log('error submit!!')

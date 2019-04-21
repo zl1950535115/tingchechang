@@ -1,5 +1,6 @@
 import { examType, subject, exam, examlist, renewal, detail, searchlist, getAll } from '@/api/exams'
-
+var moment = require('moment')
+console.log(moment(1552707000000).format('YYYY-MM-DD h:mm:ss'), 'time')
 const state = {
   examTypeList: [],
   subjectList: [],
@@ -33,7 +34,14 @@ const actions = {
   // 查询所有的数据
   async getList({ commit }, payload) {
     const res = await examlist(payload)
+    // let list = []
+    res.exam.forEach(item => {
+      item['start_time'] = moment(item.start_time * 1).format('YYYY-MM-DD h:mm:ss')
+      item['end_time'] = moment(item.end_time * 1).format('YYYY-MM-DD h:mm:ss')
+    })
+    console.log(res.exam, '修改')
     commit('updateState', { list: res.exam })
+    console.log(res)
     return res
   },
   // 跟新数据
@@ -45,7 +53,6 @@ const actions = {
   // 详情列表
   async detail({ commit }, payload) {
     const res = await detail(payload)
-    console.log(res)
     commit('updateState', { detail: res.data })
   },
   async getAll({ commit }, payload) {
