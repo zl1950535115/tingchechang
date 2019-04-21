@@ -41,7 +41,7 @@ const actions = {
   // user login 登录接口
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
-    const res = await login({ user_name: username, user_pwd: password })
+    var res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
     return res
   },

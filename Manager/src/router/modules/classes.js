@@ -16,19 +16,19 @@ const classesRouter = {
       path: 'class',
       component: () => import('@/views/classzl/class'),
       name: 'KeyboardChart',
-      meta: { title: 'classManagement', noCache: true }
+      meta: { title: 'classManagement', noCache: true, view_id: 'main-grade' }
     },
     {
       path: 'classroom',
       component: () => import('@/views/classzl/classroom'),
       name: 'LineChart',
-      meta: { title: 'classroom', noCache: true }
+      meta: { title: 'classroom', noCache: true, view_id: 'main-student' }
     },
     {
       path: 'student',
       component: () => import('@/views/classzl/student'),
       name: 'MixChart',
-      meta: { title: 'student', noCache: true }
+      meta: { title: 'student', noCache: true, view_id: 'main-room' }
     }
   ]
 }

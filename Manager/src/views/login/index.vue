@@ -121,7 +121,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      login: 'user/login',
+      login: 'user/login'
     }),
     showPwd() {
       if (this.passwordType === 'password') {
@@ -137,10 +137,10 @@ export default {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           // 调用登录接口
-          let res = await this.login(this.loginForm)
-          if(res.code === 1){
+          const res = await this.login(this.loginForm)
+          if (res.code === 1) {
             // 上次结束的页面
-            this.$router.push({ path: this.redirect ||  '/' })
+            this.$router.push({ path: this.redirect || '/' })
           }
           this.loading = false
         } else {
