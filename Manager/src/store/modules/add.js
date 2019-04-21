@@ -1,4 +1,4 @@
-import { classify, examType, subject, getQuestionsType, questions, userIfo, condition, questionsnew, update } from '@/api/addclassify'
+import { classify, examType, subject, getQuestionsType, questions, userIfo, condition, questionsnew } from '@/api/addclassify'
 const state = {
   data: [],
   type: [],
