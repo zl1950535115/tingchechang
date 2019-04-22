@@ -5,17 +5,17 @@
       <el-button type="text" @click="showDialog">添加新题</el-button>
       <div class="content-list">
         <div class="top-title">
-          <h3>{{pageDetail.title}}</h3>
+          <h3>{{ pageDetail.title }}</h3>
           <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
         </div>
         <div class="list">
-          <div v-for="(item, index) in pageDetail.questions" class="style_questionitem__3ETlC">
-            <h4>{{index + 1}}、{{item.questions_type_text}}
-              <span @click='del(index)'>删除</span>
+          <div v-for="(item, index) in pageDetail.questions" :key="index" class="style_questionitem__3ETlC">
+            <h4>{{ index + 1 }}、{{ item.questions_type_text }}
+              <span @click="del(index)">删除</span>
             </h4>
             <div class="markdown">
               <pre>
-{{item.questions_stem}}         
+{{ item.questions_stem }}
               </pre>
             </div>
           </div>
@@ -24,11 +24,11 @@
       <el-button type="primary" @click="create">创建试卷</el-button>
     </div>
     <div v-show="flag" class="add-drawer">
-      <div class="mask" @click='mask' />
+      <div class="mask" @click="mask" />
       <div class="add-drawer-right">
         <p class="title">所有试题</p>
-        <div class="exam" v-for="(item, index) in allExams" :key="index" @click='changeEaxm(item)'>
-          {{index + 1}} 、 {{item.questions_type_text}}：<br>{{item.questions_stem}}
+        <div v-for="(item, index) in allExams" :key="index" class="exam" @click="changeEaxm(item)">
+          {{ index + 1 }} 、 {{ item.questions_type_text }}：<br>{{ item.questions_stem }}
         </div>
       </div>
     </div>
@@ -36,72 +36,70 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex';
-  let moment = require('moment');
-  export default {
-    data() {
-      return {
-        pageDetail: {},
-        flag: false
+import { mapActions, mapState } from 'vuex'
+export default {
+  data() {
+    return {
+      pageDetail: {},
+      flag: false
+    }
+  },
+  created() {
+    this.pageDetail = JSON.parse(window.localStorage.getItem('exam'))
+  },
+  computed: {
+    ...mapState({
+      allExams: state => state.exams.allExams
+    })
+  },
+  methods: {
+    ...mapActions({
+      renewal: 'exams/renewal',
+      getAll: 'exams/getAll'
+    }),
+    mask() {
+      this.flag = false
+    },
+    changeEaxm(item) {
+      this.pageDetail.questions.push(item)
+      window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
+      this.flag = false
+    },
+    showDialog(item) {
+      if (this.pageDetail.questions.length < this.pageDetail.number) {
+        this.flag = true
+        this.getAll()
+      } else {
+        this.$alert('请先删除再添加！', '提示', {
+          confirmButtonText: '确定'
+        })
       }
     },
-    created() {
-      this.pageDetail = JSON.parse(window.localStorage.getItem('exam'))
-      let h = this.pageDetail.end_time - this.pageDetail.start_time;
-    },
-    computed: {
-      ...mapState({
-        allExams: state => state.exams.allExams
+    del(index) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true,
+        customClass: 'warning'
+      }).then(() => {
+        this.pageDetail.questions.splice(index, 1)
+        window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       })
     },
-    methods: {
-      ...mapActions({
-        renewal: 'exams/renewal',
-        getAll: 'exams/getAll'
-      }),
-      mask(){
-        this.flag = false;
-      },
-      changeEaxm(item){
-        this.pageDetail.questions.push(item)
-        window.localStorage.setItem('exam',JSON.stringify(this.pageDetail))
-        this.flag = false;
-      },
-      showDialog(item) {
-        if (this.pageDetail.questions.length < this.pageDetail.number) {
-          this.flag = true;
-          this.getAll()
-        } else {
-            this.$alert('请先删除再添加！', '提示', {
-              confirmButtonText: '确定'
-          });
-        }
-      },
-      del(index) {
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true,
-          customClass: 'warning'
-        }).then(() => {
-          this.pageDetail.questions.splice(index, 1)
-          window.localStorage.setItem('exam',JSON.stringify(this.pageDetail))
-        })
-      },
-      async create() {
-        // 要用exam_exam_id 的字符串
-        let arr = [];
-        this.pageDetail.questions.forEach(item => {
-          arr.push(item.questions_id)
-        });
-        let str = JSON.stringify(arr);
-        let data = { question_ids: str }
-        let res = await this.renewal({ header: this.pageDetail.exam_exam_id, data })
-        this.$router.push({ path: 'examinationPaperList' })
-      }
+    async create() {
+      // 要用exam_exam_id 的字符串
+      const arr = []
+      this.pageDetail.questions.forEach(item => {
+        arr.push(item.questions_id)
+      })
+      const str = JSON.stringify(arr)
+      const data = { question_ids: str }
+      await this.renewal({ header: this.pageDetail.exam_exam_id, data })
+      this.$router.push({ path: 'examinationPaperList' })
     }
   }
+}
 </script>
 
 <style scoped>
