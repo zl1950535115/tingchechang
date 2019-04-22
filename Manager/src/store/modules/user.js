@@ -41,20 +41,20 @@ const actions = {
   // user login 登录接口
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
-    var res = await login({ user_name: username, user_pwd: password })
+    const res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
     return res
   },
 
   // 获取用户信息
   async getInfo({ commit, state }) {
-    var data = await getInfo()
+    const data = await getInfo()
     commit('SET_USERINFO', data.data)
     return data.data
   },
   // 获取用户权限
   async getViewAuthority({ commit }, paylpoad) {
-    var data = await getViewAuthority()
+    const data = await getViewAuthority()
     if (data.code === 1) {
       commit('SET_VIEWAUTHORITY', data.data)
       return data.data
