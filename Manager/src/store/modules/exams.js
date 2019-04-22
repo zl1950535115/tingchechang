@@ -1,6 +1,5 @@
 import { examType, subject, exam, examlist, renewal, detail, searchlist, getAll } from '@/api/exams'
 var moment = require('moment')
-console.log(moment(1552707000000).format('YYYY-MM-DD h:mm:ss'), 'time')
 const state = {
   examTypeList: [],
   subjectList: [],

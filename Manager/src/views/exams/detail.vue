@@ -62,11 +62,9 @@ export default {
   .wrapper {
     position: relative;
     width: 100%;
-    height: calc(100vh - 84px);
     background: #f0f2f5;
     padding: 24px;
     box-sizing: border-box;
-    overflow-y: auto;
   }
   .content {
     display: flex;

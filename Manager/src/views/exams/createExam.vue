@@ -47,7 +47,6 @@
     },
     created() {
       this.pageDetail = JSON.parse(window.localStorage.getItem('exam'))
-      let h = this.pageDetail.end_time - this.pageDetail.start_time;
     },
     computed: {
       ...mapState({

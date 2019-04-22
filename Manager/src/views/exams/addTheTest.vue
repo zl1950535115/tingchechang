@@ -114,14 +114,15 @@ export default {
           // 转成毫秒
           let start_time = moment(this.info.start_time).valueOf()
           let end_time = moment(this.info.end_time).valueOf()
-          var localstorage = window.localStorage;
+          var localstorage = window.localStorage
           let info = {...this.info, end_time, start_time}
           let res = await this.exam(info)
-          本地存放提交成功的数据
-          window.localStorage.setItem('exam',JSON.stringify(res.data))
-          this.$router.push({ path:'createExam' })
+          // 本地存放提交成功的数据
+          if(res.code === 1){
+            window.localStorage.setItem('exam',JSON.stringify(res.data))
+            this.$router.push({ path:'createExam' })
+          }
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -140,8 +141,7 @@ export default {
 
   .wrapper {
     position: relative;
-    width: 100%;
-    height: calc(100vh - 84px);
+    width: 100%;  
     background: #f0f2f5;
     padding: 24px;
     box-sizing: border-box;
