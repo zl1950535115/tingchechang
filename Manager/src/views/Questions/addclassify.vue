@@ -91,13 +91,13 @@ export default {
     .box {
         width: 100%;
         height: 60%;
-        background: #ccc;
+        background: #f0f2f5;;
     }
 
     .tittle {
         padding: 30px;
         font-size: 25px;
-        font-weight: 800;
+
     }
 
     .little-box {

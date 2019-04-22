@@ -170,7 +170,7 @@ export default {
         position: relative;
         width: 100%;
         height: calc(100vh - 84px);
-        background: #ccc;
+        background: #f0f2f5;;
         height: 100%;
     }
     .tittle {

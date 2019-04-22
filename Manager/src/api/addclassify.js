@@ -49,3 +49,7 @@ export function questionsnew() {
     method: 'get'
   })
 }
+
+export const update = data => {
+  return request.post('/exam/questions/update', data)
+}
