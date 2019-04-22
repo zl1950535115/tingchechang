@@ -153,6 +153,7 @@ export default {
       this.new_name=""
       this.new_pwd=""
       this.manger=""
+      this.userselect=''
     },
     hotses(){
       this.user_add_api=''
