@@ -31,7 +31,7 @@ export function StudentDetail(params) {
 export function bathchSucceed(params) {
   return request({
     url: '/exam/student',
-    method: 'get',
+    method: 'put',
     params
   })
 }
