@@ -23,7 +23,7 @@ const usersRouter = {
     component: () =>
       import('@/views/exams/examinationPaperList'),
     name: 'ExaminationPaperList',
-    meta: { title: 'examinationPaperList', noCache: true, view_id: 'main-addQuestions' }
+    meta: { title: 'examinationPaperList', noCache: true, view_id: 'main-examList' }
   },
   {
     path: 'detail',

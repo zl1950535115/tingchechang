@@ -98,9 +98,9 @@ export default {
   },
   computed: {
     ...mapState({
-      grade: state => state.classmanagement.grade,
-      room: state => state.classmanagement.room,
-      subject: state => state.classmanagement.subject
+      grade: state => state.classmanagement.grade, // 班级数据
+      room: state => state.classmanagement.room, // 教室数据
+      subject: state => state.classmanagement.subject // 课程数据
     })
   },
   created() {

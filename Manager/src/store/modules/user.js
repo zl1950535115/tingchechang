@@ -1,4 +1,4 @@
-import { login, logout, getInfo, getViewAuthority } from '@/api/user'
+import { login, logout, getInfo, getViewAuthority, setUser } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -48,18 +48,23 @@ const actions = {
 
   // 获取用户信息
   async getInfo({ commit, state }) {
-    var data = await getInfo()
+    const data = await getInfo()
     commit('SET_USERINFO', data.data)
     return data.data
   },
   // 获取用户权限
   async getViewAuthority({ commit }, paylpoad) {
-    var data = await getViewAuthority()
+    const data = await getViewAuthority()
     if (data.code === 1) {
       commit('SET_VIEWAUTHORITY', data.data)
       return data.data
     }
     return []
+  },
+  // 更新用户信息
+  async set_user({ commit }, paylpoad) {
+    const data = await setUser()
+    console.log(data)
   },
   // remove token
   resetToken({ commit }) {

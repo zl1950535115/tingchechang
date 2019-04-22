@@ -1,4 +1,4 @@
-import router from './router'
+  import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
@@ -38,7 +38,6 @@ router.beforeEach(async(to, from, next) => {
           const accessRoutes = await store.dispatch('permission/generateRoutes', viewAuthority)
           // 实现动态路由转为静态路由
           router.addRoutes(accessRoutes)
-
           next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
