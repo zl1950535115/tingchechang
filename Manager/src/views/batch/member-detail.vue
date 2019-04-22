@@ -2,9 +2,14 @@
   <div class="box">
     <h2 class="tit">阅卷</h2>
     <div class="main">
-      <div class="main_left" />
+      <div class="main_left">
+        <div v-for="(item,index) in StudentDetails?StudentDetails.questions:[]" :key="index" class="item_exam">
+          <p>{{ index + 1 }}、{{ item.title }}<span class="type_text">{{ item.questions_type_text }}</span></p>
+          <p>{{ item.questions_stem }}</p>
+        </div>
+      </div>
       <div class="main_right">
-        <h2 class="name">{{ name }}</h2>
+        <h2 class="name">{{ StudentDetails?StudentDetails.student_name:"" }}</h2>
         <div class="score">
           <p>得分:</p>
           <h1>{{ score }}</h1>
@@ -12,36 +17,60 @@
         <div class="block">
           <el-slider v-model="score" class="slider" />
         </div>
-        <div>
-          <el-button class="button" type="submit" @click="dialogVisible = true">确定</el-button>
-          <el-dialog
-            title="提示"
-            :visible.sync="dialogVisible"
-            width="30%"
-            :before-close="handleClose"
-          >
-            <span>这是一段信息</span>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-            </span>
-          </el-dialog>
-        </div>
+        <el-button class="yesBtn" type="text" @click="open">确定</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
       name: '王子音',
       score: 0,
-      dialogVisible: false
+      dialogVisible: false,
+      exam_student_id: 0
     }
   },
+  computed: {
+    ...mapState({
+      StudentDetails: state => state.batchStore.StudentDetails
+    })
+  },
+  created() {
+    // this.exam_student_id =
+    this.getStudentDetail({
+      exam_student_id: this.$route.query.exam_student_id
+    })
+  },
   methods: {
+    open() {
+      this.$confirm('确定提交阅卷结果?分数值是' + this.score, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        // this.$message({
+        //   type: 'success',
+        //   message: '删除成功!'
+        // })
+        this.getbathchSucceed({
+          exam_student_id: this.exam_student_id
+        })
+      }).catch(() => {
+        // this.$message({
+        //   type: 'info'
+        //   // message: '已取消删除'
+        // })
+      })
+    },
+    ...mapActions({
+      getStudentDetail: 'batchStore/getStudentDetail',
+      getbathchSucceed: 'batchStore/getbathchSucceed'
+    }),
     handleClose(done) {
       this.$confirm('确认关闭？').then(_ => {
         done()
@@ -56,14 +85,21 @@ export default {
 
 <style scoped>
     .box{
-        position: relative;
         width: 100%;
-        height: calc(100vh - 64px);
+        height: calc(100vh - 84px);
         box-sizing: border-box;
         padding:0 24px 0 24px;
         background: #f0f2f5;
-        margin-top: 64px;
-        overflow: auto;
+    }
+    .yesBtn{
+      text-align: center;
+      padding: 8px 40px!important;
+      border-radius: 4px!important;
+      border: 0!important;
+      font-size: 14px!important;
+      color: #fff!important;
+      background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
+      margin-left: 7%;
     }
     .slider{
         width: 86%;
@@ -91,7 +127,7 @@ export default {
         width: 20%;
         height: 261.5px;
         position: fixed;
-        top:156px;
+        top:175px;
         right: 30px;
         border-radius: 10px;
         overflow: hidden;
@@ -125,5 +161,18 @@ export default {
         font-size: 14px;
         margin-left: 25px;
         margin-top: 15px;
+    }
+    .item_exam{
+      border: 0.5px solid #eee;
+      padding-bottom:20px;
+    }
+    .type_text{
+      display: inline-block;
+      padding: 2px 5px;
+      color: #1890ff;
+      border:1px solid #91d5ff ;
+      background:#e6f7ff ;
+      font-size:13px;
+      margin-left: 7px;
     }
 </style>

@@ -1,4 +1,4 @@
-import { classify, examType, subject, getQuestionsType, questions, userIfo, condition, questionsnew, update } from '@/api/addclassify'
+import { classify, examType, subject, getQuestionsType, questions, userIfo, condition, questionsnew } from '@/api/addclassify'
 const state = {
   data: [],
   type: [],
@@ -21,25 +21,25 @@ const actions = {
   // 获取所有的试题类型
   async classify({ commit }, payload) {
     const data = await classify()
-    console.log(data.data)
+    // console.log(data.data)
     commit('classif', { data: data.data })
   },
   // 所有考试类型
   async examType({ commit }, payload) {
     const type = await examType()
-    console.log(type)
+    // console.log(type)
     commit('classif', { type: type.data })
   },
   // 获取所有的课程
   async subject({ commit }, payload) {
     const sub = await subject()
-    console.log(sub)
+    // console.log(sub)
     commit('classif', { sub: sub.data })
   },
   // 获取所有的试题类型
   async getQuestionsType({ commit }, payload) {
     const getQuestions = await getQuestionsType()
-    console.log(getQuestions)
+    // console.log(getQuestions)
     commit('classif', { getQuestions: getQuestions.data })
   },
   // 获取用户信息
