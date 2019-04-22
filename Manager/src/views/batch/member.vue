@@ -5,7 +5,7 @@
         <span>状态 : </span>
         <el-select v-model="value">
           <el-option
-            v-for="item in options"
+            v-for="item in state"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -14,17 +14,17 @@
       </div>
       <div class="box_top_right">
         <span>班级 : </span>
-        <el-select v-model="value" placeholder="请选择">
+        <el-select v-model="classvalue" placeholder="请选择">
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="item in classLists"
+            :key="item.grade_id"
+            :label="item.grade_name"
+            :value="item.grade_id"
           />
         </el-select>
       </div>
       <div class="box_top_button">
-        <el-button class="button" type="submit" icon="el-icon-search">查询</el-button>
+        <el-button class="button" type="submit" icon="el-icon-search" @click="inquire">查询</el-button>
       </div>
     </div>
     <div class="box_bottom">
@@ -35,7 +35,7 @@
         style="width: 100%;border-radius:'10px'"
         class="table"
       >
-        <el-table-column prop="score" label="班级" width="138" />
+        <el-table-column prop="grade_name" label="班级" width="138" />
         <el-table-column prop="student_name" label="姓名" width="144" />
         <el-table-column prop="status" label="阅卷状态" width="171" />
         <el-table-column prop="start_time" label="开始时间" width="253" />
@@ -44,7 +44,7 @@
         <el-table-column label="操作" width="117">
           <template slot-scope="scope">
             <el-button type="text" size="small" class="options" @click="handleClick(scope.row)"><router-link
-              :to="{path:'member-detail',query:{id:scope.row.exam_exam_id}}"
+              :to="{path:'member-detail',query:{exam_student_id:scope.row.exam_student_id	}}"
             >批卷</router-link></el-button>
           </template>
         </el-table-column>
@@ -70,6 +70,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
+      state: [],
       options: [{
         value: '选项1',
         label: '黄金糕'
@@ -87,33 +88,46 @@ export default {
         label: '北京烤鸭'
       }],
       value: '',
+      classvalue: '',
       currentPage4: 1,
       currentPage: 1,
-      pagesize: 5
+      pagesize: 5,
+      newData: []
     }
   },
   computed: {
     ...mapState({
-      StudentListDatas: state => state.batchStore.StudentListDatas
+      StudentListDatas: state => state.batchStore.StudentListDatas,
+      classLists: state => state.batchStore.classLists
     })
+  },
+  watch: {
+
   },
   created() {
     this.getStudentListData({
       grade_id: this.$route.query.id
     })
+    this.newData = this.StudentListDatas
   },
   methods: {
     ...mapActions({
       getStudentListData: 'batchStore/getStudentListData'
     }),
     handleClick(row) {
-      console.log(row)
+      console.log(row.grade_name)
     },
     handleSizeChange(val) {
       this.pagesize = val
     },
     handleCurrentChange(val) {
       this.currentPage = val
+    },
+    inquire() {
+      this.newData = this.StudentListDatas.filter((item, index) => {
+        return item.grade_id.match(this.classvalue)
+      })
+      console.log(this.newData)
     }
   }
 }
@@ -123,7 +137,7 @@ export default {
     .box{
         position: relative;
         width: 100%;
-        height: calc(100vh - 64px);
+        height: calc(100vh - 84px);
         box-sizing: border-box;
         padding:60px 24px 30px 24px;
         background: #f0f2f5;

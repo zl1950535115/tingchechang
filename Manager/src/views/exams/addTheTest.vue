@@ -10,21 +10,23 @@
         <el-form-item class="babels" label="选择考试类型" prop="exam_id">
           <br>
           <el-select v-model="info.exam_id" class="select" style="width: 150px;">
-              <el-option
-              v-for='( item, index) in examTypeList'
+            <el-option
+              v-for="item in examTypeList"
               :key="item.exam_id"
               :label="item.exam_name"
-              :value="item.exam_id" />
+              :value="item.exam_id"
+            />
           </el-select>
         </el-form-item>
         <el-form-item class="babels" label="选择课程" prop="subject_id">
           <br>
           <el-select v-model="info.subject_id" class="select" style="width: 150px;">
-            <el-option 
-            v-for='( item, index) in subjectList' 
-            :key="item.subject_id"
-            :label="item.subject_text"
-            :value="item.subject_id" />
+            <el-option
+              v-for=" item in subjectList"
+              :key="item.subject_id"
+              :label="item.subject_text"
+              :value="item.subject_id"
+            />
           </el-select>
         </el-form-item>
         <el-form-item class="babels" label="设置题量" prop="number">
@@ -53,7 +55,7 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
-let moment = require('moment');
+const moment = require('moment')
 export default {
   name: 'AddTheTest',
   data() {
@@ -101,7 +103,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      updateState: 'exams/updateState',
+      updateState: 'exams/updateState'
     }),
     ...mapActions({
       examType: 'exams/examType',
@@ -109,7 +111,7 @@ export default {
       exam: 'exams/exam'
     }),
     submitForm(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async(valid) => {
         if (valid) {
           // 转成毫秒
           let start_time = moment(this.info.start_time).valueOf()

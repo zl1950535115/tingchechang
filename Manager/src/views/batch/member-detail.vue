@@ -3,12 +3,13 @@
     <h2 class="tit">阅卷</h2>
     <div class="main">
       <div class="main_left">
-        <div v-for="(item,index) in StudentDetails" :key="index">
-          <p />
+        <div v-for="(item,index) in StudentDetails?StudentDetails.questions:[]" :key="index" class="item_exam">
+          <p>{{ index + 1 }}、{{ item.title }}<span class="type_text">{{ item.questions_type_text }}</span></p>
+          <p>{{ item.questions_stem }}</p>
         </div>
       </div>
       <div class="main_right">
-        <h2 class="name">{{ name }}</h2>
+        <h2 class="name">{{ StudentDetails?StudentDetails.student_name:"" }}</h2>
         <div class="score">
           <p>得分:</p>
           <h1>{{ score }}</h1>
@@ -29,7 +30,8 @@ export default {
     return {
       name: '王子音',
       score: 0,
-      dialogVisible: false
+      dialogVisible: false,
+      exam_student_id: 0
     }
   },
   computed: {
@@ -38,22 +40,26 @@ export default {
     })
   },
   created() {
+    // this.exam_student_id =
     this.getStudentDetail({
-      exam_exam_id: this.$route.query.id
+      exam_student_id: this.$route.query.exam_student_id
     })
   },
   methods: {
     open() {
-      this.$confirm('确定提交阅卷结果?', {
+      this.$confirm('确定提交阅卷结果?分数值是' + this.score, {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
         center: true
       }).then(() => {
         // this.$message({
-        //   type: 'success'
-        //   // message: '删除成功!'
+        //   type: 'success',
+        //   message: '删除成功!'
         // })
+        this.getbathchSucceed({
+          exam_student_id: this.exam_student_id
+        })
       }).catch(() => {
         // this.$message({
         //   type: 'info'
@@ -62,7 +68,8 @@ export default {
       })
     },
     ...mapActions({
-      getStudentDetail: 'batchStore/getStudentDetail'
+      getStudentDetail: 'batchStore/getStudentDetail',
+      getbathchSucceed: 'batchStore/getbathchSucceed'
     }),
     handleClose(done) {
       this.$confirm('确认关闭？').then(_ => {
@@ -154,5 +161,18 @@ export default {
         font-size: 14px;
         margin-left: 25px;
         margin-top: 15px;
+    }
+    .item_exam{
+      border: 0.5px solid #eee;
+      padding-bottom:20px;
+    }
+    .type_text{
+      display: inline-block;
+      padding: 2px 5px;
+      color: #1890ff;
+      border:1px solid #91d5ff ;
+      background:#e6f7ff ;
+      font-size:13px;
+      margin-left: 7px;
     }
 </style>

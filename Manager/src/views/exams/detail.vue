@@ -1,30 +1,30 @@
 <template>
   <div class="add-layout">
-      <div class="wrapper">
-          <p class="text">添加考试</p>
-          <div class="list">
-            <div class="content">
-              <div class="style_questionitem__3ETlC" v-for="(item,index) in this.detail.questions">
-                <h4>{{index+1}}、{{item.questions_type_text}}</h4>
-                <div class="markdown">
-                  <pre>
-{{item.questions_stem}}
+    <div class="wrapper">
+      <p class="text">添加考试</p>
+      <div class="list">
+        <div class="content">
+          <div v-for="(item,index) in this.detail.questions" :key="index" class="style_questionitem__3ETlC">
+            <h4>{{ index+1 }}、{{ item.questions_type_text }}</h4>
+            <div class="markdown">
+              <pre>
+{{ item.questions_stem }}
                   </pre>
-                </div>
-              </div>
             </div>
-              <div class="content">
-                  <div class="style_questionitem__3ETlC" v-for="(item,index) in this.detail.questions">
-                      <h4>{{index+1}}、{{item.questions_type_text}}</h4>
-                      <div class="markdown">
-                        <pre>
-      {{item.questions_answer}}
-                        </pre>
-                      </div>
-                    </div>
-              </div>
           </div>
         </div>
+        <div class="content">
+          <div v-for="(item,index) in this.detail.questions" :key="index" class="style_questionitem__3ETlC">
+            <h4>{{ index+1 }}、{{ item.questions_type_text }}</h4>
+            <div class="markdown">
+              <pre>
+      {{ item.questions_answer }}
+                        </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,23 +33,23 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      
+
     }
   },
   computed: {
     ...mapState({
-      detail:state => state.exams.detail
+      detail: state => state.exams.detail
     })
   },
   methods: {
     ...mapActions({
-      getDetail:'exams/detail'
+      getDetail: 'exams/detail'
     })
   },
   created() {
-    this.getDetail(this.$route.query.id);
+    this.getDetail(this.$route.query.id)
     console.log(this.detail)
-  },
+  }
 }
 </script>
 
@@ -58,7 +58,6 @@ export default {
     line-height: 0;
     padding-bottom: 20px;
   }
-
   .wrapper {
     position: relative;
     width: 100%;
@@ -124,7 +123,7 @@ h4 {
   overflow: auto;
   line-height: 1.3;
   color: #657b83;
-   background: #f6f6f6; 
+   background: #f6f6f6;
   background-size: 30px 30px;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 1em;

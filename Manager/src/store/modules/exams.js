@@ -1,4 +1,4 @@
-import { examType, subject, exam, examlist, renewal, detail, searchlist, getAll } from '@/api/exams'
+import { examType, subject, exam, examlist, renewal, detail, getAll } from '@/api/exams'
 var moment = require('moment')
 const state = {
   examTypeList: [],

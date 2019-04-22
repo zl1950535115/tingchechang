@@ -1,10 +1,8 @@
-import { classList, StudentList, StudentDetail } from '@/api/batch.js'
+import { classList, StudentList, StudentDetail, bathchSucceed } from '@/api/batch.js'
 const state = {
   classLists: [],
   StudentListDatas: [],
-  StudentDetails: [],
-  gradeId: 0,
-  student_id: 0
+  StudentDetails: {}
 }
 
 const mutations = {
@@ -12,12 +10,19 @@ const mutations = {
     state.classLists = payload.data
   },
   updataStudentListData(state, payload) {
-    console.log('updataStudentListData', payload)
-    state.StudentListDatas = payload.exam
+    if (payload) {
+      state.StudentListDatas = payload.exam
+    } else {
+      state.StudentListDatas = []
+    }
   },
   updataStudentDetail(state, payload) {
-    console.log('updataStudentDetail...', payload)
-    state.StudentDetails = payload.exam
+    console.log('updataStudentDetail', payload)
+    if (payload) {
+      state.StudentDetails = payload.data
+    } else {
+      state.StudentDetails = []
+    }
   }
 }
 
@@ -31,10 +36,12 @@ const actions = {
     commit('updataStudentListData', getStudentListDatay)
   },
   async getStudentDetail({ commit }, payload) {
-    console.log('getStudentDetail...', payload)
+    console.log('getStudentDetail', payload)
     const getStudentDetaily = await StudentDetail(payload)
     commit('updataStudentDetail', getStudentDetaily)
-    // console.log('updataStudentDetail...', getStudentDetail)
+  },
+  async getbathchSucceed({ commit }, payload) {
+    return await bathchSucceed(payload)
   }
 }
 

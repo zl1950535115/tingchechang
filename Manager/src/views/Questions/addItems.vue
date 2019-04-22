@@ -40,8 +40,20 @@
         </div>
       </div>
       <div class="btn">
-        <el-button type="primary" @click="submit">提交</el-button>
+        <el-button type="primary" @click="dialogVisible = true">提交</el-button>
       </div>
+      <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <span>添加成功</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="submit">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -69,7 +81,8 @@ export default {
         exam_id: '',
         questions_answer: '',
         title: ''
-      }
+      },
+      dialogVisible: false
     }
   },
   computed: {
@@ -80,15 +93,28 @@ export default {
       type: state => state.add.type,
       sub: state => state.add.sub,
       getQuestions: state => state.add.getQuestions,
-      user: state => state.add.user
+      user: state => state.add.user,
+      newquesition: state => state.add.newquesition
     })
   },
   created() {
     this.examType()
     this.subject()
     this.getQuestionsType()
-    console.log(this.user)
     this.userIfo()
+    this.questionsnew()
+    const list = this.$route.query.list
+    console.log(list)
+    this.newquesition.forEach(item => {
+      if (list === item.questions_id) {
+        this.select = item.exam_name
+        this.el.questions_stem = item.questions_stem
+        this.selects = item.subject_text
+        this.selectd = item.questions_type_text
+        this.el.questions_answer = item.questions_answer
+        this.el.title = item.title
+      }
+    })
   },
   methods: {
     Type(e) {
@@ -109,9 +135,11 @@ export default {
       subject: 'add/subject',
       getQuestionsType: 'add/getQuestionsType',
       questions: 'add/questions',
-      userIfo: 'add/userIfo'
+      userIfo: 'add/userIfo',
+      questionsnew: 'add/questionsnew'
     }),
     submit() {
+      this.dialogVisible = false
       if (this.el.title && this.el.questions_stem && this.el.questions_answer) {
         this.questions({
           questions_type_id: this.el.questions_type_id,
@@ -125,6 +153,13 @@ export default {
       } else {
         alert('请填写未填写的东西')
       }
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
     }
   }
 }

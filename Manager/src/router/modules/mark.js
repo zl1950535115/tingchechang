@@ -16,19 +16,19 @@ const markRouter = {
       path: 'awaitingApprovalClass',
       component: () => import('@/views/batch/batchRoll'),
       name: 'KeyboardChart',
-      meta: { title: 'awaitingApprovalClass', noCache: true }
+      meta: { title: 'awaitingApprovalClass', noCache: true, view_id: 'main-examinationPapers' }
     },
     {
       path: 'member',
       component: () => import('@/views/batch/member'),
       name: 'KeyboardChart',
-      meta: { title: '', noCache: true }
+      meta: { title: '', noCache: true, view_id: 'main-examPaperClassmate' }
     },
     {
       path: 'member-detail',
       component: () => import('@/views/batch/member-detail'),
       name: 'KeyboardChart',
-      meta: { title: '', noCache: true }
+      meta: { title: '', noCache: true, view_id: 'main-examDetail' }
     }
   ]
 }
