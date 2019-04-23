@@ -104,8 +104,6 @@ export default {
   },
   async created() {
     await console.log(this.userInfo)
-    // this.userId = this.userInfo.user_id
-    // this.avatarImg = this.userInfo.avatar
   },
   methods: {
     ...mapActions({
