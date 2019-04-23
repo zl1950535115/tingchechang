@@ -1,4 +1,5 @@
 import {Userlist,userData,userapi,apilist,person_or_server,ViewPerson,View_serverPerson} from "@/api/usershow"
+import { stat } from "fs";
 
 const state={
   username:'', //第一个表格的数据列表
@@ -6,7 +7,8 @@ const state={
   apilist:'', // api列表
   Viewlist:'', // 视图权限列表接口
   view_person_list:'', // 用户与权限的关系列表
-  loading0:true
+  loading0:true,
+  person_list:''
 }
 const actions={
   userlist({commit},payload){   //获取第一个表格的数据
@@ -35,6 +37,7 @@ userapi(){
 personorserver(){
   return new Promise((res,rej)=>{
     person_or_server().then((result)=>{
+      state.person_list=result.data
     })
   })
 },

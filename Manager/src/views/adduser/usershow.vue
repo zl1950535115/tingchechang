@@ -6,7 +6,11 @@
     </div>
     <p class="Title">{{ radioValue }}</p>
     <div v-if="boxind==0" class="box_1">
+<<<<<<< HEAD
       <el-table v-loading="loading0" :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))" style="width: 100%">
+=======
+      <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))"  style="width: 100%">
+>>>>>>> 2d41c96483b82a0307b6ae76aca14eb98e2310ea
         <el-table-column prop="user_name" label="用户名" width="360" />
         <el-table-column prop="user_pwd" min-width="500" label="密码" />
         <el-table-column prop="identity_text" label="身份" />
@@ -31,12 +35,12 @@
     </div>
 
     <div v-if="boxind==3" class="box_3">
-      <el-table :data="tableData.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
-        <el-table-column align="center" prop="username" label="api权限名称" width="360" />
-        <el-table-column align="center" prop="pwd" label="api权限url" />
-        <el-table-column align="center" prop="userasign" label="api权限方法" />
+      <el-table :data="person_list.slice((currentpage-1)*showsize,currentpage*showsize)" style="width: 100%">
+        <el-table-column align="center" prop="api_authority_text" label="api权限名称" width="360" />
+        <el-table-column align="center" prop="api_authority_url" label="api权限url" />
+        <el-table-column align="center" prop="identity_text" label="api权限方法" />
       </el-table>
-      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="person_list.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
     <div v-if="boxind==4" class="box_4">
@@ -71,55 +75,6 @@ export default {
       topbutton: ['用户数据', '身份数据', 'api接口权限', '身份和api接口关系', '视图接口权限', '身份和视图权限关系'],
       radioValue: '用户数据',
       boxind: 0,
-      tableData: [{
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1518 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1517 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }, {
-        username: '王小虎',
-        pwd: '上海市普陀区金沙江路 1519 弄',
-        userasign: '管理员'
-      }],
       showsize: 5, // 身份和视图权限关系每页显示的条目
       currentpage: 1 // 身份和视图权限关系的当前页
     }
@@ -134,12 +89,22 @@ export default {
   },
   computed: {
     ...mapState({
+<<<<<<< HEAD
       userlist: state => state.usershow.username,
       userperson: state => state.usershow.userperson,
       apilist: state => state.usershow.apilist,
       Viewlist: state => state.usershow.Viewlist,
       view_person_list: state => state.usershow.view_person_list,
       loading0: state => state.usershow.loading0
+=======
+      userlist:state=>state.usershow.username,
+      userperson:state=>state.usershow.userperson,
+      apilist:state=>state.usershow.apilist,
+      Viewlist:state=>state.usershow.Viewlist,
+      view_person_list:state=>state.usershow.view_person_list,
+      loading0:state=>state.usershow.loading0,
+      person_list:state=>state.usershow.person_list
+>>>>>>> 2d41c96483b82a0307b6ae76aca14eb98e2310ea
     })
   },
   methods: {
