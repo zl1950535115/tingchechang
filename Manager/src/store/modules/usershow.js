@@ -40,7 +40,7 @@ personorserver(){
 },
 ViewPerson(){
   return new Promise((res,rej)=>{
-    ViewPerson().then((result)=>{
+    ViewPerson().then((result)=>{//方法
      state.Viewlist=result.data
     })
   })
