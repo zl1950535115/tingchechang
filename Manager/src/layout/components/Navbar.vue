@@ -23,7 +23,7 @@
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
-          <pan-thumb :image="image" />
+          <pan-thumb :image="userInfo.avatar" />
 
           <image-cropper
             v-show="imagecropperShow"
@@ -88,12 +88,7 @@ export default {
     return {
       imagecropperShow: false,
       imagecropperKey: 0,
-      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191',
-      userId: '',
-      userName: '',
-      userPwd: '',
-      identityId: '',
-      avatarImg: ''
+      userId: ''
     }
   },
   computed: {
@@ -107,9 +102,10 @@ export default {
       userInfo: state => state.user.userInfo
     })
   },
-  created() {
-    this.getInfo()
-    this.userId = this.userInfo.user_id
+  async created() {
+    await console.log(this.userInfo)
+    // this.userId = this.userInfo.user_id
+    // this.avatarImg = this.userInfo.avatar
   },
   methods: {
     ...mapActions({
@@ -126,7 +122,7 @@ export default {
     cropSuccess(e) {
       this.image = e[0].path
       this.imagecropperShow = false
-      this.set_user({ user_id: this.userId, avatar: this.image })
+      this.set_user({ user_id: this.userInfo.user_id, avatar: this.image })
     },
     close() {
       this.imagecropperShow = false

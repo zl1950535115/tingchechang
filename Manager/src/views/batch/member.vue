@@ -140,6 +140,7 @@ export default {
         box-sizing: border-box;
         padding:60px 24px 30px 24px;
         background: #f0f2f5;
+        overflow: auto;
     }
     .box_top{
         width: 100%;

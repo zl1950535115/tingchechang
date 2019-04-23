@@ -29,9 +29,10 @@ export function StudentDetail(params) {
 
 // 批卷成功接口
 export function bathchSucceed(params) {
+  console.log('bathchSucceed', params)
   return request({
     url: '/exam/student',
-    method: 'get',
-    params
+    method: 'put',
+    data: params
   })
 }

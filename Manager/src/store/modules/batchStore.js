@@ -41,6 +41,7 @@ const actions = {
     commit('updataStudentDetail', getStudentDetaily)
   },
   async getbathchSucceed({ commit }, payload) {
+    console.log('getbathchSucceed', payload)
     return await bathchSucceed(payload)
   }
 }

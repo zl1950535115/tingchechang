@@ -58,7 +58,7 @@ export default {
         //   message: '删除成功!'
         // })
         this.getbathchSucceed({
-          exam_student_id: this.exam_student_id
+          score: this.score
         })
       }).catch(() => {
         // this.$message({

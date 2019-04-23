@@ -63,9 +63,10 @@ const actions = {
   },
   // 更新用户信息
   async set_user({ commit }, payload) {
-    console.log(payload)
-    const data = await setUser(payload)
-    console.log(data)
+    await setUser(payload)
+    const data = await getInfo()
+    console.log(data, 'sadasdata')
+    commit('SET_USERINFO', data.data)
   },
   // remove token
   resetToken({ commit }) {
