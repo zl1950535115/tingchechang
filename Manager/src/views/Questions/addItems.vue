@@ -34,11 +34,12 @@
         </el-select>
       </div>
       <div class="textear">
-        <p>题目主题</p>
+        <p>题目答案</p>
         <div class="editor-container">
           <markdown-editor v-model="el.questions_answer" height="300px" class="mark" />
         </div>
       </div>
+
       <div class="btn">
         <el-button type="primary" @click="dialogVisible = true">提交</el-button>
       </div>
