@@ -36,13 +36,13 @@ export default {
       image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
     }
   },
-  computed() {
-    this.getInfo()
-  },
-  created: {
+  computed: {
     ...mapState({
-      SET_USERINFO: state => state.user.SET_USERINFO
+      userInfo: state => state.user.userInfo
     })
+  },
+  created() {
+    this.getInfo()
   },
   methods: {
     ...mapActions({
@@ -52,7 +52,7 @@ export default {
     cropSuccess(e) {
       this.image = e[0].path
       this.imagecropperShow = false
-      console.log(this.SET_USERINFO)
+      console.log(this.userInfo)
     },
     close() {
       this.imagecropperShow = false
