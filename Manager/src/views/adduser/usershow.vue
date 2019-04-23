@@ -6,11 +6,7 @@
     </div>
     <p class="Title">{{ radioValue }}</p>
     <div v-if="boxind==0" class="box_1">
-<<<<<<< HEAD
-      <el-table v-loading="loading0" :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))" style="width: 100%">
-=======
-      <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))"  style="width: 100%">
->>>>>>> 2d41c96483b82a0307b6ae76aca14eb98e2310ea
+      <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))" style="width: 100%">
         <el-table-column prop="user_name" label="用户名" width="360" />
         <el-table-column prop="user_pwd" min-width="500" label="密码" />
         <el-table-column prop="identity_text" label="身份" />
@@ -89,22 +85,13 @@ export default {
   },
   computed: {
     ...mapState({
-<<<<<<< HEAD
       userlist: state => state.usershow.username,
       userperson: state => state.usershow.userperson,
       apilist: state => state.usershow.apilist,
       Viewlist: state => state.usershow.Viewlist,
       view_person_list: state => state.usershow.view_person_list,
-      loading0: state => state.usershow.loading0
-=======
-      userlist:state=>state.usershow.username,
-      userperson:state=>state.usershow.userperson,
-      apilist:state=>state.usershow.apilist,
-      Viewlist:state=>state.usershow.Viewlist,
-      view_person_list:state=>state.usershow.view_person_list,
-      loading0:state=>state.usershow.loading0,
-      person_list:state=>state.usershow.person_list
->>>>>>> 2d41c96483b82a0307b6ae76aca14eb98e2310ea
+      loading0: state => state.usershow.loading0,
+      person_list: state => state.usershow.person_list
     })
   },
   methods: {
