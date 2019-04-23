@@ -36,13 +36,13 @@ export default {
       image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
     }
   },
-  computed() {
-    this.getInfo()
-  },
-  created: {
+  computed: {
     ...mapState({
       SET_USERINFO: state => state.user.SET_USERINFO
     })
+  },
+  created() {
+    this.getInfo()
   },
   methods: {
     ...mapActions({

@@ -77,6 +77,7 @@ export default {
         box-sizing: border-box;
         padding:0 24px 0 24px;
         background: #f0f2f5;
+        overflow: auto;
     }
     .tit{
         width: 100%;
