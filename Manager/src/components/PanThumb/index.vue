@@ -1,5 +1,5 @@
 <template>
-  <div :style="{zIndex:zIndex,height:height,width:width}" class="pan-item">
+  <div :style="{zIndex:zIndex}" class="pan-item">
     <div class="pan-info">
       <div class="pan-info-roles-container">
         <slot />
@@ -35,8 +35,8 @@ export default {
 
 <style scoped>
 .pan-item {
-  width: 200px;
-  height: 200px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: inline-block;
   position: relative;
@@ -45,7 +45,7 @@ export default {
 }
 
 .pan-info-roles-container {
-  padding: 20px;
+  /* padding: 20px; */
   text-align: center;
 }
 
@@ -66,14 +66,14 @@ export default {
   height: 8px;
   position: absolute;
   border-radius: 50%;
-  top: 40%;
+  /* top: 40%; */
   left: 95%;
   margin: -4px 0 0 -4px;
-  background: radial-gradient(ellipse at center, rgba(14, 14, 14, 1) 0%, rgba(125, 126, 125, 1) 100%);
-  box-shadow: 0 0 1px rgba(255, 255, 255, 0.9);
+  /* background: radial-gradient(ellipse at center, rgba(14, 14, 14, 1) 0%, rgba(125, 126, 125, 1) 100%);
+  box-shadow: 0 0 1px rgba(255, 255, 255, 0.9); */
 }
 
-.pan-info {
+/* .pan-info {
   position: absolute;
   width: inherit;
   height: inherit;
@@ -136,5 +136,5 @@ export default {
 .pan-item:hover .pan-info p a {
   opacity: 1;
   transform: translateX(0px) rotate(0deg);
-}
+} */
 </style>

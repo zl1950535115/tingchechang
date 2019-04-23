@@ -11,7 +11,7 @@
           <el-select slot="prepend" v-model="select" class="select" placeholder="请选择身份id">
             <el-option v-for="(item,index) in userData" :key="index" :label="item.identity_text" :value="index" />
           </el-select>
-          <div class="confim"><el-button type="primary" class="success" @click="adduser">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+          <div class="confim"><el-button type="primary" class="success" @click="adduser">确定</el-button><el-button class="reset" plain @click="plan">重置</el-button></div>
         </div>
 
         <div v-if="ind==1" class="addUser">
@@ -25,21 +25,21 @@
           <el-select slot="prepend" v-model="manger" class="select" placeholder="请选择他/她的身份" @change="selectnew">
             <el-option v-for="(item,index) in userData" :key="index" :label="item.identity_text" :value="index" />
           </el-select>
-          <div class="confim"><el-button type="primary" class="success" @click="stateuser">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+          <div class="confim"><el-button type="primary" class="success" @click="stateuser">确定</el-button><el-button class="reset" plain @click="reun">重置</el-button></div>
         </div>
 
       </div>
       <div class="person">
         <el-button class="active add_person">添加身份</el-button>
         <el-input v-model="person" clearable class="name_2" placeholder="请输入身份" />
-        <div class="confim"><el-button type="primary" class="success" @click="adduserperson">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="adduserperson">确定</el-button><el-button class="reset" plain @click="hot">重置</el-button></div>
       </div>
       <div class="add_api">
         <el-button class="active add_person">添加api接口权限</el-button>
         <el-input v-model="api_name" class="name_2" placeholder="请输入api接口权限名称" clearable />
         <el-input v-model="api_url" class="name_2" placeholder="请输入api接口权限url" clearable />
         <el-input v-model="api_fun" class="name_2" placeholder="请输入api接口权限方法" clearable />
-        <div class="confim"><el-button type="primary" class="success" @click="apiadds">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="apiadds">确定</el-button><el-button class="reset" plain @click="hots">重置</el-button></div>
       </div>
 
       <div class="add_view">
@@ -47,7 +47,7 @@
         <el-select slot="prepend" v-model="view_select" class="select" placeholder="请输入已有视图" @change="select_event">
           <el-option v-for="(item,index) in viewList" :key="index" :label="item.view_authority_text" :value="index" />
         </el-select>
-        <div class="confim"><el-button type="primary" class="success" @click="addview_person">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="addview_person">确定</el-button><el-button class="reset" plain @click="hotse">重置</el-button></div>
       </div>
       <div class="add_api_seting">
         <el-button class="active apibtn">给身份设置api接口权限</el-button>
@@ -57,7 +57,7 @@
         <el-select v-model="user_add_manger" class="select" placeholder="请选择api接口权限" @change="apiselecttwo">
           <el-option v-for="(item,index) in apilist" :key="index" :label="item.api_authority_text" :value="index" />
         </el-select>
-        <div class="confim"><el-button type="primary" class="success" @click="apiadd">确定</el-button><el-button class="reset" plain>重置</el-button></div>
+        <div class="confim"><el-button type="primary" class="success" @click="apiadd">确定</el-button><el-button class="reset" plain @click="hotses">重置</el-button></div>
       </div>
 
       <div class="add_api_seting">
@@ -146,8 +146,33 @@ export default {
       personApi: 'adduser/personApi',
       viewaddApi: 'adduser/viewaddApi'
     }),
+    hot() {
+      this.person = ''
+    },
+    reun() {
+      this.new_name = ''
+      this.new_pwd = ''
+      this.manger = ''
+      this.userselect = ''
+    },
+    hotses() {
+      this.user_add_api = ''
+    },
+    plan() {
+      this.select = ''
+      this.name = ''
+      this.pwd = ''
+    },
     tab(index) {
       this.ind = index
+    },
+    hots() {
+      this.api_name = ''
+      this.api_url = ''
+      this.api_fun = ''
+    },
+    hotse() {
+      this.view_select = ''
     },
     adduser() { // 添加用户的逻辑
       var uPattern = /^[a-zA-Z0-9_-]{4,16}$/
@@ -287,6 +312,7 @@ export default {
     },
     returns() {
       this.user_view_manger = ''
+      this.user_view_id = ''
     }
   }
 }

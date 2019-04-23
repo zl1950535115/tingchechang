@@ -41,7 +41,7 @@ const actions = {
   // user login 登录接口
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
-    var res = await login({ user_name: username, user_pwd: password })
+    const res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
     return res
   },
@@ -62,8 +62,9 @@ const actions = {
     return []
   },
   // 更新用户信息
-  async set_user({ commit }, paylpoad) {
-    const data = await setUser()
+  async set_user({ commit }, payload) {
+    console.log(payload)
+    const data = await setUser(payload)
     console.log(data)
   },
   // remove token

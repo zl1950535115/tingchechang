@@ -2,15 +2,15 @@
   <div>
     <pan-thumb :image="image" />
 
-    <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
+    <el-button type="primary" icon="upload" style="position: absolute;margin-left: 40px;" @click="imagecropperShow=true">
       Change Avatar
     </el-button>
 
     <image-cropper
       v-show="imagecropperShow"
       :key="imagecropperKey"
-      :width="300"
-      :height="300"
+      :width="50"
+      :height="50"
       url="http://123.206.55.50:11000/upload"
       lang-type="en"
       @close="close"
@@ -48,6 +48,8 @@ export default {
   },
   created() {
     this.getInfo()
+    console.log(this.userInfo)
+    this.userId = this.userInfo.user_id
   },
   methods: {
     ...mapActions({
@@ -57,7 +59,7 @@ export default {
     cropSuccess(e) {
       this.image = e[0].path
       this.imagecropperShow = false
-      console.log(this.userInfo)
+      this.set_user({ user_id: this.userId })
     },
     close() {
       this.imagecropperShow = false
