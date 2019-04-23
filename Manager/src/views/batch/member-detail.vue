@@ -5,7 +5,8 @@
       <div class="main_left">
         <div v-for="(item,index) in StudentDetails?StudentDetails.questions:[]" :key="index" class="item_exam">
           <p>{{ index + 1 }}、{{ item.title }}<span class="type_text">{{ item.questions_type_text }}</span></p>
-          <p>{{ item.questions_stem }}</p>
+          <markdown-editor ref="markdownEditor" v-model="item.questions_stem" :options="{hideModeSwitch:true,previewStyle:'tab'}" height="200px" />
+
         </div>
       </div>
       <div class="main_right">
@@ -20,12 +21,16 @@
         <el-button class="yesBtn" type="text" @click="open">确定</el-button>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
+import MarkdownEditor from '@/components/MarkdownEditor'
 import { mapState, mapActions } from 'vuex'
 export default {
+  name: 'MarkdownDemo',
+  components: { MarkdownEditor },
   data() {
     return {
       name: '王子音',
@@ -40,10 +45,7 @@ export default {
     })
   },
   created() {
-    // this.exam_student_id =
-    this.getStudentDetail({
-      exam_student_id: this.$route.query.exam_student_id
-    })
+    this.getStudentDetail(this.$route.query.exam_student_id)
   },
   methods: {
     open() {
@@ -90,6 +92,7 @@ export default {
         box-sizing: border-box;
         padding:0 24px 0 24px;
         background: #f0f2f5;
+        overflow: auto;
     }
     .yesBtn{
       text-align: center;
@@ -118,10 +121,10 @@ export default {
     }
     .main_left{
         width:74%;
-        height: 200px;
         background: #fff;
         border-radius: 10px;
         overflow: hidden;
+        padding: 30px;
     }
     .main_right{
         width: 20%;
@@ -163,7 +166,7 @@ export default {
         margin-top: 15px;
     }
     .item_exam{
-      border: 0.5px solid #eee;
+      border-bottom: 0.5px solid #eee;
       padding-bottom:20px;
     }
     .type_text{

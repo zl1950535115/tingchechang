@@ -167,7 +167,7 @@ export default {
     }
    .box_top span{
             font-size:14px;
-        }
+    }
     .tit{
         width: 100%;
         padding: 10px 0px 0px 30px;
@@ -180,6 +180,7 @@ export default {
         border-radius: 10px;
         overflow: hidden;
         background: #fff;
+        margin-top:30px;
     }
     .table{
         width:100%;
