@@ -46,7 +46,7 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, viewAuthority) {
+  async generateRoutes({ commit }, viewAuthority) {
     // 根据view_id 来确定是否显示路由
     var view_ids = viewAuthority.map(item => item.view_id)
     // 过滤得到用户可以访问到的路由

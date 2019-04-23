@@ -6,7 +6,7 @@
         <el-form-item class="babels" label="考试类型:" prop="exam_id" required>
           <el-select v-model="info.exam_id" class="select" style="width: 150px;">
             <el-option
-              v-for="( item) in examTypeList"
+              v-for="item in examTypeList"
               :key="item.exam_id"
               :label="item.exam_name"
               :value="item.exam_id"
@@ -16,7 +16,7 @@
         <el-form-item class="babels" label="课程:" prop="subject_id" required>
           <el-select v-model="info.subject_id" class="select" style="width: 150px;">
             <el-option
-              v-for="( item) in subjectList"
+              v-for="item in subjectList"
               :key="item.subject_id"
               :label="item.subject_text"
               :value="item.subject_id"
@@ -159,7 +159,6 @@ export default {
 .wrapper {
   position: relative;
   width: 100%;
-  height: calc(100vh - 84px);
   background: #f0f2f5;
   padding: 24px;
   box-sizing: border-box;
