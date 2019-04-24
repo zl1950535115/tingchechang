@@ -1,4 +1,4 @@
-import { classify, examType, subject, getQuestionsType, questions, userIfo, condition, questionsnew, insertQuestionsType, delQuestionsType } from '@/api/addclassify'
+import { classify, examType, subject, getQuestionsType, questions, userIfo, condition, questionsnew, insertQuestionsType, delQuestionsType, update } from '@/api/addclassify'
 const state = {
   data: [],
   type: [],
@@ -68,7 +68,11 @@ const actions = {
   },
   async delQuestionsType({ commit }, payload) {
     const del = await delQuestionsType(payload)
-    console.log('aaa...', del)
+    console.log('a...', del)
+  },
+  async update({ commit }, payload) {
+    const UpDate = await update(payload)
+    console.log('aaa...', UpDate)
   }
 
 }
