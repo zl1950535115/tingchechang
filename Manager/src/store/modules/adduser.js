@@ -29,6 +29,7 @@ const actions={
   adduser({commit},payload){
       return new Promise((res,rej)=>{
         addUser(payload).then((results)=>{
+          console.log(results)
           state.code=results.code
           res()
         })
@@ -37,7 +38,7 @@ const actions={
   username({commit},payload){
     return new Promise((res,rej)=>{
       userName(payload).then((results)=>{
-
+        console.log(results)
         if(results.code==1){
           state.username=results.data
           res()
