@@ -179,14 +179,8 @@ export default {
       var Reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
       var blone=Reg.test(this.pwd)
       var userblone=uPattern.test(this.name)
-      // this.addUserValue = this.userData[this.select]
-      if(!this.userData){
-           this.$message.error('没有权限')
-      }else{
-        if(this.addUserValue=null){
-          this.$message.error('请先选择')
-        }else{
-          if (this.name == '' || this.addUserValue == null || this.pwd == '') {
+      this.addUserValue = this.userData[this.select]
+      if (this.name == '' || this.addUserValue == null || this.pwd == '') {
         this.$message.error('请检查未填写值')
       } else if(blone == false){
            this.$message.error('密码格式不正确')
@@ -211,8 +205,6 @@ export default {
             this.$message.error('用户已经存在')
           }
         })
-      }
-        }
       }
     },
     selectnew(e){
