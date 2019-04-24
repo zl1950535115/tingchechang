@@ -6,7 +6,7 @@
     </div>
     <p class="Title">{{ radioValue }}</p>
     <div v-if="boxind==0" class="box_1">
-      <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))"  style="width: 100%">
+      <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))" style="width: 100%">
         <el-table-column prop="user_name" label="用户名" width="360" />
         <el-table-column prop="user_pwd" min-width="500" label="密码" />
         <el-table-column prop="identity_text" label="身份" />
@@ -60,7 +60,7 @@
 
 <script>
 import titles from '../../components/Title_info/Title.vue'
-import {mapState, mapActions} from "vuex"
+import { mapState, mapActions } from 'vuex'
 export default {
   components: {
     titleinfo: titles
@@ -72,10 +72,10 @@ export default {
       radioValue: '用户数据',
       boxind: 0,
       showsize: 5, // 身份和视图权限关系每页显示的条目
-      currentpage: 1, // 身份和视图权限关系的当前页
+      currentpage: 1 // 身份和视图权限关系的当前页
     }
   },
-    created(){
+  created() {
     this.Userlist()
     this.userData()
     this.userapi()
@@ -83,53 +83,52 @@ export default {
     this.ViewPerson();
     this.View_serverPerson()
   },
-  computed:{
+  computed: {
     ...mapState({
-      userlist:state=>state.usershow.username,
-      userperson:state=>state.usershow.userperson,
-      apilist:state=>state.usershow.apilist,
-      Viewlist:state=>state.usershow.Viewlist,
-      view_person_list:state=>state.usershow.view_person_list,
-      loading0:state=>state.usershow.loading0,
-      person_list:state=>state.usershow.person_list
+      userlist: state => state.usershow.username,
+      userperson: state => state.usershow.userperson,
+      apilist: state => state.usershow.apilist,
+      Viewlist: state => state.usershow.Viewlist,
+      view_person_list: state => state.usershow.view_person_list,
+      loading0: state => state.usershow.loading0,
+      person_list: state => state.usershow.person_list
     })
   },
   methods: {
     ...mapActions({
-      Userlist:'usershow/userlist',
-      userData:'usershow/userData',
-      userapi:'usershow/userapi',
-      personorserver:'usershow/personorserver',
-      ViewPerson:'usershow/ViewPerson',
-      View_serverPerson:'usershow/View_serverPerson'
+      Userlist: 'usershow/userlist',
+      userData: 'usershow/userData',
+      userapi: 'usershow/userapi',
+      personorserver: 'usershow/personorserver',
+      ViewPerson: 'usershow/ViewPerson',
+      View_serverPerson: 'usershow/View_serverPerson'
     }),
     selectValue(e) {
       this.boxind = this.topbutton.indexOf(e)
       switch (this.boxind) {
         case 0:
           this.Userlist()
-          break;
+          break
         case 1:
           this.userData()
-          break;
+          break
         case 2:
-        this.userapi()
-          break;
+          this.userapi()
+          break
         case 3:
-        this.personorserver()
-          break;
+          this.personorserver()
+          break
         case 4:
-        this.ViewPerson()
-          break;
+          this.ViewPerson()
+          break
         case 5:
-        this.View_serverPerson()
-          break;
+          this.View_serverPerson()
+          break
         default:
-          break;
+          break
       }
       this.showsize = 5
       this.currentpage = 1
-
     },
     handleSizeChange(e) {
       this.showsize = e

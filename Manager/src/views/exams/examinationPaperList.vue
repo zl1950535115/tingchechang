@@ -2,32 +2,34 @@
   <div class="wrapper">
     <p class="text">试卷列表</p>
     <div class="content">
-        <el-form :inline="true" ref="info" :model="info" :rules="rules" class="demo-form-inline">
-          <el-form-item class="babels" label="考试类型:" prop="exam_id" required>
-              <el-select v-model="info.exam_id" class="select" style="width: 150px;">
-                  <el-option
-                  v-for='( item, index) in examTypeList'
-                  :key="item.exam_id"
-                  :label="item.exam_name"
-                  :value="item.exam_id" />
-              </el-select>
-            </el-form-item>
-          <el-form-item class="babels" label="课程:" prop="subject_id" required>
-              <el-select v-model="info.subject_id" class="select" style="width: 150px;">
-                <el-option 
-                v-for='( item, index) in subjectList' 
-                :key="item.subject_id"
-                :label="item.subject_text"
-                :value="item.subject_id" />
-              </el-select>
-            </el-form-item>
-          <el-form-item>
-              <el-button class="btn" type="primary" @click="submitForm('info')" >
-                  <i class="el-icon-search" />
-                  查询
-                </el-button>
-          </el-form-item>
-        </el-form>
+      <el-form ref="info" :inline="true" :model="info" :rules="rules" class="demo-form-inline">
+        <el-form-item class="babels" label="考试类型:" prop="exam_id" required>
+          <el-select v-model="info.exam_id" class="select" style="width: 150px;">
+            <el-option
+              v-for="item in examTypeList"
+              :key="item.exam_id"
+              :label="item.exam_name"
+              :value="item.exam_id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item class="babels" label="课程:" prop="subject_id" required>
+          <el-select v-model="info.subject_id" class="select" style="width: 150px;">
+            <el-option
+              v-for="item in subjectList"
+              :key="item.subject_id"
+              :label="item.subject_text"
+              :value="item.subject_id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button class="btn" type="primary" @click="submitForm('info')">
+            <i class="el-icon-search" />
+            查询
+          </el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <div class="content">
       <div class="nav">
@@ -41,34 +43,34 @@
       <el-table :data="list" :header-cell-style="tableHeaderColor" style="width: 100%">
         <el-table-column label="试卷信息">
           <template slot-scope="scope">
-            <p>{{scope.row.title}}</p>
-            <p>考试时间:{{0}} {{scope.row.number}}道题{{scope.row.status}}分</p>
+            <p>{{ scope.row.title }}</p>
+            <p>考试时间:{{ 0 }} {{ scope.row.number }}道题{{ scope.row.status }}分</p>
           </template>
         </el-table-column>
         <el-table-column label="班级">
           <template slot-scope="scope">
             <p>教室班级</p>
-            <p><span v-for="(item, index) in scope.row.grade_name">{{item}}      </span></p>
+            <p><span v-for="(item, index) in scope.row.grade_name" :key="index">{{ item }}      </span></p>
           </template>
         </el-table-column>
         <el-table-column label="创建人">
-            <template slot-scope="scope">
-                <p>{{ scope.row.user_name }}</p>
-              </template>
+          <template slot-scope="scope">
+            <p>{{ scope.row.user_name }}</p>
+          </template>
         </el-table-column>
         <el-table-column label="开始时间">
-          <template>
-            <span>详情</span>
+          <template slot-scope="scope">
+            <span>{{ scope.row.start_time }}</span>
           </template>
         </el-table-column>
         <el-table-column label="结束时间">
-          <template>
-            <span>详情</span>
+          <template slot-scope="scope">
+            <span>{{ scope.row.end_time }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="87">
           <template slot-scope="scope">
-            <span class="detail" @click='gotoDetail(scope.row.exam_exam_id)'>详情</span>
+            <span class="detail" @click="gotoDetail(scope.row.exam_exam_id)">详情</span>
           </template>
         </el-table-column>
       </el-table>
@@ -94,8 +96,8 @@ export default {
         ],
         subject_id: [
           { required: true, message: '请选择课程', trigger: 'change' }
-        ],
-      },
+        ]
+      }
     }
   },
   created() {
@@ -114,12 +116,12 @@ export default {
     ...mapActions({
       examType: 'exams/examType',
       subject: 'exams/subject',
-      getList: 'exams/getList',
+      getList: 'exams/getList'
     }),
     // 点击跳转详情
-    gotoDetail(exam_exam_id){
+    gotoDetail(exam_exam_id) {
       // console.log(exam_exam_id)
-      this.$router.push({path:'detail' + '?id=' + exam_exam_id})
+      this.$router.push({ path: 'detail' + '?id=' + exam_exam_id })
     },
     // 点击改变样式
     changeType(type) {
@@ -131,10 +133,10 @@ export default {
       }
     },
     submitForm(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async(valid) => {
         if (valid) {
-          // 转成毫秒
-        this.getList(this.info)
+        // 转成毫秒
+          this.getList(this.info)
         } else {
           console.log('error submit!!')
           return false
@@ -157,7 +159,6 @@ export default {
 .wrapper {
   position: relative;
   width: 100%;
-  height: calc(100vh - 84px);
   background: #f0f2f5;
   padding: 24px;
   box-sizing: border-box;
