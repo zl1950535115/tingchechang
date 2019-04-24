@@ -2,13 +2,13 @@ import {Userlist,userData,userapi,apilist,person_or_server,ViewPerson,View_serve
 import { stat } from "fs";
 
 const state={
-  username:'', //第一个表格的数据列表
-  userperson:'', //身份数据
-  apilist:'', // api列表
-  Viewlist:'', // 视图权限列表接口
-  view_person_list:'', // 用户与权限的关系列表
+  username:[], //第一个表格的数据列表
+  userperson:[], //身份数据
+  apilist:[], // api列表
+  Viewlist:[], // 视图权限列表接口
+  view_person_list:[], // 用户与权限的关系列表
   loading0:true,
-  person_list:''
+  person_list:[]
 }
 const actions={
   userlist({commit},payload){   //获取第一个表格的数据
@@ -16,6 +16,7 @@ const actions={
       Userlist().then((result)=>{
         if(result){
           state.username=result.data
+          console.log(state.username)
           state.loading0=false
           res()
         }else{
