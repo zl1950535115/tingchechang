@@ -53,3 +53,11 @@ export function questionsnew() {
 export const update = data => {
   return request.post('/exam/questions/update', data)
 }
+
+export const insertQuestionsType = params => {
+  return request.get('/exam/insertQuestionsType', { params })
+}
+
+export const delQuestionsType = data => {
+  return request.post('/exam/delQuestionsType', data)
+}
