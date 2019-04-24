@@ -189,7 +189,7 @@ export default {
         this.$message.error('用户名格式不正确')
         return false
       } else {
-        this.addusers({ user_name: this.name, user_pwd: this.pwd, identity_id: this.addUserValue }).then(() => {
+        this.addusers({ user_name: this.name, user_pwd: this.pwd, identity_id: this.addUserValue.identity_id }).then(() => {
           if (this.code === 1) {
             this.$message({
               message: '恭喜你，添加成功',
