@@ -36,9 +36,13 @@ router.beforeEach(async(to, from, next) => {
           console.log('权限信息...', viewAuthority)
           // 通过权限生成路由
           const accessRoutes = await store.dispatch('permission/generateRoutes', viewAuthority)
+          console.log('accessRoutes', accessRoutes)
           // 实现动态路由转为静态路由
-          router.addRoutes(accessRoutes)
-          next({ ...to, replace: true })
+          if (accessRoutes) {
+            router.addRoutes(accessRoutes)
+            next({ ...to, replace: true })
+
+          }
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
