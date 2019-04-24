@@ -12,7 +12,7 @@
         <h2 class="name">{{ StudentDetails?StudentDetails.student_name:"" }}</h2>
         <div class="score">
           <p>得分:</p>
-          <h1>{{ score }}</h1>
+          <h1>{{ StudentDetails.score==0?score: StudentDetails.score }}</h1>
         </div>
         <div class="block">
           <el-slider v-model="score" class="slider" />
@@ -45,6 +45,7 @@ export default {
     })
   },
   created() {
+    console.log('StudentDetails...', this.StudentDetails)
     this.getStudentDetail(this.$route.query.exam_student_id)
     this.score = this.scores
     console.log('this.$route.query.exam_student_id...', this.$route.query.exam_student_id)

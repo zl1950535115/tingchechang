@@ -20,8 +20,8 @@ export function StudentList(params) {
 // 学生试题详情接口
 export function StudentDetail(params) {
   return request({
-    url: '/exam/student/4edl4i-k0rr7a-b3yna-f87a9w',
-    // url: '/exam/student/' + params,
+    // url: '/exam/student/4edl4i-k0rr7a-b3yna-f87a9w',
+    url: '/exam/student/' + params,
     method: 'get',
     params
   })
