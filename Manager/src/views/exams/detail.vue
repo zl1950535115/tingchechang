@@ -6,21 +6,13 @@
         <div class="content">
           <div v-for="(item,index) in this.detail.questions" :key="index" class="style_questionitem__3ETlC">
             <h4>{{ index+1 }}、{{ item.questions_type_text }}</h4>
-            <div class="markdown">
-              <pre>
-{{ item.questions_stem }}
-                  </pre>
-            </div>
+            <VueMarkdown :source="item.questions_stem" ></VueMarkdown>
           </div>
         </div>
         <div class="content">
           <div v-for="(item,index) in this.detail.questions" :key="index" class="style_questionitem__3ETlC">
             <h4>{{ index+1 }}、{{ item.questions_type_text }}</h4>
-            <div class="markdown">
-              <pre>
-      {{ item.questions_answer }}
-                        </pre>
-            </div>
+            <VueMarkdown :source="item.questions_answer" ></VueMarkdown>
           </div>
         </div>
       </div>
@@ -30,11 +22,10 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import VueMarkdown from 'vue-markdown'
 export default {
-  data() {
-    return {
-
-    }
+  components:{
+VueMarkdown
   },
   computed: {
     ...mapState({
@@ -54,6 +45,14 @@ export default {
 </script>
 
 <style scoped>
+  .content/deep/code{
+    white-space:normal;
+    word-break:break-all;
+  }
+  .content/deep/.style_questionitem__3ETlC{
+    white-space:normal;
+    word-break:break-all;
+  }
   p {
     line-height: 0;
     padding-bottom: 20px;
