@@ -100,10 +100,10 @@ h4 {
 }
 .top-title {
   text-align: center;
-  p {
+}
+.top-title p {
     font-size: 14px;
   }
-}
 .style_questionitem__3ETlC {
   text-align: left;
   border: 1px solid #ccc;
