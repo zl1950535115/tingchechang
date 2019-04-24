@@ -20,7 +20,7 @@ export function userapi() {
 }
 export function person_or_server() {
   return request({
-    url: '/user/identity_api_authority_relationy',
+    url: '/user/identity_api_authority_relation',
     method: 'get',
   })
 }

@@ -2,15 +2,15 @@
   <div>
     <pan-thumb :image="image" />
 
-    <el-button type="primary" icon="upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
+    <el-button type="primary" icon="upload" style="position: absolute;margin-left: 40px;" @click="imagecropperShow=true">
       Change Avatar
     </el-button>
 
     <image-cropper
       v-show="imagecropperShow"
       :key="imagecropperKey"
-      :width="300"
-      :height="300"
+      :width="50"
+      :height="50"
       url="http://123.206.55.50:11000/upload"
       lang-type="en"
       @close="close"
@@ -33,16 +33,26 @@ export default {
     return {
       imagecropperShow: false,
       imagecropperKey: 0,
-      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
+      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191',
+      userId: '',
+      userName: '',
+      userPwd: '',
+      identityId: '',
+      avatarImg: ''
     }
   },
   computed: {
     ...mapState({
-      SET_USERINFO: state => state.user.SET_USERINFO
+      userInfo: state => state.user.userInfo
     })
   },
   created() {
     this.getInfo()
+<<<<<<< HEAD
+    console.log(this.userInfo)
+    this.userId = this.userInfo.user_id
+=======
+>>>>>>> 27bbf92d7f65666400e71d93f5a15180b40a0eb7
   },
   methods: {
     ...mapActions({
@@ -52,7 +62,7 @@ export default {
     cropSuccess(e) {
       this.image = e[0].path
       this.imagecropperShow = false
-      console.log(this.SET_USERINFO)
+      this.set_user({ user_id: this.userId })
     },
     close() {
       this.imagecropperShow = false
