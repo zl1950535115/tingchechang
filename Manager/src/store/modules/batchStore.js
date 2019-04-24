@@ -3,7 +3,8 @@ const state = {
   classLists: [],
   StudentListDatas: [],
   StudentDetails: {},
-  scores: 0
+  scores: 0,
+  bathchSucceedCode: 0
 }
 
 const mutations = {
@@ -27,6 +28,9 @@ const mutations = {
   },
   updatascore(state, payload) {
     state.scores = payload.score
+  },
+  updataSucceedyCode(state, payload) {
+    state.bathchSucceedCode = payload.code
   }
 }
 
@@ -44,7 +48,8 @@ const actions = {
     commit('updataStudentDetail', getStudentDetaily)
   },
   async getbathchSucceed({ commit }, payload) {
-    return await bathchSucceed(payload)
+    const getbathchSucceedy = await bathchSucceed(payload)
+    commit('updataSucceedyCode', getbathchSucceedy)
   }
 }
 

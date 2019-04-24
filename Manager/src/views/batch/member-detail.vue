@@ -34,7 +34,8 @@ export default {
       name: '王子音',
       dialogVisible: false,
       exam_student_id: 0,
-      score: 0
+      score: 0,
+      newquestions: []
     }
   },
   computed: {
@@ -66,11 +67,24 @@ export default {
         this.getScore({
           score: this.score
         })
+        this.open6()
       }).catch(() => {
         // this.$message({
         //   type: 'info'
         //   // message: '已取消删除'
         // })
+      })
+    },
+    open6() {
+      this.$confirm('批卷结果, 批改试卷成功 ' + this.StudentDetails.student_name + '得分' + this.score, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
+        this.$router.push({ path: '/mark/member?id=' + this.$route.query.grade_id })
+      }).catch(() => {
+
       })
     },
     ...mapActions({
