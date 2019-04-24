@@ -31,8 +31,8 @@ export function StudentDetail(params) {
 export function bathchSucceed(params) {
   console.log('bathchSucceed', params)
   return request({
-    url: '/exam/student',
+    url: '/exam/student/4edl4i-k0rr7a-b3yna-f87a9w',
     method: 'put',
-    params
+    data: params
   })
 }

@@ -5,8 +5,7 @@
       <div class="main_left">
         <div v-for="(item,index) in StudentDetails?StudentDetails.questions:[]" :key="index" class="item_exam">
           <p>{{ index + 1 }}、{{ item.title }}<span class="type_text">{{ item.questions_type_text }}</span></p>
-          <markdown-editor ref="markdownEditor" v-model="item.questions_stem" :options="{hideModeSwitch:true,previewStyle:'tab'}" height="200px" />
-
+          <vueMarkdown class="markdown">{{ item.questions_stem }}</vueMarkdown>
         </div>
       </div>
       <div class="main_right">
@@ -21,31 +20,33 @@
         <el-button class="yesBtn" type="text" @click="open">确定</el-button>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import MarkdownEditor from '@/components/MarkdownEditor'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
+import vueMarkdown from 'vue-markdown'
 export default {
   name: 'MarkdownDemo',
-  components: { MarkdownEditor },
+  components: { vueMarkdown },
   data() {
     return {
       name: '王子音',
-      score: 0,
       dialogVisible: false,
-      exam_student_id: 0
+      exam_student_id: 0,
+      score: 0
     }
   },
   computed: {
     ...mapState({
-      StudentDetails: state => state.batchStore.StudentDetails
+      StudentDetails: state => state.batchStore.StudentDetails,
+      scores: state => state.batchStore.scores
     })
   },
   created() {
     this.getStudentDetail(this.$route.query.exam_student_id)
+    this.score = this.scores
+    console.log('this.$route.query.exam_student_id...', this.$route.query.exam_student_id)
   },
   methods: {
     open() {
@@ -62,6 +63,9 @@ export default {
         this.getbathchSucceed({
           score: this.score
         })
+        this.getScore({
+          score: this.score
+        })
       }).catch(() => {
         // this.$message({
         //   type: 'info'
@@ -72,6 +76,9 @@ export default {
     ...mapActions({
       getStudentDetail: 'batchStore/getStudentDetail',
       getbathchSucceed: 'batchStore/getbathchSucceed'
+    }),
+    ...mapMutations({
+      getScore: 'batchStore/updatascore'
     }),
     handleClose(done) {
       this.$confirm('确认关闭？').then(_ => {
@@ -86,6 +93,9 @@ export default {
 </script>
 
 <style scoped>
+    .markdown /deep/ img{
+      width: 100%;
+    }
     .box{
         width: 100%;
         box-sizing: border-box;
