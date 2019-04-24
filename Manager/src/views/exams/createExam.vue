@@ -1,8 +1,9 @@
 <template>
   <div class="add-layout">
+    
     <h2>创建试卷</h2>
     <div class="add-layout-content">
-      <el-button type="text" @click="showDialog">添加新题</el-button>
+      <button class="btn" @click="showDialog">添加新题</button>
       <div class="content-list">
         <div class="top-title">
           <h3>{{ pageDetail.title }}</h3>
@@ -13,22 +14,21 @@
             <h4>{{ index + 1 }}、{{ item.questions_type_text }}
               <span @click="del(index)">删除</span>
             </h4>
-            <div class="markdown">
-              <pre>
-{{ item.questions_stem }}
-              </pre>
-            </div>
+            <VueMarkdown :source="item.questions_stem" ></VueMarkdown>
           </div>
         </div>
       </div>
-      <el-button type="primary" @click="create">创建试卷</el-button>
+     <div class="add">
+        <el-button type="primary" @click="create">创建试卷</el-button>
+     </div>
     </div>
     <div v-show="flag" class="add-drawer">
       <div class="mask" @click="mask" />
       <div class="add-drawer-right">
         <p class="title">所有试题</p>
         <div v-for="(item, index) in allExams" :key="index" class="exam" @click="changeEaxm(item)">
-          {{ index + 1 }} 、 {{ item.questions_type_text }}：<br>{{ item.questions_stem }}
+          {{ index + 1 }} 、 {{ item.questions_type_text }}:
+          <VueMarkdown :source="item.questions_stem" ></VueMarkdown>
         </div>
       </div>
     </div>
@@ -37,12 +37,16 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import VueMarkdown from 'vue-markdown'
 export default {
   data() {
     return {
       pageDetail: {},
       flag: false
     }
+  },
+  components:{
+    VueMarkdown
   },
   created() {
     this.pageDetail = JSON.parse(window.localStorage.getItem('exam'))
@@ -57,18 +61,21 @@ export default {
       renewal: 'exams/renewal',
       getAll: 'exams/getAll'
     }),
-    mask() {
-      this.flag = false
-    },
-    changeEaxm(item) {
+    changeEaxm(item){
       this.pageDetail.questions.push(item)
       window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       this.flag = false
     },
-    showDialog(item) {
+    mask() {
+      this.flag = false
+    },
+    created() {
+      this.pageDetail = JSON.parse(window.localStorage.getItem('exam'))
+    },
+    async showDialog(item) {
       if (this.pageDetail.questions.length < this.pageDetail.number) {
+       await this.getAll()
         this.flag = true
-        this.getAll()
       } else {
         this.$alert('请先删除再添加！', '提示', {
           confirmButtonText: '确定'
@@ -76,6 +83,8 @@ export default {
       }
     },
     del(index) {
+      this.$forceUpdate();
+      window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -83,9 +92,15 @@ export default {
         center: true,
         customClass: 'warning'
       }).then(() => {
+        console.log(1)
         this.pageDetail.questions.splice(index, 1)
         window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
-      })
+      }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
     },
     async create() {
       // 要用exam_exam_id 的字符串
@@ -103,17 +118,40 @@ export default {
 </script>
 
 <style scoped>
+  .add/deep/.el-button.el-button--primary.el-button--medium{
+    display: block;
+    margin: 0 auto;
+  }
+  .btn{
+    padding: 5px 10px;
+    background: #fff;
+    outline: none;
+    border: 1px solid rgb(24, 144, 255);
+    font-size: 14px;
+    color: rgb(24, 144, 255);
+    border-radius: 5px;
+  }
+  .list/deep/code{
+    white-space:normal;
+  }
+  .list{
+    white-space:normal;
+    word-break:break-all;
+  }
   .exam{
+   cursor: pointer;
+  }
+  .add-drawer-right{
     padding: 10px 10px;
     line-height: 30px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
+    /* -webkit-line-clamp: 4; */
     overflow: hidden;
     margin: 0 10px;
     margin-bottom: 20px;
     background: #f0f2f5;
-    cursor: pointer;
+
   }
   @keyframes fade-in {
   0% {
@@ -143,7 +181,7 @@ export default {
   }
   .add-drawer-right {
     animation: fade-in;
-    animation-duration: 0.3s;
+    animation-duration: 0.2s;
     width: 40%;
     height: 100%;
     position: relative;
