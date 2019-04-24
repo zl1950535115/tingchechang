@@ -22,12 +22,14 @@ const markRouter = {
       path: 'member',
       component: () => import('@/views/batch/member'),
       name: 'KeyboardChart',
+      hidden: true,
       meta: { title: '', noCache: true, view_id: 'main-examPaperClassmate' }
     },
     {
       path: 'member-detail',
       component: () => import('@/views/batch/member-detail'),
       name: 'KeyboardChart',
+      hidden: true,
       meta: { title: '', noCache: true, view_id: 'main-examDetail' }
     }
   ]

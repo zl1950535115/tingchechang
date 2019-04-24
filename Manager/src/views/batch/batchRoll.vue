@@ -73,10 +73,10 @@ export default {
 <style scoped>
     .box{
         width: 100%;
-        height: calc(100vh - 84px);
         box-sizing: border-box;
         padding:0 24px 0 24px;
         background: #f0f2f5;
+        overflow: auto;
     }
     .tit{
         width: 100%;

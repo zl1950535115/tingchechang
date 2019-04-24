@@ -22,7 +22,19 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
+          <pan-thumb :image="userInfo.avatar" />
+
+          <image-cropper
+            v-show="imagecropperShow"
+            :key="imagecropperKey"
+            :width="300"
+            :height="300"
+            url="http://123.206.55.50:11000/upload"
+            lang-type="en"
+            @close="close"
+            @crop-upload-success="cropSuccess"
+          />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -39,6 +51,9 @@
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
+          <el-dropdown-item divided>
+            <span style="display:block;" @click="imagecropperShow=true">更改头像</span>
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -46,7 +61,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
@@ -54,6 +69,8 @@ import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
+import ImageCropper from '@/components/ImageCropper'
+import PanThumb from '@/components/PanThumb'
 
 export default {
   components: {
@@ -63,7 +80,16 @@ export default {
     Screenfull,
     SizeSelect,
     LangSelect,
-    Search
+    Search,
+    ImageCropper,
+    PanThumb
+  },
+  data() {
+    return {
+      imagecropperShow: false,
+      imagecropperKey: 0,
+      userId: ''
+    }
   },
   computed: {
     ...mapGetters([
@@ -71,15 +97,35 @@ export default {
       'name',
       'avatar',
       'device'
-    ])
+    ]),
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
+  },
+  async created() {
+    await console.log(this.userInfo)
+    // this.userId = this.userInfo.user_id
+    // this.avatarImg = this.userInfo.avatar
   },
   methods: {
+    ...mapActions({
+      set_user: 'user/set_user',
+      getInfo: 'user/getInfo'
+    }),
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    cropSuccess(e) {
+      this.image = e[0].path
+      this.imagecropperShow = false
+      this.set_user({ user_id: this.userInfo.user_id, avatar: this.image })
+    },
+    close() {
+      this.imagecropperShow = false
     }
   }
 }
@@ -146,7 +192,6 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
         position: relative;
 
         .user-avatar {

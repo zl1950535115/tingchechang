@@ -1,4 +1,4 @@
-import { login, logout, getInfo, getViewAuthority } from '@/api/user'
+import { login, logout, getInfo, getViewAuthority, setUser } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -41,7 +41,7 @@ const actions = {
   // user login 登录接口
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
-    var res = await login({ user_name: username, user_pwd: password })
+    const res = await login({ user_name: username, user_pwd: password })
     setToken(res.token)
     return res
   },
@@ -60,6 +60,13 @@ const actions = {
       return data.data
     }
     return []
+  },
+  // 更新用户信息
+  async set_user({ commit }, payload) {
+    await setUser(payload)
+    const data = await getInfo()
+    console.log(data, 'sadasdata')
+    commit('SET_USERINFO', data.data)
   },
   // remove token
   resetToken({ commit }) {

@@ -16,13 +16,13 @@ const usersRouter = {
       path: 'addUsers',
       component: () => import('@/views/adduser/adduser'),
       name: 'adduser',
-      meta: { title: 'addUsers', noCache: true ,view_id:'main-addUser'}
+      meta: { title: 'addUsers', noCache: true, view_id: 'main-addUser' }
     },
     {
       path: 'theUserDisplay',
       component: () => import('@/views/adduser/usershow'),
       name: 'LineChart',
-      meta: { title: 'theUserDisplay', noCache: true ,view_id:'main-showUser'}
+      meta: { title: 'theUserDisplay', noCache: true, view_id: 'main-showUser' }
     }
   ]
 }

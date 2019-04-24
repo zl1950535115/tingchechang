@@ -29,3 +29,11 @@ export function getViewAuthority() {
   })
 }
 
+// 更新用户信息
+export function setUser(params) {
+  return request({
+    url: '/user/user',
+    method: 'put',
+    data: params
+  })
+}
