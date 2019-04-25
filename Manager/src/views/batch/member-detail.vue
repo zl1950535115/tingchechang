@@ -34,7 +34,7 @@ export default {
       name: '王子音',
       dialogVisible: false,
       exam_student_id: 0,
-      score: 0,
+      score: this.scores,
       newquestions: []
     }
   },
