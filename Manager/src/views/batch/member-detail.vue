@@ -45,10 +45,8 @@ export default {
     })
   },
   created() {
-    console.log('StudentDetails...', this.StudentDetails)
-    this.getStudentDetail(this.$route.query.exam_student_id)
     this.score = this.scores
-    console.log('this.$route.query.exam_student_id...', this.$route.query.exam_student_id)
+    this.getStudentDetail(this.$route.query.exam_student_id)
   },
   methods: {
     open() {
@@ -62,12 +60,7 @@ export default {
         //   type: 'success',
         //   message: '删除成功!'
         // })
-        this.getbathchSucceed({
-          score: this.score
-        })
-        this.getScore({
-          score: this.score
-        })
+
         this.open6()
       }).catch(() => {
         // this.$message({
@@ -83,6 +76,13 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
+        this.getbathchSucceed({
+          exam_student_id: this.$route.query.exam_student_id,
+          score: this.score
+        })
+        this.getScore({
+          score: this.score
+        })
         this.$router.push({ path: '/mark/member?id=' + this.$route.query.grade_id })
       }).catch(() => {
 

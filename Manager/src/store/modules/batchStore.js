@@ -48,7 +48,8 @@ const actions = {
     commit('updataStudentDetail', getStudentDetaily)
   },
   async getbathchSucceed({ commit }, payload) {
-    const getbathchSucceedy = await bathchSucceed(payload)
+    console.log('getbathchSucceed...', payload)
+    const getbathchSucceedy = await bathchSucceed(payload.exam_student_id, payload.score)
     commit('updataSucceedyCode', getbathchSucceedy)
   }
 }

@@ -20,7 +20,6 @@ export function StudentList(params) {
 // 学生试题详情接口
 export function StudentDetail(params) {
   return request({
-    // url: '/exam/student/4edl4i-k0rr7a-b3yna-f87a9w',
     url: '/exam/student/' + params,
     method: 'get',
     params
@@ -28,11 +27,12 @@ export function StudentDetail(params) {
 }
 
 // 批卷成功接口
-export function bathchSucceed(params) {
-  console.log('bathchSucceed', params)
+export function bathchSucceed(id, score) {
   return request({
-    url: '/exam/student/4edl4i-k0rr7a-b3yna-f87a9w',
+    url: '/exam/student/' + id,
     method: 'put',
-    data: params
+    data: {
+      score: score
+    }
   })
 }
