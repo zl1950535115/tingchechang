@@ -2,6 +2,7 @@
   <div class="usershow">
     <titleinfo :title="Title_info" />
     <div class="btndivs">
+      <!-- 开始主体 -->
       <el-radio-group v-model="radioValue" @change="selectValue"><el-radio-button v-for="(item,index) in topbutton" :key="index" :label="item">{{ item }}</el-radio-button></el-radio-group>
     </div>
     <p class="Title">{{ radioValue }}</p>
