@@ -154,13 +154,13 @@ export default {
 
 <style>
   .box_1{
-    padding-left:10px;
+    padding: 0 24px;
     background-color:#f3f3f3;
   }
   .usershow{
+    padding-bottom: 80px;
     position: relative;
     width: 100%;
-    height: calc(100vh - 84px);
     background: #f0f2f5;
     margin-top:-17px;
   }
@@ -179,7 +179,7 @@ export default {
    border-radius:0;
   }
   .Title{
-  margin-left:15px;
+  padding-left: 24px;
   font-size:25px;
   transition:.5s;
   }

@@ -54,7 +54,6 @@ const actions = {
   },
   // 获取用户权限
   async getViewAuthority({ commit }, paylpoad) {
-    console.log(paylpoad)
     const data = await getViewAuthority({ user_id: paylpoad.user_id })
     if (data.code === 1) {
       commit('SET_VIEWAUTHORITY', data.data)
@@ -66,7 +65,6 @@ const actions = {
   async set_user({ commit }, payload) {
     await setUser(payload)
     const data = await getInfo()
-    console.log(data, 'sadasdata')
     commit('SET_USERINFO', data.data)
   },
   // remove token

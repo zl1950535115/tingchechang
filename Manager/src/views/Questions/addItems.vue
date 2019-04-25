@@ -107,7 +107,6 @@ export default {
     this.questionsnew()
     const list = this.$route.query.list
     this.listt = list
-    console.log('asd', this.listt)
     this.newquesition.forEach(item => {
       if (list === item.questions_id) {
         this.select = item.exam_name
