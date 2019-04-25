@@ -1,9 +1,9 @@
 import { classList, StudentList, StudentDetail, bathchSucceed } from '@/api/batch.js'
+import moment from 'moment'
 const state = {
   classLists: [],
   StudentListDatas: [],
   StudentDetails: {},
-  scores: 0,
   bathchSucceedCode: 0
 }
 
@@ -14,20 +14,22 @@ const mutations = {
   updataStudentListData(state, payload) {
     if (payload) {
       state.StudentListDatas = payload.exam
+      payload.exam.forEach((x, y) => {
+        state.StudentListDatas.forEach((val, ind) => {
+          val.start_time = moment(Number(val.start_time)).format('YYYY-MM-DD HH:mm:ss')
+          val.end_time = moment(Number(val.end_time)).format('YYYY-MM-DD HH:mm:ss')
+        })
+      })
     } else {
       state.StudentListDatas = []
     }
   },
   updataStudentDetail(state, payload) {
-    console.log('updataStudentDetail', payload)
     if (payload) {
       state.StudentDetails = payload.data
     } else {
       state.StudentDetails = []
     }
-  },
-  updatascore(state, payload) {
-    state.scores = payload.score
   },
   updataSucceedyCode(state, payload) {
     state.bathchSucceedCode = payload.code
@@ -48,7 +50,6 @@ const actions = {
     commit('updataStudentDetail', getStudentDetaily)
   },
   async getbathchSucceed({ commit }, payload) {
-    console.log('getbathchSucceed...', payload)
     const getbathchSucceedy = await bathchSucceed(payload.exam_student_id, payload.score)
     commit('updataSucceedyCode', getbathchSucceedy)
   }

@@ -131,7 +131,7 @@ export default {
       this.newData = this.StudentListDatas.filter((item, index) => {
         return item.grade_id.match(this.classvalue)
       })
-      console.log(this.newData)
+      // console.log(this.newData)
     }
   }
 }
