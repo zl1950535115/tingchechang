@@ -16,7 +16,6 @@ const actions={
       Userlist().then((result)=>{
         if(result){
           state.username=result.data
-          console.log(state.username)
           state.loading0=false
           res()
         }else{

@@ -190,7 +190,6 @@ export default {
            return false
       }else{
         this.addusers({user_name:this.name,user_pwd:this.pwd,identity_id:this.addUserValue.identity_id}).then(()=>{
-          if(this.userData.length>0){
             if(this.code==1){
               this.$message({
               message: '恭喜你，添加成功',
@@ -200,10 +199,10 @@ export default {
               this.name = ''
               this.pwd = ''
               this.addUserValue = null
-          }
           }else{
             this.$message.error('用户已经存在')
           }
+
         })
       }
     },
