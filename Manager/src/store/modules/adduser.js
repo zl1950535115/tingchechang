@@ -20,7 +20,7 @@ const actions={
           state.user_Data=result.data
           res()
         }else{
-          state.user_Data=result.data
+          state.user_Data=[]
           res()
         }
       })
@@ -29,18 +29,26 @@ const actions={
   adduser({commit},payload){
       return new Promise((res,rej)=>{
         addUser(payload).then((results)=>{
-          state.code=results.code
-          res()
+          if(results){
+            state.code=results.code
+            res()
+          }else{
+            state.code=0
+            res()
+          }
         })
       })
   },
   username({commit},payload){
     return new Promise((res,rej)=>{
       userName(payload).then((results)=>{
-
-        if(results.code==1){
-          state.username=results.data
-          res()
+        if(results){
+          if(results.code==1){
+            state.username=results.data
+            res()
+          }
+        }else{
+          state.username=[]
         }
       })
     })
@@ -48,10 +56,11 @@ const actions={
 updateusername({commit},payload){
   return new Promise((res,rej)=>{
     updateusername(payload).then((results)=>{
-      if(results.code==1){
-          state.userCode=results.code
-          res()
+      if(results){
+            state.userCode=results.code
+            res()
       }else{
+          state.userCode=0
           rej()
       }
     })
@@ -61,10 +70,7 @@ addusercard({commit},payload){
     return new Promise((res,rej)=>{
       addUserCard(payload).then((result)=>{
         if(result){
-          state.adduserCode=result.code
-          res()
-        }else{
-          state.adduserCode=0
+          state.adduserCode=result
           res()
         }
       })
@@ -88,6 +94,8 @@ addview({commit},payload){
     addView(payload).then((result)=>{
       if(result){
         state.viewList=result.data
+      }else{
+        state.viewList=[]
       }
     })
   })
@@ -109,8 +117,12 @@ addViewPerson({commit},payload){
 api_authorityList({commit},payload){
   return new Promise((res,rej)=>{
     api_authorityList().then((result)=>{
-      state.apilist=result.data
+      if(result){
+        state.apilist=result.data
       res()
+      } else{
+        state.apilist=[]
+      }
     })
     })
   },
