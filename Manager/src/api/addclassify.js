@@ -51,7 +51,7 @@ export function questionsnew() {
 }
 
 export const update = data => {
-  return request.post('/exam/questions/update', data)
+  return request.put('/exam/questions/update', data)
 }
 
 export const insertQuestionsType = params => {
