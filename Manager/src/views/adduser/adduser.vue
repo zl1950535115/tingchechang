@@ -3,8 +3,8 @@
     <titleinfo :title="Title_info" />
     <div class="top_title">
       <div class="infos">
-        <el-button v-for="(item,index) in addList" :key="index" plain :class="index==ind?'active':''" @click="tab(index)">{{ item }}</el-button>
-        <div v-if="ind==0" class="addUser">
+        <el-button v-for="(item,index) in addList" :key="index" plain :class="index === ind?'active':''" @click="tab(index)">{{ item }}</el-button>
+        <div v-if="ind === 0" class="addUser">
           <el-input v-model="name" class="name_1" placeholder="请输入用户名" clearable />
           <el-input v-model="pwd" class="pwd" placeholder="请输入密码" show-password />
 
@@ -14,7 +14,7 @@
           <div class="confim"><el-button type="primary" class="success" @click="adduser">确定</el-button><el-button class="reset" plain @click="plan">重置</el-button></div>
         </div>
 
-        <div v-if="ind==1" class="addUser">
+        <div v-if="ind === 1" class="addUser">
           <el-select slot="prepend" v-model="userselect" class="select" placeholder="请选择身份ID">
             <el-option v-for="(item,index) in usernamelist" :key="index" :label="item.user_name" :value="index" />
           </el-select>
@@ -190,17 +190,15 @@ export default {
         return false
       } else {
         this.addusers({ user_name: this.name, user_pwd: this.pwd, identity_id: this.addUserValue.identity_id }).then(() => {
-          if (this.userData.length > 0) {
-            if (this.code === 1) {
-              this.$message({
-                message: '恭喜你，添加成功',
-                type: 'success'
-              })
-              this.userdata()
-              this.name = ''
-              this.pwd = ''
-              this.addUserValue = null
-            }
+          if (this.code === 1) {
+            this.$message({
+              message: '恭喜你，添加成功',
+              type: 'success'
+            })
+            this.userdata()
+            this.name = ''
+            this.pwd = ''
+            this.addUserValue = null
           } else {
             this.$message.error('用户已经存在')
           }
@@ -221,11 +219,7 @@ export default {
                 message: '恭喜你，添加成功',
                 type: 'success'
               })
-              this.new_name = ''
-              this.new_pwd = ''
             }
-          }).catch((err) => {
-            console.log('错误', err)
           })
       }
     },

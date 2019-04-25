@@ -7,6 +7,7 @@ const usersRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Exams',
+  alwaysShow: true,
   meta: {
     title: 'exams',
     icon: 'excel'
@@ -31,7 +32,7 @@ const usersRouter = {
     component: () =>
       import('@/views/exams/detail'),
     name: 'detail',
-    meta: { title: 'detail', noCache: true }
+    meta: { title: 'detail', noCache: true, 'view_id': 'main-examDetail' }
   },
   {
     path: 'createExam',
@@ -39,7 +40,7 @@ const usersRouter = {
     component: () =>
       import('@/views/exams/createExam'),
     name: 'createExam',
-    meta: { title: 'createExam', noCache: true }
+    meta: { title: 'createExam', noCache: true, 'view_id': 'main-examEdit' }
   }
   ]
 }

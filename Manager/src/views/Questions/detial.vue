@@ -12,19 +12,25 @@
         <span class="exam_name">{{ list.exam_name }}</span>
       </div>
       <p class="value">
-        {{ list.questions_stem }}
+        <markdown-editor ref="markdownEditor" v-model="list.questions_stem" :options="{hideModeSwitch:true,previewStyle:'tab'}" height="300px" width="500px" />
       </p>
     </div>
     <div class="Answer">
       <p class="message">答案信息</p>
       <div classs="messagevalue" />
-      {{ list.questions_answer }}
+      <markdown-editor ref="markdownEditor" v-model=" list.questions_answer" :options="{hideModeSwitch:true,previewStyle:'tab'}" height="300px" width="100%" />
     </div>
+
   </div>
 </template>
 <script>
+import MarkdownEditor from '@/components/MarkdownEditor'
 import { mapActions, mapState } from 'vuex'
 export default {
+  name: 'MarkdownDemo',
+  components: {
+    MarkdownEditor
+  },
   data() {
     return {
       date: [],
@@ -34,7 +40,10 @@ export default {
   computed: {
     ...mapState({
       newquesition: state => state.add.newquesition
-    })
+    }),
+    language() {
+      return this.languageTypeList[this.$store.getters.language]
+    }
   },
   created() {
     this.questionsnew()

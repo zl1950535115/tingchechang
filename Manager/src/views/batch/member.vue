@@ -31,13 +31,15 @@
       <p class="tit">试卷列表</p>
       <el-table
         id="tabels"
-        :data="newStudentListDatas.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+        :data="StudentListDatas.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         style="width: 100%;border-radius:'10px'"
         class="table"
       >
         <el-table-column prop="grade_name" label="班级" width="138" />
         <el-table-column prop="student_name" label="姓名" width="144" />
-        <el-table-column prop="status" label="阅卷状态" width="171" />
+        <el-table-column label="阅卷状态" width="171">
+          <template slot-scope="scope">{{ scope.row.status ? '已阅':'未阅' }}</template>
+        </el-table-column>
         <el-table-column prop="start_time" label="开始时间" width="253" />
         <el-table-column prop="end_time" label="结束时间" width="253" />
         <el-table-column prop="score" label="成材率" width="144" />
@@ -112,24 +114,12 @@ export default {
     })
     this.newData = this.StudentListDatas
     this.grade_id = this.$route.query.id
-
-    this.newStudentListDatas = this.StudentListDatas
-    this.StudentListDatas.forEach((item, index) => {
-      this.newStudentListDatas.forEach((val, ind) => {
-        if (item.status === 1) {
-          val.status = '已阅'
-        } else {
-          val.status = '未阅'
-        }
-      })
-    })
   },
   methods: {
     ...mapActions({
       getStudentListData: 'batchStore/getStudentListData'
     }),
     handleClick(row) {
-      console.log(row.grade_name)
     },
     handleSizeChange(val) {
       this.pagesize = val

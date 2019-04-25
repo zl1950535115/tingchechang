@@ -22,8 +22,8 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
-          <pan-thumb :image="userInfo.avatar" />
+          <img :src="userInfo.avatar" class="user-avatar">
+          <!-- <pan-thumb :image="userInfo.avatar" /> -->
 
           <image-cropper
             v-show="imagecropperShow"
@@ -103,9 +103,7 @@ export default {
     })
   },
   async created() {
-    await console.log(this.userInfo)
-    // this.userId = this.userInfo.user_id
-    // this.avatarImg = this.userInfo.avatar
+    await this.userInfo
   },
   methods: {
     ...mapActions({
@@ -192,6 +190,7 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
+        margin-top: 5px;
         position: relative;
 
         .pan-item{

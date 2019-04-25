@@ -17,11 +17,11 @@ export default {
 
 <style>
    .title_name{
-    margin-left:20px;
     color: rgba(0, 0, 0, 0.85);
     font-weight: 500;
     font-size:20px;
-    padding-top:24px;
+    padding:24px;
+    padding-bottom: 0;
   }
   .top{
     box-sizing:border-box;

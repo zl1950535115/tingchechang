@@ -48,8 +48,11 @@ export default {
   },
   created() {
     this.getInfo()
+<<<<<<< HEAD
     console.log(this.userInfo)
     this.userId = this.userInfo.user_id
+=======
+>>>>>>> 9d1d744d0fcd8f62bf28bec343b80df60667c15c
   },
   methods: {
     ...mapActions({
