@@ -7,6 +7,7 @@ const usersRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Exams',
+  alwaysShow: true,
   meta: {
     title: 'exams',
     icon: 'excel'

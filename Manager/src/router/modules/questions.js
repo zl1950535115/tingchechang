@@ -7,6 +7,7 @@ const questionsRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Questions',
+  alwaysShow: true,
   meta: {
     title: 'questions',
     icon: 'clipboard'
