@@ -26,11 +26,11 @@
         </div>
         <div class="content_table">
           <el-table :data="list" style="width: 100%" :header-cell-style="tableHeaderColor">
-            <el-table-column prop="student_name" label="姓名" width="150" />
-            <el-table-column prop="student_id" label="学号" width="240" />
-            <el-table-column prop="grade_name" label="班级" width="130" />
-            <el-table-column prop="room_text" label="教室" width="150" />
-            <el-table-column prop="student_pwd" label="密码" width="300" />
+            <el-table-column prop="student_name" label="姓名" />
+            <el-table-column prop="student_id" label="学号" />
+            <el-table-column prop="grade_name" label="班级" />
+            <el-table-column prop="room_text" label="教室" />
+            <el-table-column prop="student_pwd" label="密码" />
             <el-table-column prop="operation" label="操作">
               <template slot-scope="scope">
                 <el-button
@@ -120,16 +120,32 @@ export default {
       if (!value) {
         this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
       } else {
-        this.list = this.studentlist.filter((item, index) => {
-          // return { ...item }.match(value)
-          // return ((item.student_name === value) ? 'true' : 'false')
-          return (value === '' ? '' : item.student_name === value)
-        })
+        // 三个值都有的情况
+          if (value && roomname && classname) {
+          this.list = this.studentlist.filter((item, ind) => {
+            return value === item.student_name && roomname === item.room_text && classname === item.grade_name
+            })
+            // 有两个值得情况
+          } else if ((value && roomname) || (roomname && classname) || (value && classname)) {
+            this.list  = this.studentlist.filter((item, ind) => {
+              return (value === item.student_name && roomname === item.room_text) || (roomname === item.room_text && classname === item.grade_name) || (value === item.student_name && classname === item.grade_name)
+            })
+            // 一个值的情况
+          } else {
+            this.list  = this.studentlist.filter((item, ind) => {
+              return value === item.student_name || roomname === item.rooxm_text || classname === item.grade_name
+            })
+          }
+      // this.list = this.studentlist.filter((item, index) => {
+        //   return { ...item }.match(value)
+        //   return ((item.student_name === value) ? 'true' : 'false')
+        //   return (value === '' ? '' : item.student_name === value ? '' : item.room_text === roomname)
+        // })
       }
     },
     reset() {
       this.input = ''
-      this.room = ''
+      this.rooms = ''
       this.grades = ''
       this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
     }
