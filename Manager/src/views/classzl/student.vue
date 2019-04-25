@@ -122,7 +122,8 @@ export default {
       } else {
         this.list = this.studentlist.filter((item, index) => {
           // return { ...item }.match(value)
-          return !!((item.student_name === value && item.room_text === roomname))
+          // return ((item.student_name === value) ? 'true' : 'false')
+          return (value === '' ? '' : item.student_name === value)
         })
       }
     },

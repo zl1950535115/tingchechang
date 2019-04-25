@@ -194,6 +194,11 @@ export default {
       .avatar-wrapper {
         position: relative;
 
+        .pan-item{
+          width: 50px;
+          height: 50px;
+        }
+
         .user-avatar {
           cursor: pointer;
           width: 40px;

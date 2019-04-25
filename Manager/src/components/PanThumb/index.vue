@@ -35,8 +35,8 @@ export default {
 
 <style scoped>
 .pan-item {
-  width: 50px;
-  height: 50px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   display: inline-block;
   position: relative;
@@ -73,7 +73,7 @@ export default {
   box-shadow: 0 0 1px rgba(255, 255, 255, 0.9); */
 }
 
-/* .pan-info {
+.pan-info {
   position: absolute;
   width: inherit;
   height: inherit;
@@ -136,5 +136,5 @@ export default {
 .pan-item:hover .pan-info p a {
   opacity: 1;
   transform: translateX(0px) rotate(0deg);
-} */
+}
 </style>
