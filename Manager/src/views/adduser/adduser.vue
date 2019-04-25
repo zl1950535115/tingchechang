@@ -3,8 +3,8 @@
     <titleinfo :title="Title_info" />
     <div class="top_title">
       <div class="infos">
-        <el-button v-for="(item,index) in addList" :key="index" plain :class="index==ind?'active':''" @click="tab(index)">{{ item }}</el-button>
-        <div v-if="ind==0" class="addUser">
+        <el-button v-for="(item,index) in addList" :key="index" plain :class="index === ind?'active':''" @click="tab(index)">{{ item }}</el-button>
+        <div v-if="ind === 0" class="addUser">
           <el-input v-model="name" class="name_1" placeholder="请输入用户名" clearable />
           <el-input v-model="pwd" class="pwd" placeholder="请输入密码" show-password />
 
@@ -14,7 +14,7 @@
           <div class="confim"><el-button type="primary" class="success" @click="adduser">确定</el-button><el-button class="reset" @click="plan" plain>重置</el-button></div>
         </div>
 
-        <div v-if="ind==1" class="addUser">
+        <div v-if="ind === 1" class="addUser">
           <el-select slot="prepend" v-model="userselect" class="select" placeholder="请选择身份ID">
            <el-option v-for="(item,index) in usernamelist" :key="index" :label="item.user_name" :value="index" />
           </el-select>
@@ -180,17 +180,17 @@ export default {
       var blone=Reg.test(this.pwd)
       var userblone=uPattern.test(this.name)
       this.addUserValue = this.userData[this.select]
-      if (this.name == '' || this.addUserValue == null || this.pwd == '') {
+      if (this.name  ===  '' || this.addUserValue  ===  null || this.pwd  ===  '') {
         this.$message.error('请检查未填写值')
-      } else if(blone == false){
+      } else if(blone  ===  false){
            this.$message.error('密码格式不正确')
            return false
-      }else if(userblone == false){
+      }else if(userblone  ===  false){
           this.$message.error('用户名格式不正确')
            return false
       }else{
         this.addusers({user_name:this.name,user_pwd:this.pwd,identity_id:this.addUserValue.identity_id}).then(()=>{
-            if(this.code==1){
+            if(this.code === 1){
               this.$message({
               message: '恭喜你，添加成功',
               type: 'success'
@@ -210,12 +210,12 @@ export default {
       this.select1=this.userData[e].identity_id
     },
     stateuser() {
-      if(this.new_name==""||this.usernamelist[this.userselect].user_id==""||this.new_pwd==""||this.userid==""||this.select1==''){
+      if(this.new_name === ""||this.usernamelist[this.userselect].user_id === ""||this.new_pwd === ""||this.userid === ""||this.select1 === ''){
          this.$message.error('请检查未填写值')
       }else{
          this.updateusername({user_id:this.usernamelist[this.userselect].user_id,user_name: this.new_name,user_pwd:this.new_pwd,identity_id:this.select1})
          .then(()=>{
-           if(this.UserCode==1){
+           if(this.UserCode === 1){
              this.$message({
               message: '恭喜你，添加成功',
               type: 'success'
@@ -229,15 +229,15 @@ export default {
       }
     },
     adduserperson(){
-      if(this.person.trim()==""){
+      if(this.person.trim() === ""){
           this.$message.error('请检查未填写值')
       }else{
         this.addusercrad({identity_text:this.person}).then(()=>{
           console.log(this.adduserCode)
-         if(this.adduserCode.code==1){
+         if(this.adduserCode.code === 1){
           this.$message({message: '恭喜你，添加成功',type: 'success'})
           this.userdata()
-         }else if(this.adduserCode.code==0){
+         }else if(this.adduserCode.code === 0){
           this.$message.error(this.adduserCode.msg)
          }
         })
@@ -245,11 +245,11 @@ export default {
       }
     },
     apiadds(){
-      if(this.api_name==""||this.api_url==""||this.api_fun==""){
+      if(this.api_name === ""||this.api_url === ""||this.api_fun === ""){
         this.$message.error('不可以为空')
       }else{
         this.addapi({api_authority_text:this.api_name,api_authority_url:this.api_url,api_authority_method:this.api_fun}).then(()=>{
-         if(this.apicode==1){
+         if(this.apicode === 1){
             this.$message({message: '恭喜你，添加成功',type: 'success'})
             this.api_authorityList()
          }else{
@@ -262,11 +262,11 @@ export default {
       this.view_select_value=this.viewList[this.view_select]
     },
     addview_person(){
-      if(this.view_select_value=== ''){
+      if(this.view_select_value === ''){
         this.$message.error('请先选择')
       }else{
         var content=this.view_select_value
-        if(this.addViewCode==1){
+        if(this.addViewCode === 1){
         this.addViewPerson({view_authority_text:content.view_authority_text,view_id:content.view_authority_id})
         }else{
           this.$message.error('权限名称重复')
@@ -280,11 +280,11 @@ export default {
       this.api_two_select=this.apilist[this.user_add_manger].api_authority_id
     },
     apiadd(){
-      if(this.api_one_select==''||this.api_two_select==''){
+      if(this.api_one_select === ''||this.api_two_select === ''){
         this.$message.error('缺少必要参数')
       }else{
       this.personApi({identity_id:this.api_one_select,api_authority_id:this.api_two_select}).then(()=>{
-        if(this.apiCode==1){
+        if(this.apiCode === 1){
            this.$message({message: '添加成功',type: 'success'})
         }else{
            this.$message.error('权限重复!重新选择')
@@ -299,13 +299,13 @@ export default {
       this.view_api_two_select=this.viewList[e].view_authority_id
     },
     addview(){
-      if(this.view_api_select==''||this.view_api_two_select==''){
+      if(this.view_api_select === ''||this.view_api_two_select === ''){
         this.$message.error('请先做出选择')
       }else{
         this.viewaddApi({identity_id:this.view_api_select,view_authority_id:this.view_api_two_select})
         .then(()=>{
 
-          if(this.perSonCode==1){
+          if(this.perSonCode === 1){
             this.$message({message: '添加成功',type: 'success'})
           }else{
             this.$message.error('权限重复!重新选择')
