@@ -35,8 +35,8 @@ export default {
 
 <style scoped>
 .pan-item {
-  width: 50px;
-  height: 50px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   display: inline-block;
   position: relative;

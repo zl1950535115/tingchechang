@@ -82,7 +82,7 @@ export default {
     this.userData()
     this.userapi()
     this.personorserver()
-    this.ViewPerson();
+    this.ViewPerson()
     this.View_serverPerson()
   },
   computed: {
