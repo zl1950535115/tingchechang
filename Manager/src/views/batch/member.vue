@@ -37,14 +37,16 @@
       >
         <el-table-column prop="grade_name" label="班级" width="138" />
         <el-table-column prop="student_name" label="姓名" width="144" />
-        <el-table-column prop="status" label="阅卷状态" width="171" />
+        <el-table-column label="阅卷状态" width="171">
+          <template slot-scope="scope">{{ scope.row.status ? '已阅':'未阅' }}</template>
+        </el-table-column>
         <el-table-column prop="start_time" label="开始时间" width="253" />
         <el-table-column prop="end_time" label="结束时间" width="253" />
         <el-table-column prop="score" label="成材率" width="144" />
         <el-table-column label="操作" width="117">
           <template slot-scope="scope">
             <el-button type="text" size="small" class="options" @click="handleClick(scope.row)"><router-link
-              :to="{path:'member-detail',query:{exam_student_id:scope.row.exam_student_id	}}"
+              :to="{path:'member-detail',query:{exam_student_id:scope.row.exam_student_id	,grade_id:grade_id}}"
             >批卷</router-link></el-button>
           </template>
         </el-table-column>
@@ -92,7 +94,9 @@ export default {
       currentPage4: 1,
       currentPage: 1,
       pagesize: 5,
-      newData: []
+      newData: [],
+      grade_id: 0,
+      newStudentListDatas: []
     }
   },
   computed: {
@@ -109,13 +113,13 @@ export default {
       grade_id: this.$route.query.id
     })
     this.newData = this.StudentListDatas
+    this.grade_id = this.$route.query.id
   },
   methods: {
     ...mapActions({
       getStudentListData: 'batchStore/getStudentListData'
     }),
     handleClick(row) {
-      console.log(row.grade_name)
     },
     handleSizeChange(val) {
       this.pagesize = val
@@ -166,7 +170,7 @@ export default {
     }
    .box_top span{
             font-size:14px;
-        }
+    }
     .tit{
         width: 100%;
         padding: 10px 0px 0px 30px;
@@ -179,6 +183,7 @@ export default {
         border-radius: 10px;
         overflow: hidden;
         background: #fff;
+        margin-top:30px;
     }
     .table{
         width:100%;

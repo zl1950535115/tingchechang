@@ -2,7 +2,9 @@ import { classList, StudentList, StudentDetail, bathchSucceed } from '@/api/batc
 const state = {
   classLists: [],
   StudentListDatas: [],
-  StudentDetails: {}
+  StudentDetails: {},
+  scores: 0,
+  bathchSucceedCode: 0
 }
 
 const mutations = {
@@ -23,6 +25,12 @@ const mutations = {
     } else {
       state.StudentDetails = []
     }
+  },
+  updatascore(state, payload) {
+    state.scores = payload.score
+  },
+  updataSucceedyCode(state, payload) {
+    state.bathchSucceedCode = payload.code
   }
 }
 
@@ -36,13 +44,13 @@ const actions = {
     commit('updataStudentListData', getStudentListDatay)
   },
   async getStudentDetail({ commit }, payload) {
-    console.log('getStudentDetail', payload)
     const getStudentDetaily = await StudentDetail(payload)
     commit('updataStudentDetail', getStudentDetaily)
   },
   async getbathchSucceed({ commit }, payload) {
-    console.log('getbathchSucceed', payload)
-    return await bathchSucceed(payload)
+    console.log('getbathchSucceed...', payload)
+    const getbathchSucceedy = await bathchSucceed(payload.exam_student_id, payload.score)
+    commit('updataSucceedyCode', getbathchSucceedy)
   }
 }
 
