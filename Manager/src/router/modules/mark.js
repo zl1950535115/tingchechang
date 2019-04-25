@@ -7,6 +7,7 @@ const markRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Mark',
+  alwaysShow: true,
   meta: {
     title: 'marking',
     icon: 'form'
