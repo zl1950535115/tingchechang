@@ -7,7 +7,7 @@
     </div>
     <p class="Title">{{ radioValue }}</p>
     <div v-if="boxind === 0" class="box_1">
-      <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))" header-cell-style='background:white;color:black'  cell-style='height:60px;background:#f3f3f3'  empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
+      <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))" :header-cell-style='cellstyle' :cell-style='cell_style'  empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
         <el-table-column  class="a" prop="user_name" label="用户名" width="360" />
         <el-table-column  prop="user_pwd" min-width="500" label="密码" />
         <el-table-column  prop="identity_text" label="身份" />
@@ -49,7 +49,7 @@
     </div>
 
     <div v-if="boxind === 5" class="box_5">
-      <el-table :data="Array.from(view_person_list.slice((currentpage-1)*showsize,currentpage*showsize))" header-cell-style='background:white;color:black'  cell-style='height:60px;background:#f3f3f3' empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
+      <el-table :data="Array.from(view_person_list.slice((currentpage-1)*showsize,currentpage*showsize))"  empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
         <el-table-column align="center" prop="identity_text" label="身份" width="360" />
         <el-table-column align="center" prop="view_authority_text" label="视图名称" />
         <el-table-column align="center" prop="view_id" label="视图id" />
@@ -105,6 +105,16 @@ export default {
       ViewPerson: 'usershow/ViewPerson',
       View_serverPerson: 'usershow/View_serverPerson'
     }),
+    cellstyle(){
+     return {
+       background:'white',color:'black'
+     }
+    },
+    cell_style(){
+      return {
+        height:'60px',background:'#f3f3f3'
+      }
+    },
     selectValue(e) {
       this.boxind = this.topbutton.indexOf(e)
       switch (this.boxind) {
