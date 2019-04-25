@@ -7,6 +7,7 @@ const usersRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Users',
+  alwaysShow: true,
   meta: {
     title: 'users',
     icon: 'user'

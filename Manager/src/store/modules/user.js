@@ -54,7 +54,8 @@ const actions = {
   },
   // 获取用户权限
   async getViewAuthority({ commit }, paylpoad) {
-    const data = await getViewAuthority()
+    console.log(paylpoad)
+    const data = await getViewAuthority({ user_id: paylpoad.user_id })
     if (data.code === 1) {
       commit('SET_VIEWAUTHORITY', data.data)
       return data.data

@@ -32,10 +32,11 @@ router.beforeEach(async(to, from, next) => {
           const userInfo = await store.dispatch('user/getInfo')
           console.log('用户信息...', userInfo)
           // 获取用户权限
-          const viewAuthority = await store.dispatch('user/getViewAuthority')
+          const viewAuthority = await store.dispatch('user/getViewAuthority', userInfo)
           console.log('权限信息...', viewAuthority)
           // 通过权限生成路由
           const accessRoutes = await store.dispatch('permission/generateRoutes', viewAuthority)
+          console.log('accessRoutes', accessRoutes)
           // 实现动态路由转为静态路由
           router.addRoutes(accessRoutes)
           next({ ...to, replace: true })
