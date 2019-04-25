@@ -5,7 +5,7 @@
       <el-radio-group v-model="radioValue" @change="selectValue"><el-radio-button v-for="(item,index) in topbutton" :key="index" :label="item">{{ item }}</el-radio-button></el-radio-group>
     </div>
     <p class="Title">{{ radioValue }}</p>
-    <div v-if="boxind==0" class="box_1">
+    <div v-if="boxind === 0" class="box_1">
       <el-table :data="Array.from(userlist.slice((currentpage-1)*showsize,currentpage*showsize))" empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
         <el-table-column prop="user_name" label="用户名" width="360" />
         <el-table-column prop="user_pwd" min-width="500" label="密码" />
@@ -14,14 +14,14 @@
       <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="userlist.length*1" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
-    <div v-if="boxind==1" class="box_1">
+    <div v-if="boxind === 1" class="box_1">
       <el-table :data="Array.from(userperson.slice((currentpage-1)*showsize,currentpage*showsize))" empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
         <el-table-column prop="identity_text" label="身份名称" />
       </el-table>
       <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="userperson.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
-    <div v-if="boxind==2" class="box_2">
+    <div v-if="boxind === 2" class="box_2">
       <el-table :data="Array.from(apilist.slice((currentpage-1)*showsize,currentpage*showsize))" empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
         <el-table-column align="center" prop="api_authority_text" label="api权限名称" width="360" />
         <el-table-column align="center" prop="api_authority_url" label="api权限url" />
@@ -30,7 +30,7 @@
       <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="apilist.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
-    <div v-if="boxind==3" class="box_3">
+    <div v-if="boxind === 3" class="box_3">
       <el-table :data="Array.from(person_list.slice((currentpage-1)*showsize,currentpage*showsize))" empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
         <el-table-column align="center" prop="api_authority_text" label="api权限名称" width="360" />
         <el-table-column align="center" prop="api_authority_url" label="api权限url" />
@@ -39,7 +39,7 @@
       <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="person_list.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
-    <div v-if="boxind==4" class="box_4">
+    <div v-if="boxind === 4" class="box_4">
       <el-table :data="Array.from(Viewlist.slice((currentpage-1)*showsize,currentpage*showsize))" empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
         <el-table-column align="center" prop="view_authority_text" label="视图权限名称" width="360" />
         <el-table-column align="center" prop="view_id" label="视图id" />
@@ -47,7 +47,7 @@
       <el-pagination class="right_pagin" :page-sizes="[5, 10, 15, 20]" :page-size="showsize" layout="total, sizes, prev, pager, next, jumper" :total="Viewlist.length" :current-page="currentpage" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
 
-    <div v-if="boxind==5" class="box_5">
+    <div v-if="boxind === 5" class="box_5">
       <el-table :data="Array.from(view_person_list.slice((currentpage-1)*showsize,currentpage*showsize))"  empty-text="小伙鸡,你貌似没有权限啊" style="width: 100%">
         <el-table-column align="center" prop="identity_text" label="身份" width="360" />
         <el-table-column align="center" prop="view_authority_text" label="视图名称" />
