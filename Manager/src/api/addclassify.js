@@ -49,3 +49,15 @@ export function questionsnew() {
     method: 'get'
   })
 }
+
+export const update = data => {
+  return request.put('/exam/questions/update', data)
+}
+
+export const insertQuestionsType = params => {
+  return request.get('/exam/insertQuestionsType', { params })
+}
+
+export const delQuestionsType = data => {
+  return request.post('/exam/delQuestionsType', data)
+}

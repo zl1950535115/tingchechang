@@ -12,7 +12,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <el-button type="primary" @click="submit">确 定</el-button>
           </div>
         </el-dialog>
         <div class="table">
@@ -25,7 +25,7 @@
             <div v-for="(item,index) in data" :key="index" class="count-text">
               <span>{{ item.questions_type_id }}</span>
               <span>{{ item.questions_type_text }}</span>
-              <span />
+              <span><el-button type="primary" icon="el-icon-delete" class="btn" @click="remove(item.questions_type_id)" /></span>
             </div>
           </div>
         </div>
@@ -42,6 +42,7 @@ export default {
       visible: false,
       dialogTableVisible: false,
       dialogFormVisible: false,
+      id: 1,
       form: {
         name: '',
         region: '',
@@ -52,17 +53,7 @@ export default {
         resource: '',
         desc: ''
       },
-      formLabelWidth: '120px',
-      list: [
-        {
-          'tittle': 'sfjsdkjfk',
-          'name': '简答题'
-        },
-        {
-          'tittle': 'sjjijiji',
-          'name': '理论题'
-        }
-      ]
+      formLabelWidth: '120px'
     }
   },
   created() {
@@ -75,8 +66,24 @@ export default {
   },
   methods: {
     ...mapActions({
-      classify: 'add/classify'
-    })
+      classify: 'add/classify',
+      insertQuestionsType: 'add/insertQuestionsType',
+      delQuestionsType: 'add/delQuestionsType'
+    }),
+    submit() {
+      this.dialogFormVisible = false
+      this.insertQuestionsType({
+        text: this.form.name,
+        sort: Math.random().toString(36).substr(2)
+      })
+      this.classify()
+    },
+    remove(typeid) {
+      this.delQuestionsType({
+        id: typeid
+      })
+      this.classify()
+    }
   }
 }
 </script>
@@ -91,13 +98,13 @@ export default {
     .box {
         width: 100%;
         height: 60%;
-        background: #ccc;
+        background: #f0f2f5;;
     }
 
     .tittle {
         padding: 30px;
         font-size: 25px;
-        font-weight: 800;
+
     }
 
     .little-box {
@@ -143,7 +150,6 @@ export default {
     }
 
     .count-text {
-        text-align: center;
         display: flex;
         align-content: center;
         height: 10%;
@@ -153,8 +159,8 @@ export default {
         border-bottom: 1px solid #ccc;
     }
     .count-text span{
-      display:block;
-        width: 33%;
+        display:block;
+        width: 33%  ;
         text-align: center;
     }
     .count-text:hover {
@@ -163,5 +169,8 @@ export default {
     .table{
       width: 100%;
       height: 100%;
+    }
+    .btn{
+      height: 30px;
     }
 </style>
