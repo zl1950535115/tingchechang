@@ -21,8 +21,8 @@
               :value="item.grade_name"
             />
           </el-select>
-          <el-button type="primary" @click="search(input)">搜索</el-button>
-          <el-button type="primary">重置</el-button>
+          <el-button type="primary" @click="search(input,rooms,grades)">搜索</el-button>
+          <el-button type="primary" @click="reset">重置</el-button>
         </div>
         <div class="content_table">
           <el-table :data="list" style="width: 100%" :header-cell-style="tableHeaderColor">
@@ -113,14 +113,24 @@ export default {
       await this.getstudent()
       this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
     },
-    search(value) {
+    // 搜索学生
+    search(value, roomname, classname) {
+      console.log(this.studentlist)
+      console.log(value, roomname, classname)
       if (!value) {
         this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
       } else {
         this.list = this.studentlist.filter((item, index) => {
-          return item.student_name.match(value)
+          // return { ...item }.match(value)
+          return !!((item.student_name === value && item.room_text === roomname))
         })
       }
+    },
+    reset() {
+      this.input = ''
+      this.room = ''
+      this.grades = ''
+      this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
     }
   }
 }

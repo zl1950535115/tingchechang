@@ -31,7 +31,7 @@
       <p class="tit">试卷列表</p>
       <el-table
         id="tabels"
-        :data="StudentListDatas.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+        :data="newStudentListDatas.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         style="width: 100%;border-radius:'10px'"
         class="table"
       >
@@ -44,7 +44,7 @@
         <el-table-column label="操作" width="117">
           <template slot-scope="scope">
             <el-button type="text" size="small" class="options" @click="handleClick(scope.row)"><router-link
-              :to="{path:'member-detail',query:{exam_student_id:scope.row.exam_student_id	}}"
+              :to="{path:'member-detail',query:{exam_student_id:scope.row.exam_student_id	,grade_id:grade_id}}"
             >批卷</router-link></el-button>
           </template>
         </el-table-column>
@@ -92,7 +92,9 @@ export default {
       currentPage4: 1,
       currentPage: 1,
       pagesize: 5,
-      newData: []
+      newData: [],
+      grade_id: 0,
+      newStudentListDatas: []
     }
   },
   computed: {
@@ -109,6 +111,18 @@ export default {
       grade_id: this.$route.query.id
     })
     this.newData = this.StudentListDatas
+    this.grade_id = this.$route.query.id
+
+    this.newStudentListDatas = this.StudentListDatas
+    this.StudentListDatas.forEach((item, index) => {
+      this.newStudentListDatas.forEach((val, ind) => {
+        if (item.status === 1) {
+          val.status = '已阅'
+        } else {
+          val.status = '未阅'
+        }
+      })
+    })
   },
   methods: {
     ...mapActions({
@@ -166,7 +180,7 @@ export default {
     }
    .box_top span{
             font-size:14px;
-        }
+    }
     .tit{
         width: 100%;
         padding: 10px 0px 0px 30px;
@@ -179,6 +193,7 @@ export default {
         border-radius: 10px;
         overflow: hidden;
         background: #fff;
+        margin-top:30px;
     }
     .table{
         width:100%;

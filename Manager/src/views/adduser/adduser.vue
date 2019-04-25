@@ -190,15 +190,17 @@ export default {
         return false
       } else {
         this.addusers({ user_name: this.name, user_pwd: this.pwd, identity_id: this.addUserValue.identity_id }).then(() => {
-          if (this.code === 1) {
-            this.$message({
-              message: '恭喜你，添加成功',
-              type: 'success'
-            })
-            this.userdata()
-            this.name = ''
-            this.pwd = ''
-            this.addUserValue = null
+          if (this.userData.length > 0) {
+            if (this.code === 1) {
+              this.$message({
+                message: '恭喜你，添加成功',
+                type: 'success'
+              })
+              this.userdata()
+              this.name = ''
+              this.pwd = ''
+              this.addUserValue = null
+            }
           } else {
             this.$message.error('用户已经存在')
           }
@@ -232,11 +234,12 @@ export default {
         this.$message.error('请检查未填写值')
       } else {
         this.addusercrad({ identity_text: this.person }).then(() => {
-          if (this.adduserCode === 1) {
+          console.log(this.adduserCode)
+          if (this.adduserCode.code === 1) {
             this.$message({ message: '恭喜你，添加成功', type: 'success' })
             this.userdata()
-          } else {
-            this.$message.error('该身份已存在')
+          } else if (this.adduserCode.code === 0) {
+            this.$message.error(this.adduserCode.msg)
           }
         })
         this.person = ''
