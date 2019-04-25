@@ -115,32 +115,26 @@ export default {
     },
     // 搜索学生
     search(value, roomname, classname) {
-      console.log(this.studentlist)
-      console.log(value, roomname, classname)
-      if (!value) {
+      // console.log(this.studentlist)
+      // console.log(value, roomname, classname)
+      if (!(value || roomname || classname)) {
         this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
       } else {
-        // 三个值都有的情况
-          if (value && roomname && classname) {
+        // console.log('roomname...', roomname)
+        if (value && roomname && classname) {
           this.list = this.studentlist.filter((item, ind) => {
             return value === item.student_name && roomname === item.room_text && classname === item.grade_name
-            })
-            // 有两个值得情况
-          } else if ((value && roomname) || (roomname && classname) || (value && classname)) {
-            this.list  = this.studentlist.filter((item, ind) => {
-              return (value === item.student_name && roomname === item.room_text) || (roomname === item.room_text && classname === item.grade_name) || (value === item.student_name && classname === item.grade_name)
-            })
-            // 一个值的情况
-          } else {
-            this.list  = this.studentlist.filter((item, ind) => {
-              return value === item.student_name || roomname === item.rooxm_text || classname === item.grade_name
-            })
-          }
-      // this.list = this.studentlist.filter((item, index) => {
-        //   return { ...item }.match(value)
-        //   return ((item.student_name === value) ? 'true' : 'false')
-        //   return (value === '' ? '' : item.student_name === value ? '' : item.room_text === roomname)
-        // })
+          })
+        } else if ((value && roomname) || (roomname && classname) || (value && classname)) {
+          this.list = this.studentlist.filter((item, ind) => {
+            return (value === item.student_name && roomname === item.room_text) || (roomname === item.room_text && classname === item.grade_name) || (value === item.student_name && classname === item.grade_name)
+          })
+        } else {
+          this.list = this.studentlist.filter((item, ind) => {
+            console.log(item.room_text)
+            return (value === item.student_name || roomname === item.room_text || classname === item.grade_name)
+          })
+        }
       }
     },
     reset() {
