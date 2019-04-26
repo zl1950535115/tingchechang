@@ -71,6 +71,7 @@ import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
 import ImageCropper from '@/components/ImageCropper'
 import PanThumb from '@/components/PanThumb'
+import { removeToken } from '@/utils/auth'
 
 export default {
   components: {
@@ -114,6 +115,9 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
+      // 清除本地
+      window.localStorage.removeItem('exam')
+
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },

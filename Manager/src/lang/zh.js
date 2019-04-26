@@ -87,7 +87,8 @@ export default {
     student: '学生管理',
     // 批阅试卷
     marking: '阅卷管理',
-    awaitingApprovalClass: '待批班级'
+    awaitingApprovalClass: '待批班级',
+    Dashboard: '首页'
 
   },
   navbar: {

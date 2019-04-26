@@ -38,14 +38,11 @@ const actions = {
       item['start_time'] = moment(item.start_time * 1).format('YYYY-MM-DD h:mm:ss')
       item['end_time'] = moment(item.end_time * 1).format('YYYY-MM-DD h:mm:ss')
     })
-    console.log(res.exam, '修改')
     commit('updateState', { list: res.exam })
-    console.log(res)
     return res
   },
   // 跟新数据
   async renewal({ commit }, payload) {
-    console.log(payload)
     const res = await renewal(payload.header, payload.data)
     return res
   },
