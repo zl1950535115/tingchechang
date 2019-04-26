@@ -157,6 +157,7 @@ export default {
     },
     hotses() {
       this.user_add_api = ''
+      this.user_add_manger=''
     },
     plan() {
       this.select = ''
