@@ -1,5 +1,5 @@
 import { classList, StudentList, StudentDetail, bathchSucceed } from '@/api/batch.js'
-import moment from 'moment'
+// import moment from 'moment'
 const state = {
   classLists: [],
   StudentListDatas: [],
@@ -16,8 +16,8 @@ const mutations = {
       state.StudentListDatas = payload.exam
       payload.exam.forEach((x, y) => {
         state.StudentListDatas.forEach((val, ind) => {
-          val.start_time = moment(Number(val.start_time)).format('YYYY-MM-DD HH:mm:ss')
-          val.end_time = moment(Number(val.end_time)).format('YYYY-MM-DD HH:mm:ss')
+          // val.start_time = moment(Number(val.start_time)).format('YYYY-MM-DD HH:mm:s')
+          // val.end_time = moment(Number(val.end_time)).format('YYYY-MM-DD HH:mm:s')
         })
       })
     } else {
