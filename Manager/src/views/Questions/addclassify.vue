@@ -4,8 +4,10 @@
       <div class="tittle">
         试题分类
       </div>
+
       <div class="little-box">
         <el-button type="primary" class="btn" @click="dialogFormVisible = true">+添加类型</el-button>
+        <el-button type="primary" class="btn" @click="excal">导出execl</el-button>
         <el-dialog title="添加类型" :visible.sync="dialogFormVisible" class="tan">
           <el-form :model="form">
             <el-input v-model="form.name" autocomplete="off" placeholder="请输入试题类型" />
@@ -83,6 +85,21 @@ export default {
         id: typeid
       })
       this.classify()
+    },
+    excal() {
+      const header = Object.keys(this.data[0])
+      const Header = this.data.map(item => {
+        const arr = Object.values(item)
+        return arr.map(item => JSON.stringify(item))
+      })
+      import('@/vendor/Export2Excel').then(excel => {
+        excel.export_json_to_excel({
+          header: header,
+          data: Header,
+          filename: '类型列表',
+          bookType: 'xlsx'
+        })
+      })
     }
   }
 }
