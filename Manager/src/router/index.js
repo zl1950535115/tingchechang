@@ -24,7 +24,7 @@ import classesRouter from './modules/classes'
 // 批阅试卷
 import markRouter from './modules/mark'
 // 上传图片
-// import userRouter from './modules/user'
+import userRouter from './modules/user'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -108,7 +108,7 @@ export const asyncRoutes = [
   examsRouter,
   classesRouter,
   markRouter,
-  // userRouter,
+  userRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]
 

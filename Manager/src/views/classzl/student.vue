@@ -23,6 +23,7 @@
           </el-select>
           <el-button type="primary" @click="search(input,rooms,grades)">搜索</el-button>
           <el-button type="primary" @click="reset">重置</el-button>
+          <el-button type="primary" @click="excel">导出</el-button>
         </div>
         <div class="content_table">
           <el-table :data="list" style="width: 100%" :header-cell-style="tableHeaderColor">
@@ -137,11 +138,30 @@ export default {
         }
       }
     },
+    // 点击重置
     reset() {
       this.input = ''
       this.rooms = ''
       this.grades = ''
       this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+    },
+    // 导出execl
+    excel() {
+      // console.log(this.studentlist)
+      const header = Object.keys(this.studentlist)
+      const excelist = this.studentlist.map((item, index) => {
+        const arr = Object.values(item)
+        return arr.map(item => JSON.stringify(item))
+      })
+      // console.log(excelist)
+      import('@/vendor/Export2Excel').then(excel => {
+        excel.export_json_to_excel({
+          header: header,
+          data: excelist,
+          filename: '试卷列表',
+          bookType: 'xlsx'
+        })
+      })
     }
   }
 }

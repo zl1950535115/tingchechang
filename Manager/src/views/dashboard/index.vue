@@ -23,7 +23,7 @@ export default {
     })
   },
   created() {
-    if(this.identity_text === '管理员'){
+    if (this.identity_text === '管理员') {
       this.currentRole = 'editorDashboard'
     }
   }
