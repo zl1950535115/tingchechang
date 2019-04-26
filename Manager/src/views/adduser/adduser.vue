@@ -191,7 +191,7 @@ export default {
         return false
       } else {
         this.addusers({ user_name: this.name, user_pwd: this.pwd, identity_id: this.addUserValue.identity_id }).then(() => {
-          if (this.userData.length > 0) {
+
             if (this.code === 1) {
               this.$message({
                 message: '恭喜你，添加成功',
@@ -201,8 +201,7 @@ export default {
               this.name = ''
               this.pwd = ''
               this.addUserValue = null
-            }
-          } else {
+            }else {
             this.$message.error('用户已经存在')
           }
 
@@ -237,11 +236,11 @@ export default {
       } else {
         this.addusercrad({ identity_text: this.person }).then(() => {
           console.log(this.adduserCode)
-          if (this.adduserCode.code === 1) {
+          if (this.adduserCode === 1) {
             this.$message({ message: '恭喜你，添加成功', type: 'success' })
             this.userdata()
-          } else if (this.adduserCode.code === 0) {
-            this.$message.error(this.adduserCode.msg)
+          } else {
+            this.$message.error('重复')
           }
         })
         this.person = ''
