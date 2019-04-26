@@ -107,6 +107,7 @@ export default {
     this.getgrade()
     this.getroom()
     this.getsubject()
+    console.log(this.subject)
   },
   methods: {
     ...mapActions({

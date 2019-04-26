@@ -21,16 +21,16 @@
               :value="item.grade_name"
             />
           </el-select>
-          <el-button type="primary" @click="search(input)">搜索</el-button>
-          <el-button type="primary">重置</el-button>
+          <el-button type="primary" @click="search(input,rooms,grades)">搜索</el-button>
+          <el-button type="primary" @click="reset">重置</el-button>
         </div>
         <div class="content_table">
           <el-table :data="list" style="width: 100%" :header-cell-style="tableHeaderColor">
-            <el-table-column prop="student_name" label="姓名" width="150" />
-            <el-table-column prop="student_id" label="学号" width="240" />
-            <el-table-column prop="grade_name" label="班级" width="130" />
-            <el-table-column prop="room_text" label="教室" width="150" />
-            <el-table-column prop="student_pwd" label="密码" width="300" />
+            <el-table-column prop="student_name" label="姓名" />
+            <el-table-column prop="student_id" label="学号" />
+            <el-table-column prop="grade_name" label="班级" />
+            <el-table-column prop="room_text" label="教室" />
+            <el-table-column prop="student_pwd" label="密码" />
             <el-table-column prop="operation" label="操作">
               <template slot-scope="scope">
                 <el-button
@@ -113,14 +113,35 @@ export default {
       await this.getstudent()
       this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
     },
-    search(value) {
-      if (!value) {
+    // 搜索学生
+    search(value, roomname, classname) {
+      // console.log(this.studentlist)
+      // console.log(value, roomname, classname)
+      if (!(value || roomname || classname)) {
         this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
       } else {
-        this.list = this.studentlist.filter((item, index) => {
-          return item.student_name.match(value)
-        })
+        // console.log('roomname...', roomname)
+        if (value && roomname && classname) {
+          this.list = this.studentlist.filter((item, ind) => {
+            return value === item.student_name && roomname === item.room_text && classname === item.grade_name
+          })
+        } else if ((value && roomname) || (roomname && classname) || (value && classname)) {
+          this.list = this.studentlist.filter((item, ind) => {
+            return (value === item.student_name && roomname === item.room_text) || (roomname === item.room_text && classname === item.grade_name) || (value === item.student_name && classname === item.grade_name)
+          })
+        } else {
+          this.list = this.studentlist.filter((item, ind) => {
+            console.log(item.room_text)
+            return (value === item.student_name || roomname === item.room_text || classname === item.grade_name)
+          })
+        }
       }
+    },
+    reset() {
+      this.input = ''
+      this.rooms = ''
+      this.grades = ''
+      this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
     }
   }
 }

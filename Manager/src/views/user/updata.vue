@@ -48,11 +48,7 @@ export default {
   },
   created() {
     this.getInfo()
-<<<<<<< HEAD
-    console.log(this.userInfo)
     this.userId = this.userInfo.user_id
-=======
->>>>>>> 27bbf92d7f65666400e71d93f5a15180b40a0eb7
   },
   methods: {
     ...mapActions({
@@ -70,6 +66,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-
-</style>

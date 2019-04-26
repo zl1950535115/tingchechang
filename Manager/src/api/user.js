@@ -23,7 +23,6 @@ export function getInfo() {
 }
 // 获取用户权限
 export function getViewAuthority(params) {
-  console.log(params)
   return request({
     url: '/user/new',
     method: 'get',

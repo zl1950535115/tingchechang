@@ -1,4 +1,4 @@
-import { classify, examType, subject, getQuestionsType, questions, userIfo, condition, questionsnew } from '@/api/addclassify'
+import { classify, examType, subject, getQuestionsType, questions, userIfo, condition, questionsnew, insertQuestionsType, delQuestionsType, update } from '@/api/addclassify'
 const state = {
   data: [],
   type: [],
@@ -45,7 +45,6 @@ const actions = {
   // 获取用户信息
   async userIfo({ commit }, payload) {
     const user = await userIfo()
-    console.log('uuu...', user)
     commit('classif', { user: user.data })
   },
   // 添加用户接口
@@ -56,15 +55,26 @@ const actions = {
   // 查询接口
   async condition({ commit }, payload) {
     const cond = await condition(payload)
-    console.log(cond)
     commit('classif', { cond: cond.data })
   },
   // 全部试题
   async questionsnew({ commit }, payload) {
     const newquesition = await questionsnew()
-    console.log(newquesition)
     commit('classif', { newquesition: newquesition.data })
+  },
+  async insertQuestionsType({ commit }, payload) {
+    const insert = await insertQuestionsType(payload)
+    console.log('bbb...', insert)
+  },
+  async delQuestionsType({ commit }, payload) {
+    const del = await delQuestionsType(payload)
+    console.log('a...', del)
+  },
+  async update({ commit }, payload) {
+    const UpDate = await update(payload)
+    console.log('aaa...', UpDate)
   }
+
 }
 
 export default {

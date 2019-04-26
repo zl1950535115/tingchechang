@@ -12,7 +12,7 @@
         <h2 class="name">{{ StudentDetails?StudentDetails.student_name:"" }}</h2>
         <div class="score">
           <p>得分:</p>
-          <h1>{{ score }}</h1>
+          <h1>{{ StudentDetails.score==0?score: StudentDetails.score }}</h1>
         </div>
         <div class="block">
           <el-slider v-model="score" class="slider" />
@@ -34,7 +34,7 @@ export default {
       name: '王子音',
       dialogVisible: false,
       exam_student_id: 0,
-      score: 0,
+      score: this.scores,
       newquestions: []
     }
   },
@@ -45,9 +45,8 @@ export default {
     })
   },
   created() {
-    this.getStudentDetail(this.$route.query.exam_student_id)
     this.score = this.scores
-    console.log('this.$route.query.exam_student_id...', this.$route.query.exam_student_id)
+    this.getStudentDetail(this.$route.query.exam_student_id)
   },
   methods: {
     open() {
@@ -61,12 +60,7 @@ export default {
         //   type: 'success',
         //   message: '删除成功!'
         // })
-        this.getbathchSucceed({
-          score: this.score
-        })
-        this.getScore({
-          score: this.score
-        })
+
         this.open6()
       }).catch(() => {
         // this.$message({
@@ -82,6 +76,13 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
+        this.getbathchSucceed({
+          exam_student_id: this.$route.query.exam_student_id,
+          score: this.score
+        })
+        this.getScore({
+          score: this.score
+        })
         this.$router.push({ path: '/mark/member?id=' + this.$route.query.grade_id })
       }).catch(() => {
 
