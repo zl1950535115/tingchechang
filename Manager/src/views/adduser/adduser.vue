@@ -220,6 +220,8 @@ export default {
                 type: 'success'
               })
             }
+          }).catch((err) => {
+            console.log('错误', err)
           })
       }
     },

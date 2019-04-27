@@ -58,6 +58,7 @@ export default {
   },
   created() {
     this.getInfo()
+    this.userId = this.userInfo.user_id
   },
   methods: {
     ...mapActions({
@@ -92,6 +93,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-
-</style>

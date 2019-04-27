@@ -1,8 +1,11 @@
 <template>
   <div class="dashboard-editor-container">
     <div class=" clearfix">
-      <pan-thumb :image="userInfo.avatar" style="float: left">
+      <pan-thumb :image="userInfo.avatar" style="float: left;">
+        <br>
+        <br>
         Your roles:
+        <br>
         <span>{{ userInfo.identity_text }}</span>
       </pan-thumb>
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
@@ -46,8 +49,11 @@ export default {
   }
 
   .dashboard-editor-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 84px);
+    box-sizing: border-box;
     background-color: #e3e3e3;
-    min-height: 100vh;
     padding: 50px 60px 0px;
     .pan-info-roles {
       font-size: 12px;

@@ -75,9 +75,10 @@ export default {
     theUserDisplay: '用户展示',
     // 考试管理
     exams: '考试管理',
-
+    detail: '列表详情',
     addTheTest: '添加考试',
     examinationPaperList: '试卷列表',
+    createExam: '创建试题',
     // 班级管理
     classes: '班级管理',
 
