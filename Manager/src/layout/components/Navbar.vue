@@ -119,7 +119,7 @@ export default {
       window.localStorage.removeItem('exam')
 
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login`)
     },
     cropSuccess(e) {
       // console.log(e[0].path)

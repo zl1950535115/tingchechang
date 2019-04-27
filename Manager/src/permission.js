@@ -34,11 +34,10 @@ router.beforeEach(async(to, from, next) => {
           const viewAuthority = await store.dispatch('user/getViewAuthority', userInfo)
           // 通过权限生成路由
           const accessRoutes = await store.dispatch('permission/generateRoutes', viewAuthority)
-          // 实现动态路由转为静态路由
+          // 添加路由表
           router.addRoutes(accessRoutes)
           next({ ...to, replace: true })
         } catch (error) {
-          // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
@@ -47,12 +46,9 @@ router.beforeEach(async(to, from, next) => {
       }
     }
   } else {
-    /* has no token*/
     if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }
@@ -60,6 +56,5 @@ router.beforeEach(async(to, from, next) => {
 })
 
 router.afterEach(() => {
-  // finish progress bar
   NProgress.done()
 })
