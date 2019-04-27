@@ -1,6 +1,6 @@
 <template>
   <div class="add-layout">
-    
+
     <h2>创建试卷</h2>
     <div class="add-layout-content">
       <button class="btn" @click="showDialog">添加新题</button>
@@ -14,13 +14,13 @@
             <h4>{{ index + 1 }}、{{ item.questions_type_text }}
               <span @click="del(index)">删除</span>
             </h4>
-            <VueMarkdown :source="item.questions_stem" ></VueMarkdown>
+            <VueMarkdown :source="item.questions_stem" />
           </div>
         </div>
       </div>
-     <div class="add">
+      <div class="add">
         <el-button type="primary" @click="create">创建试卷</el-button>
-     </div>
+      </div>
     </div>
     <div v-show="flag" class="add-drawer">
       <div class="mask" @click="mask" />
@@ -28,7 +28,7 @@
         <p class="title">所有试题</p>
         <div v-for="(item, index) in allExams" :key="index" class="exam" @click="changeEaxm(item)">
           {{ index + 1 }} 、 {{ item.questions_type_text }}:
-          <VueMarkdown :source="item.questions_stem" ></VueMarkdown>
+          <VueMarkdown :source="item.questions_stem" />
         </div>
       </div>
     </div>
@@ -39,14 +39,14 @@
 import { mapActions, mapState } from 'vuex'
 import VueMarkdown from 'vue-markdown'
 export default {
+  components: {
+    VueMarkdown
+  },
   data() {
     return {
       pageDetail: {},
       flag: false
     }
-  },
-  components:{
-    VueMarkdown
   },
   created() {
     this.pageDetail = JSON.parse(window.localStorage.getItem('exam'))
@@ -61,7 +61,7 @@ export default {
       renewal: 'exams/renewal',
       getAll: 'exams/getAll'
     }),
-    changeEaxm(item){
+    changeEaxm(item) {
       this.pageDetail.questions.push(item)
       window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       this.flag = false
@@ -74,7 +74,7 @@ export default {
     },
     async showDialog(item) {
       if (this.pageDetail.questions.length < this.pageDetail.number) {
-       await this.getAll()
+        await this.getAll()
         this.flag = true
       } else {
         this.$alert('请先删除再添加！', '提示', {
@@ -83,7 +83,7 @@ export default {
       }
     },
     del(index) {
-      this.$forceUpdate();
+      this.$forceUpdate()
       window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -96,11 +96,11 @@ export default {
         this.pageDetail.questions.splice(index, 1)
         window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     async create() {
       // 要用exam_exam_id 的字符串
@@ -118,7 +118,7 @@ export default {
 </script>
 
 <style scoped>
-  .add/deep/.el-button.el-button--primary.el-button--medium{
+  .add /deep/ .el-button.el-button--primary.el-button--medium{
     display: block;
     margin: 0 auto;
   }
@@ -131,7 +131,7 @@ export default {
     color: rgb(24, 144, 255);
     border-radius: 5px;
   }
-  .list/deep/code{
+  .list /deep/ code{
     white-space:normal;
   }
   .list{

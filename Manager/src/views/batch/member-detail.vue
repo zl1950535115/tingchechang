@@ -12,10 +12,10 @@
         <h2 class="name">{{ StudentDetails?StudentDetails.student_name:"" }}</h2>
         <div class="score">
           <p>得分:</p>
-          <h1>{{ StudentDetails.score==0?score: StudentDetails.score }}</h1>
+          <h1>{{ StudentDetails.score }}</h1>
         </div>
         <div class="block">
-          <el-slider v-model="score" class="slider" />
+          <el-slider v-model="StudentDetails.score" class="slider" />
         </div>
         <el-button class="yesBtn" type="text" @click="open">确定</el-button>
       </div>
@@ -34,14 +34,12 @@ export default {
       name: '王子音',
       dialogVisible: false,
       exam_student_id: 0,
-      score: this.scores,
       newquestions: []
     }
   },
   computed: {
     ...mapState({
-      StudentDetails: state => state.batchStore.StudentDetails,
-      scores: state => state.batchStore.scores
+      StudentDetails: state => state.batchStore.StudentDetails
     })
   },
   created() {
@@ -56,17 +54,8 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        // this.$message({
-        //   type: 'success',
-        //   message: '删除成功!'
-        // })
-
         this.open6()
       }).catch(() => {
-        // this.$message({
-        //   type: 'info'
-        //   // message: '已取消删除'
-        // })
       })
     },
     open6() {
@@ -78,9 +67,6 @@ export default {
       }).then(() => {
         this.getbathchSucceed({
           exam_student_id: this.$route.query.exam_student_id,
-          score: this.score
-        })
-        this.getScore({
           score: this.score
         })
         this.$router.push({ path: '/mark/member?id=' + this.$route.query.grade_id })

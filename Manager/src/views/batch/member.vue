@@ -25,6 +25,8 @@
       </div>
       <div class="box_top_button">
         <el-button class="button" type="submit" icon="el-icon-search" @click="inquire">查询</el-button>
+        <!-- <el-button class="button" type="primary" @click="toLead">导入</el-button> -->
+        <el-button class="button" type="primary" @click="excel">导出</el-button>
       </div>
     </div>
     <div class="box_bottom">
@@ -131,7 +133,23 @@ export default {
       this.newData = this.StudentListDatas.filter((item, index) => {
         return item.grade_id.match(this.classvalue)
       })
-      console.log(this.newData)
+      // console.log(this.newData)
+    },
+    excel() {
+      const header = Object.keys(this.StudentListDatas[0])
+      console.log(header)
+      const list = this.StudentListDatas.map(item => {
+        const arr = Object.values(item)
+        return arr.map(item => JSON.stringify(item))
+      })
+      import('@/vendor/Export2Excel').then(excel => {
+        excel.export_json_to_excel({
+          header: header,
+          data: list,
+          filename: '试卷列表',
+          bookType: 'xlsx'
+        })
+      })
     }
   }
 }
