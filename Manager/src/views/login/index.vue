@@ -162,6 +162,7 @@ export default {
   }
   /* reset element-ui css */
   .login-container {
+
     .el-input {
       display: inline-block;
       height: 47px;
@@ -197,7 +198,8 @@ export default {
   .login-container {
     min-height: 100%;
     width: 100%;
-    background-color: $bg;
+    background: url(../../assets/timg.jpg) no-repeat;
+   background-size: cover;
     overflow: hidden;
     .login-form {
       position: relative;

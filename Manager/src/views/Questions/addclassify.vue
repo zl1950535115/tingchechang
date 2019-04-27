@@ -60,6 +60,7 @@ export default {
   },
   created() {
     this.classify()
+    console.log('ttt...', this.data)
   },
   computed: {
     ...mapState({

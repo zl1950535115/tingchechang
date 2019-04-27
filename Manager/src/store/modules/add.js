@@ -11,8 +11,10 @@ const state = {
 
 const mutations = {
   classif(state, payload) {
-    for (const key in payload) {
-      state[key] = payload[key]
+    if (payload) {
+      for (const key in payload) {
+        state[key] = payload[key]
+      }
     }
   }
 }
@@ -21,7 +23,7 @@ const actions = {
   // 获取所有的试题类型
   async classify({ commit }, payload) {
     const data = await classify()
-    // console.log(data.data)
+
     commit('classif', { data: data.data })
   },
   // 所有考试类型
