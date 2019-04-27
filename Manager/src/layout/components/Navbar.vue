@@ -70,8 +70,8 @@ import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
 import ImageCropper from '@/components/ImageCropper'
-import PanThumb from '@/components/PanThumb'
-import { removeToken } from '@/utils/auth'
+// import PanThumb from '@/components/PanThumb'
+// import { removeToken } from '@/utils/auth'
 
 export default {
   components: {
