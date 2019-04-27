@@ -71,7 +71,9 @@ export default {
       rooms: '',
       grades: '',
       list: [],
-      list_size: null
+      lists: [],
+      list_size: null,
+      code_id: ''
     }
   },
   computed: {
@@ -79,6 +81,7 @@ export default {
       studentlist: state => state.classmanagement.studentlist, // 获取全部的学生信息
       grade: state => state.classmanagement.grade, // 获取班级信息
       room: state => state.classmanagement.room // 获取教室信息
+      // allsearch: state => state.classmanagement.allsearch
     })
   },
   // 初始渲染数据
@@ -88,7 +91,7 @@ export default {
     this.getroom()
     this.list_size = this.studentlist.length
     // 初始分页渲染数据
-    this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+    this.searchlist(this.studentlist)
   },
   methods: {
     ...mapActions({
@@ -97,6 +100,9 @@ export default {
       getroom: 'classmanagement/getroom',
       delete_student: 'classmanagement/delete_student'
     }),
+    // ...mapMutations({
+    //   searchall: 'classmanagement/searchall'
+    // }),
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
@@ -104,46 +110,60 @@ export default {
     },
     // 分页器
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`)
+      // console.log(`当前页: ${val}`)
       this.currentpage = val
-      this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+      // console.log(this.code_id, this.list)
+      // this.searchlist(this.studentlist)
+      if (!this.code_id) {
+        this.searchlist(this.studentlist)
+      } else {
+        this.searchlist(this.lists)
+      }
     },
     // 删除学生信息
     async handleDelete(id) {
       await this.delete_student(id)
       await this.getstudent()
-      this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+      this.searchlist(this.studentlist)
     },
     // 搜索学生
-    search(value, roomname, classname) {
+    async search(value, roomname, classname) {
       // console.log(this.studentlist)
       // console.log(value, roomname, classname)
       if (!(value || roomname || classname)) {
-        this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+        this.searchlist(this.studentlist)
       } else {
+        this.code_id = 1
         // console.log('roomname...', roomname)
         if (value && roomname && classname) {
-          this.list = this.studentlist.filter((item, ind) => {
-            return value === item.student_name && roomname === item.room_text && classname === item.grade_name
+          this.lists = this.studentlist.filter((item, ind) => {
+            return item.student_name.match(value) && item.room_text.match(roomname) && item.room_text.match(roomname)
+            // return value === item.student_name && roomname === item.room_text && classname === item.grade_name
           })
         } else if ((value && roomname) || (roomname && classname) || (value && classname)) {
-          this.list = this.studentlist.filter((item, ind) => {
+          this.lists = this.studentlist.filter((item, ind) => {
             return (value === item.student_name && roomname === item.room_text) || (roomname === item.room_text && classname === item.grade_name) || (value === item.student_name && classname === item.grade_name)
           })
         } else {
-          this.list = this.studentlist.filter((item, ind) => {
-            console.log(item.room_text)
+          this.lists = this.studentlist.filter((item, ind) => {
+            // console.log(item.room_text)
             return (value === item.student_name || roomname === item.room_text || classname === item.grade_name)
           })
         }
       }
+      // await this.searchall(this.lists)
+      await this.searchlist(this.lists)
+      // console.log(this.allsearch)
+      this.list_size = this.lists.length
     },
     // 点击重置
     reset() {
+      this.code_id = ''
       this.input = ''
       this.rooms = ''
       this.grades = ''
       this.list = this.studentlist.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
+      this.list_size = this.studentlist.length
     },
     // 导出execl
     excel() {
@@ -162,6 +182,10 @@ export default {
           bookType: 'xlsx'
         })
       })
+    },
+    // 搜索数据
+    searchlist(value) {
+      this.list = value.slice((this.currentpage - 1) * this.pagesize, this.currentpage * this.pagesize)
     }
   }
 }

@@ -9,7 +9,9 @@ const state = {
   roomid: null,
   studentlist: null,
   // 全部试卷
-  subject: null
+  subject: null,
+  // 搜索出来的数据
+  allsearch: []
 }
 
 const mutations = {
@@ -17,6 +19,10 @@ const mutations = {
     for (const key in payload) {
       state[key] = payload[key]
     }
+  },
+  searchall(state, payload) {
+    this.state.allsearch = payload
+    console.log('payload...', this.state.allsearch)
   }
 }
 

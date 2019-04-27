@@ -81,8 +81,8 @@ export default {
     SizeSelect,
     LangSelect,
     Search,
-    ImageCropper,
-    PanThumb
+    ImageCropper
+    // PanThumb
   },
   data() {
     return {
@@ -118,6 +118,7 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     cropSuccess(e) {
+      // console.log(e[0].path)
       this.image = e[0].path
       this.imagecropperShow = false
       this.set_user({ user_id: this.userInfo.user_id, avatar: this.image })
