@@ -69,9 +69,6 @@ export default {
           exam_student_id: this.$route.query.exam_student_id,
           score: this.score
         })
-        // this.getScore({
-        //   score: this.score
-        // })
         this.$router.push({ path: '/mark/member?id=' + this.$route.query.grade_id })
       }).catch(() => {
 

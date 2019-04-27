@@ -14,12 +14,14 @@ const mutations = {
   updataStudentListData(state, payload) {
     if (payload) {
       state.StudentListDatas = payload.exam
-      payload.exam.forEach((x, y) => {
-        state.StudentListDatas.forEach((val, ind) => {
-          // val.start_time = moment(Number(val.start_time)).format('YYYY-MM-DD HH:mm:s')
-          // val.end_time = moment(Number(val.end_time)).format('YYYY-MM-DD HH:mm:s')
-        })
-      })
+      // payload.exam.forEach((x, y) => {
+      //   state.StudentListDatas.forEach((val, ind) => {
+      //     // const start_time = val.start_time.slice('0', '-3')
+      //     val.start_time = moment(Number(val.start_time)).format('YYYY-MM-DD HH:mm:s')
+      //     console.log('start_time', val.start_time)
+      //     // val.end_time = moment(Number(val.end_time)).format('YYYY-MM-DD HH:mm:s')
+      //   })
+      // })
     } else {
       state.StudentListDatas = []
     }

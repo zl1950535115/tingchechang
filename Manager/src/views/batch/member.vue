@@ -25,6 +25,7 @@
       </div>
       <div class="box_top_button">
         <el-button class="button" type="submit" icon="el-icon-search" @click="inquire">查询</el-button>
+        <!-- <el-button class="button" type="primary" @click="toLead">导入</el-button> -->
         <el-button class="button" type="primary" @click="excel">导出</el-button>
       </div>
     </div>
