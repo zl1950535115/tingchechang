@@ -157,6 +157,7 @@ export default {
     },
     hotses() {
       this.user_add_api = ''
+      this.user_add_manger = ''
     },
     plan() {
       this.select = ''
@@ -175,11 +176,15 @@ export default {
       this.view_select = ''
     },
     adduser() { // 添加用户的逻辑
+      if (!this.userData[this.select]) {
+        this.$message.error('请检查未填写值')
+      } else {
+        this.addUserValue = this.userData[this.select]
+      }
       var uPattern = /^[a-zA-Z0-9_-]{4,16}$/
       var Reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
       var blone = Reg.test(this.pwd)
       var userblone = uPattern.test(this.name)
-      this.addUserValue = this.userData[this.select]
       if (this.name === '' || this.addUserValue === null || this.pwd === '') {
         this.$message.error('请检查未填写值')
       } else if (blone === false) {
@@ -230,12 +235,11 @@ export default {
         this.$message.error('请检查未填写值')
       } else {
         this.addusercrad({ identity_text: this.person }).then(() => {
-          console.log(this.adduserCode)
-          if (this.adduserCode.code === 1) {
+          if (this.adduserCode === 1) {
             this.$message({ message: '恭喜你，添加成功', type: 'success' })
             this.userdata()
-          } else if (this.adduserCode.code === 0) {
-            this.$message.error(this.adduserCode.msg)
+          } else {
+            this.$message.error('重复')
           }
         })
         this.person = ''

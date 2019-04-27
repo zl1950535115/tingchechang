@@ -70,7 +70,10 @@ const actions = {
     return new Promise((res, rej) => {
       addUserCard(payload).then((result) => {
         if (result) {
-          state.adduserCode = result
+          state.adduserCode = result.code
+          res()
+        }else{
+          state.adduserCode = 0
           res()
         }
       })
