@@ -1,5 +1,3 @@
-/** When your routing table is too long, you can split it into small modules**/
-
 import Layout from '@/layout'
 
 const classesRouter = {
@@ -7,6 +5,7 @@ const classesRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Classes',
+  alwaysShow: true,
   meta: {
     title: 'classes',
     icon: 'chart'
@@ -15,19 +14,19 @@ const classesRouter = {
     {
       path: 'class',
       component: () => import('@/views/classzl/class'),
-      name: 'KeyboardChart',
+      name: 'class',
       meta: { title: 'classManagement', noCache: true, view_id: 'main-grade' }
     },
     {
       path: 'classroom',
       component: () => import('@/views/classzl/classroom'),
-      name: 'LineChart',
+      name: 'classroom',
       meta: { title: 'classroom', noCache: true, view_id: 'main-student' }
     },
     {
       path: 'student',
       component: () => import('@/views/classzl/student'),
-      name: 'MixChart',
+      name: 'student',
       meta: { title: 'student', noCache: true, view_id: 'main-room' }
     }
   ]

@@ -5,17 +5,17 @@
       <div class="main_left">
         <div v-for="(item,index) in StudentDetails?StudentDetails.questions:[]" :key="index" class="item_exam">
           <p>{{ index + 1 }}、{{ item.title }}<span class="type_text">{{ item.questions_type_text }}</span></p>
-          <p>{{ item.questions_stem }}</p>
+          <vueMarkdown class="markdown">{{ item.questions_stem }}</vueMarkdown>
         </div>
       </div>
       <div class="main_right">
         <h2 class="name">{{ StudentDetails?StudentDetails.student_name:"" }}</h2>
         <div class="score">
           <p>得分:</p>
-          <h1>{{ score }}</h1>
+          <h1>{{ StudentDetails.score }}</h1>
         </div>
         <div class="block">
-          <el-slider v-model="score" class="slider" />
+          <el-slider v-model="StudentDetails.score" class="slider" />
         </div>
         <el-button class="yesBtn" type="text" @click="open">确定</el-button>
       </div>
@@ -24,14 +24,17 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
+import vueMarkdown from 'vue-markdown'
 export default {
+  name: 'MarkdownDemo',
+  components: { vueMarkdown },
   data() {
     return {
       name: '王子音',
-      score: 0,
       dialogVisible: false,
-      exam_student_id: 0
+      exam_student_id: 0,
+      newquestions: []
     }
   },
   computed: {
@@ -40,10 +43,8 @@ export default {
     })
   },
   created() {
-    // this.exam_student_id =
-    this.getStudentDetail({
-      exam_student_id: this.$route.query.exam_student_id
-    })
+    this.score = this.scores
+    this.getStudentDetail(this.$route.query.exam_student_id)
   },
   methods: {
     open() {
@@ -53,23 +54,32 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        // this.$message({
-        //   type: 'success',
-        //   message: '删除成功!'
-        // })
+        this.open6()
+      }).catch(() => {
+      })
+    },
+    open6() {
+      this.$confirm('批卷结果, 批改试卷成功 ' + this.StudentDetails.student_name + '得分' + this.score, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(() => {
         this.getbathchSucceed({
+          exam_student_id: this.$route.query.exam_student_id,
           score: this.score
         })
+        this.$router.push({ path: '/mark/member?id=' + this.$route.query.grade_id })
       }).catch(() => {
-        // this.$message({
-        //   type: 'info'
-        //   // message: '已取消删除'
-        // })
+
       })
     },
     ...mapActions({
       getStudentDetail: 'batchStore/getStudentDetail',
       getbathchSucceed: 'batchStore/getbathchSucceed'
+    }),
+    ...mapMutations({
+      getScore: 'batchStore/updatascore'
     }),
     handleClose(done) {
       this.$confirm('确认关闭？').then(_ => {
@@ -84,11 +94,15 @@ export default {
 </script>
 
 <style scoped>
+    .markdown /deep/ img{
+      width: 100%;
+    }
     .box{
         width: 100%;
         box-sizing: border-box;
         padding:0 24px 0 24px;
         background: #f0f2f5;
+        overflow: auto;
     }
     .yesBtn{
       text-align: center;
@@ -117,10 +131,10 @@ export default {
     }
     .main_left{
         width:74%;
-        height: 200px;
         background: #fff;
         border-radius: 10px;
         overflow: hidden;
+        padding: 30px;
     }
     .main_right{
         width: 20%;
@@ -162,7 +176,7 @@ export default {
         margin-top: 15px;
     }
     .item_exam{
-      border: 0.5px solid #eee;
+      border-bottom: 0.5px solid #eee;
       padding-bottom:20px;
     }
     .type_text{

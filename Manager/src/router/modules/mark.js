@@ -7,6 +7,7 @@ const markRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Mark',
+  alwaysShow: true,
   meta: {
     title: 'marking',
     icon: 'form'
@@ -15,20 +16,20 @@ const markRouter = {
     {
       path: 'awaitingApprovalClass',
       component: () => import('@/views/batch/batchRoll'),
-      name: 'KeyboardChart',
+      name: 'awaitingApprovalClass',
       meta: { title: 'awaitingApprovalClass', noCache: true, view_id: 'main-examinationPapers' }
     },
     {
       path: 'member',
       component: () => import('@/views/batch/member'),
-      name: 'KeyboardChart',
+      name: 'member',
       hidden: true,
       meta: { title: '', noCache: true, view_id: 'main-examPaperClassmate' }
     },
     {
       path: 'member-detail',
       component: () => import('@/views/batch/member-detail'),
-      name: 'KeyboardChart',
+      name: 'member-detail',
       hidden: true,
       meta: { title: '', noCache: true, view_id: 'main-examDetail' }
     }

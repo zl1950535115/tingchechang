@@ -22,8 +22,8 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
-          <pan-thumb :image="userInfo.avatar" />
+          <img :src="userInfo.avatar" class="user-avatar">
+          <!-- <pan-thumb :image="userInfo.avatar" /> -->
 
           <image-cropper
             v-show="imagecropperShow"
@@ -70,7 +70,8 @@ import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
 import ImageCropper from '@/components/ImageCropper'
-import PanThumb from '@/components/PanThumb'
+// import PanThumb from '@/components/PanThumb'
+// import { removeToken } from '@/utils/auth'
 
 export default {
   components: {
@@ -81,8 +82,8 @@ export default {
     SizeSelect,
     LangSelect,
     Search,
-    ImageCropper,
-    PanThumb
+    ImageCropper
+    // PanThumb
   },
   data() {
     return {
@@ -103,7 +104,7 @@ export default {
     })
   },
   async created() {
-    await console.log(this.userInfo)
+    await this.userInfo
   },
   methods: {
     ...mapActions({
@@ -114,10 +115,14 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
+      // 清除本地
+      window.localStorage.removeItem('exam')
+
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push(`/login`)
     },
     cropSuccess(e) {
+      // console.log(e[0].path)
       this.image = e[0].path
       this.imagecropperShow = false
       this.set_user({ user_id: this.userInfo.user_id, avatar: this.image })
@@ -190,7 +195,13 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
+        margin-top: 5px;
         position: relative;
+
+        .pan-item{
+          width: 50px;
+          height: 50px;
+        }
 
         .user-avatar {
           cursor: pointer;

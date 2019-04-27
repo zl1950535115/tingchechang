@@ -22,10 +22,11 @@ export function getInfo() {
   })
 }
 // 获取用户权限
-export function getViewAuthority() {
+export function getViewAuthority(params) {
   return request({
-    url: '/user/view_authority',
-    method: 'get'
+    url: '/user/new',
+    method: 'get',
+    params
   })
 }
 

@@ -1,14 +1,17 @@
 <template>
   <div class="dashboard-editor-container">
     <div class=" clearfix">
-      <pan-thumb :image="avatar" style="float: left">
+      <pan-thumb :image="userInfo.avatar" style="float: left;">
+        <br>
+        <br>
         Your roles:
-        <span v-for="item in roles" :key="item" class="pan-info-roles">{{ item }}</span>
+        <br>
+        <span>{{ userInfo.identity_text }}</span>
       </pan-thumb>
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
       <div class="info-container">
-        <span class="display_name">{{ name }}</span>
-        <span style="font-size:20px;padding-top:20px;display:inline-block;">Editor's Dashboard</span>
+        <span class="display_name">{{userInfo.user_name}}</span>
+        <span style="font-size:20px;padding-top:20px;display:inline-block;">你都会啥绝活啊！？</span>
       </div>
     </div>
     <div>
@@ -18,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import PanThumb from '@/components/PanThumb'
 import GithubCorner from '@/components/GithubCorner'
 
@@ -31,11 +34,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'name',
-      'avatar',
-      'roles'
-    ])
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
   }
 }
 </script>
@@ -48,8 +49,11 @@ export default {
   }
 
   .dashboard-editor-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 84px);
+    box-sizing: border-box;
     background-color: #e3e3e3;
-    min-height: 100vh;
     padding: 50px 60px 0px;
     .pan-info-roles {
       font-size: 12px;

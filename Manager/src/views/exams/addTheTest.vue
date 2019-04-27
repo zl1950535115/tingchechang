@@ -116,14 +116,15 @@ export default {
           // 转成毫秒
           const start_time = moment(this.info.start_time).valueOf()
           const end_time = moment(this.info.end_time).valueOf()
-          var localstorage = window.localStorage
+          const localstorage = window.localStorage
           const info = { ...this.info, end_time, start_time }
           const res = await this.exam(info)
           // 本地存放提交成功的数据
-          window.localStorage.setItem('exam', JSON.stringify(res.data))
-          this.$router.push({ path: 'createExam' })
+          if (res.code === 1) {
+            window.localStorage.setItem('exam', JSON.stringify(res.data))
+            this.$router.push({ path: 'createExam' })
+          }
         } else {
-          console.log('error submit!!')
           return false
         }
       })

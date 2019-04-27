@@ -16,10 +16,17 @@
       @close="close"
       @crop-upload-success="cropSuccess"
     />
+    <div class="app-container">
+      <upload-excel-component :on-success="handleSuccess" :before-upload="beforeUpload" />
+      <el-table :data="tableData" border highlight-current-row style="width: 100%;margin-top:20px;">
+        <el-table-column v-for="item of tableHeader" :key="item" :prop="item" :label="item" />
+      </el-table>
+    </div>
   </div>
 </template>
 
 <script>
+import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 import ImageCropper from '@/components/ImageCropper'
 import PanThumb from '@/components/PanThumb'
 import { mapState, mapActions } from 'vuex'
@@ -27,7 +34,8 @@ import { mapState, mapActions } from 'vuex'
 export default {
   components: {
     ImageCropper,
-    PanThumb
+    PanThumb,
+    UploadExcelComponent
   },
   data() {
     return {
@@ -38,7 +46,9 @@ export default {
       userName: '',
       userPwd: '',
       identityId: '',
-      avatarImg: ''
+      avatarImg: '',
+      tableData: [],
+      tableHeader: []
     }
   },
   computed: {
@@ -48,11 +58,7 @@ export default {
   },
   created() {
     this.getInfo()
-<<<<<<< HEAD
-    console.log(this.userInfo)
     this.userId = this.userInfo.user_id
-=======
->>>>>>> 27bbf92d7f65666400e71d93f5a15180b40a0eb7
   },
   methods: {
     ...mapActions({
@@ -66,10 +72,24 @@ export default {
     },
     close() {
       this.imagecropperShow = false
+    },
+    beforeUpload(file) {
+      const isLt1M = file.size / 1024 / 1024 < 1
+
+      if (isLt1M) {
+        return true
+      }
+
+      this.$message({
+        message: 'Please do not upload files larger than 1m in size.',
+        type: 'warning'
+      })
+      return false
+    },
+    handleSuccess({ results, header }) {
+      this.tableData = results
+      this.tableHeader = header
     }
   }
 }
 </script>
-<style scoped>
-
-</style>

@@ -54,7 +54,7 @@ const actions = {
   },
   // 获取用户权限
   async getViewAuthority({ commit }, paylpoad) {
-    const data = await getViewAuthority()
+    const data = await getViewAuthority({ user_id: paylpoad.user_id })
     if (data.code === 1) {
       commit('SET_VIEWAUTHORITY', data.data)
       return data.data
@@ -65,7 +65,6 @@ const actions = {
   async set_user({ commit }, payload) {
     await setUser(payload)
     const data = await getInfo()
-    console.log(data, 'sadasdata')
     commit('SET_USERINFO', data.data)
   },
   // remove token
@@ -82,8 +81,8 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
+        commit('SET_USERINFO', { avatar: '' })
+        commit('SET_VIEWAUTHORITY', [])
         removeToken()
         resetRouter()
         resolve()

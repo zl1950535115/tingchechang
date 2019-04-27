@@ -34,11 +34,12 @@
         </el-select>
       </div>
       <div class="textear">
-        <p>题目主题</p>
+        <p>题目答案</p>
         <div class="editor-container">
           <markdown-editor v-model="el.questions_answer" height="300px" class="mark" />
         </div>
       </div>
+
       <div class="btn">
         <el-button type="primary" @click="dialogVisible = true">提交</el-button>
       </div>
@@ -74,6 +75,7 @@ export default {
       select: '',
       selects: '',
       selectd: '',
+      listt: '',
       el: {
         questions_type_id: '',
         questions_stem: '',
@@ -104,7 +106,7 @@ export default {
     this.userIfo()
     this.questionsnew()
     const list = this.$route.query.list
-    console.log(list)
+    this.listt = list
     this.newquesition.forEach(item => {
       if (list === item.questions_id) {
         this.select = item.exam_name
@@ -136,22 +138,35 @@ export default {
       getQuestionsType: 'add/getQuestionsType',
       questions: 'add/questions',
       userIfo: 'add/userIfo',
-      questionsnew: 'add/questionsnew'
+      questionsnew: 'add/questionsnew',
+      update: 'add/update'
     }),
     submit() {
       this.dialogVisible = false
-      if (this.el.title && this.el.questions_stem && this.el.questions_answer) {
-        this.questions({
+      if (this.listt === undefined) {
+        if (this.el.title && this.el.questions_stem && this.el.questions_answer) {
+          this.questions({
+            questions_type_id: this.el.questions_type_id,
+            questions_stem: this.el.questions_stem,
+            subject_id: this.el.subject_id,
+            exam_id: this.el.exam_id,
+            questions_answer: this.el.questions_answer,
+            title: this.el.title,
+            user_id: this.user.user_id
+          })
+        } else {
+          alert('请填写未填写的东西')
+        }
+      } else {
+        this.update({
+          questions_id: this.listt,
           questions_type_id: this.el.questions_type_id,
           questions_stem: this.el.questions_stem,
           subject_id: this.el.subject_id,
           exam_id: this.el.exam_id,
           questions_answer: this.el.questions_answer,
-          title: this.el.title,
-          user_id: this.user.user_id
+          title: this.el.title
         })
-      } else {
-        alert('请填写未填写的东西')
       }
     },
     handleClose(done) {
@@ -170,7 +185,7 @@ export default {
         position: relative;
         width: 100%;
         height: calc(100vh - 84px);
-        background: #ccc;
+        background: #f0f2f5;;
         height: 100%;
     }
     .tittle {

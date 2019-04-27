@@ -84,8 +84,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'chenmanjie',
-        password: 'Chenmanjie123!'
+        username: 'zhanglei',
+        password: 'Zhanglei123!'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur' }, { trigger: 'blur', validator: validateUsername }],
@@ -106,18 +106,12 @@ export default {
       immediate: true
     }
   },
-  created() {
-    // window.addEventListener('storage', this.afterQRScan)
-  },
   mounted() {
     if (this.loginForm.username === '') {
       this.$refs.username.focus()
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
-  },
-  destroyed() {
-    // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
     ...mapActions({
@@ -137,15 +131,17 @@ export default {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           // 调用登录接口
+          this.loading = true
           const res = await this.login(this.loginForm)
           if (res.code === 1) {
             // 上次结束的页面
             this.$router.push({ path: this.redirect || '/' })
+            this.loading = false
           }
-          this.loading = false
         } else {
           console.log('error submit!!')
           return false
+          this.loading = false
         }
       })
     }
@@ -166,6 +162,7 @@ export default {
   }
   /* reset element-ui css */
   .login-container {
+
     .el-input {
       display: inline-block;
       height: 47px;
@@ -201,7 +198,8 @@ export default {
   .login-container {
     min-height: 100%;
     width: 100%;
-    background-color: $bg;
+    background: url(../../assets/timg.jpg) no-repeat;
+   background-size: cover;
     overflow: hidden;
     .login-form {
       position: relative;

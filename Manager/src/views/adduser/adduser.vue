@@ -3,8 +3,8 @@
     <titleinfo :title="Title_info" />
     <div class="top_title">
       <div class="infos">
-        <el-button v-for="(item,index) in addList" :key="index" plain :class="index==ind?'active':''" @click="tab(index)">{{ item }}</el-button>
-        <div v-if="ind==0" class="addUser">
+        <el-button v-for="(item,index) in addList" :key="index" plain :class="index === ind?'active':''" @click="tab(index)">{{ item }}</el-button>
+        <div v-if="ind === 0" class="addUser">
           <el-input v-model="name" class="name_1" placeholder="请输入用户名" clearable />
           <el-input v-model="pwd" class="pwd" placeholder="请输入密码" show-password />
 
@@ -14,7 +14,7 @@
           <div class="confim"><el-button type="primary" class="success" @click="adduser">确定</el-button><el-button class="reset" plain @click="plan">重置</el-button></div>
         </div>
 
-        <div v-if="ind==1" class="addUser">
+        <div v-if="ind === 1" class="addUser">
           <el-select slot="prepend" v-model="userselect" class="select" placeholder="请选择身份ID">
             <el-option v-for="(item,index) in usernamelist" :key="index" :label="item.user_name" :value="index" />
           </el-select>
@@ -157,6 +157,7 @@ export default {
     },
     hotses() {
       this.user_add_api = ''
+      this.user_add_manger = ''
     },
     plan() {
       this.select = ''
@@ -175,11 +176,15 @@ export default {
       this.view_select = ''
     },
     adduser() { // 添加用户的逻辑
+      if (!this.userData[this.select]) {
+        this.$message.error('请检查未填写值')
+      } else {
+        this.addUserValue = this.userData[this.select]
+      }
       var uPattern = /^[a-zA-Z0-9_-]{4,16}$/
       var Reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/
       var blone = Reg.test(this.pwd)
       var userblone = uPattern.test(this.name)
-      this.addUserValue = this.userData[this.select]
       if (this.name === '' || this.addUserValue === null || this.pwd === '') {
         this.$message.error('请检查未填写值')
       } else if (blone === false) {
@@ -189,7 +194,7 @@ export default {
         this.$message.error('用户名格式不正确')
         return false
       } else {
-        this.addusers({ user_name: this.name, user_pwd: this.pwd, identity_id: this.addUserValue }).then(() => {
+        this.addusers({ user_name: this.name, user_pwd: this.pwd, identity_id: this.addUserValue.identity_id }).then(() => {
           if (this.code === 1) {
             this.$message({
               message: '恭喜你，添加成功',
@@ -219,8 +224,6 @@ export default {
                 message: '恭喜你，添加成功',
                 type: 'success'
               })
-              this.new_name = ''
-              this.new_pwd = ''
             }
           }).catch((err) => {
             console.log('错误', err)
@@ -236,7 +239,7 @@ export default {
             this.$message({ message: '恭喜你，添加成功', type: 'success' })
             this.userdata()
           } else {
-            this.$message.error('该身份已存在')
+            this.$message.error('重复')
           }
         })
         this.person = ''

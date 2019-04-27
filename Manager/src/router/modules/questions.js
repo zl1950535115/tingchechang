@@ -7,6 +7,7 @@ const questionsRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Questions',
+  alwaysShow: true,
   meta: {
     title: 'questions',
     icon: 'clipboard'
@@ -16,27 +17,27 @@ const questionsRouter = {
     component: () =>
                 import('@/views/Questions/addItems'),
     name: 'KeyboardChart',
-    meta: { title: 'addItem', noCache: true }
+    meta: { title: 'addItem', noCache: true, view_id: 'main-addQuestions' }
   },
   {
     path: 'questionClassification',
     component: () =>
                 import('@/views/Questions/addclassify'),
     name: 'LineChart',
-    meta: { title: 'questionClassification', noCache: true }
+    meta: { title: 'questionClassification', noCache: true, view_id: 'main-questionsType' }
   },
   {
     path: 'checkTheItem',
     component: () =>
                 import('@/views/Questions/addlist'),
     name: 'MixChart',
-    meta: { title: 'checkTheItem', noCache: true }
+    meta: { title: 'checkTheItem', noCache: true, view_id: 'main-watchQuestions' }
   }, {
     path: 'detial',
     hidden: true,
     component: () =>
                 import('@/views/Questions/detial'),
-    meta: { title: '', noCache: true }
+    meta: { title: '', noCache: true, view_id: 'main-questionsDetail' }
   }
   ]
 }

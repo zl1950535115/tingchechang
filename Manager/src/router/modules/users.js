@@ -7,6 +7,7 @@ const usersRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Users',
+  alwaysShow: true,
   meta: {
     title: 'users',
     icon: 'user'
@@ -15,13 +16,13 @@ const usersRouter = {
     {
       path: 'addUsers',
       component: () => import('@/views/adduser/adduser'),
-      name: 'adduser',
+      name: 'addusers',
       meta: { title: 'addUsers', noCache: true, view_id: 'main-addUser' }
     },
     {
       path: 'theUserDisplay',
       component: () => import('@/views/adduser/usershow'),
-      name: 'LineChart',
+      name: 'theUserDisplay',
       meta: { title: 'theUserDisplay', noCache: true, view_id: 'main-showUser' }
     }
   ]

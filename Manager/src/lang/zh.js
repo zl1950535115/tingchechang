@@ -75,9 +75,10 @@ export default {
     theUserDisplay: '用户展示',
     // 考试管理
     exams: '考试管理',
-
+    detail: '列表详情',
     addTheTest: '添加考试',
     examinationPaperList: '试卷列表',
+    createExam: '创建试题',
     // 班级管理
     classes: '班级管理',
 
@@ -86,7 +87,8 @@ export default {
     student: '学生管理',
     // 批阅试卷
     marking: '阅卷管理',
-    awaitingApprovalClass: '待批班级'
+    awaitingApprovalClass: '待批班级',
+    Dashboard: '首页'
 
   },
   navbar: {
