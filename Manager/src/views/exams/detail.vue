@@ -45,6 +45,10 @@ VueMarkdown
 </script>
 
 <style scoped>
+  .content/deep/img{
+    width: 100%;
+    height: auto;
+  }
   .content/deep/code{
     white-space:normal;
     word-break:break-all;
@@ -70,10 +74,10 @@ VueMarkdown
     padding: 24px;
     background: #FFF;
     border-radius: 10px;
-    width: 30%;
+    width: 35%;
   }
   .content:nth-child(1){
-    width: 70%;
+    width: 65%;
     margin-right: 20px;
   }
   .list{

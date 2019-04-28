@@ -65,6 +65,10 @@ export default {
       this.pageDetail.questions.push(item)
       window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       this.flag = false
+      this.$message({
+        type: 'success',
+        message: '添加成功!'
+      });
     },
     mask() {
       this.flag = false
@@ -92,7 +96,10 @@ export default {
         center: true,
         customClass: 'warning'
       }).then(() => {
-        console.log(1)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        });
         this.pageDetail.questions.splice(index, 1)
         window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       }).catch(() => {
@@ -122,6 +129,16 @@ export default {
     display: block;
     margin: 0 auto;
   }
+  .item{
+    background: red;
+  }
+  .exam /deep/ img{
+    width: 100%;
+    height: auto;
+  }
+  .exam /deep/ code{
+    white-space:normal;
+  }
   .btn{
     padding: 5px 10px;
     background: #fff;
@@ -130,9 +147,6 @@ export default {
     font-size: 14px;
     color: rgb(24, 144, 255);
     border-radius: 5px;
-  }
-  .list /deep/ code{
-    white-space:normal;
   }
   .list{
     white-space:normal;
@@ -181,7 +195,7 @@ export default {
   }
   .add-drawer-right {
     animation: fade-in;
-    animation-duration: 0.2s;
+    animation-duration: 0.3s;
     width: 40%;
     height: 100%;
     position: relative;

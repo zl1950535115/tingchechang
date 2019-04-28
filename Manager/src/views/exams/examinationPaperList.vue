@@ -2,8 +2,8 @@
   <div class="wrapper">
     <p class="text">试卷列表</p>
     <div class="content">
-      <el-form ref="info" :inline="true" :model="info" :rules="rules" class="demo-form-inline">
-        <el-form-item class="babels" label="考试类型:" prop="exam_id" required>
+      <el-form :inline="true" ref="info" :model="info" :rules="rules" class="demo-form-inline">
+        <el-form-item class="babels" label="考试类型:" prop="exam_id" >
           <el-select v-model="info.exam_id" class="select" style="width: 150px;">
             <el-option
               v-for="item in examTypeList"
@@ -13,7 +13,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item class="babels" label="课程:" prop="subject_id" required>
+        <el-form-item class="babels" label="课程:" prop="subject_id" >
           <el-select v-model="info.subject_id" class="select" style="width: 150px;">
             <el-option
               v-for="item in subjectList"
