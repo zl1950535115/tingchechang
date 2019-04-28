@@ -84,8 +84,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'zhanglei',
-        password: 'Zhanglei123!'
+        username: 'chenmanjie',
+        password: 'Chenmanjie123!'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur' }, { trigger: 'blur', validator: validateUsername }],
@@ -140,8 +140,8 @@ export default {
           }
         } else {
           console.log('error submit!!')
-          return false
           this.loading = false
+          return false
         }
       })
     }

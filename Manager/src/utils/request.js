@@ -29,9 +29,9 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-      if(res.code==1){
-        return res
-      }
+    if (res.code === 1) {
+      return res
+    }
   },
   error => {
     console.log('err' + error) // for debug
