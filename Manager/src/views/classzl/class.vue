@@ -20,45 +20,49 @@
           </el-table>
         </div>
         <el-dialog title="添加班级" :visible.sync="dialogFormVisible">
-          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="班级名：" prop="name" style="margin-left:-20px" />
-            <el-input v-model="ruleForm.name" />
-            <el-form-item label="教室号：" prop="region" style="margin-left:-20px" />
-            <el-select v-model="ruleForm.region" placeholder="请选择教室号" style="width:100%;">
-              <el-option v-for="(item,index) in room" :key="index" :label="item.room_text" :value="item.room_id" />
-            </el-select>
-            <el-form-item label="课程名：" prop="course" style="margin-left:-20px" />
-            <el-select v-model="ruleForm.course" placeholder="课程名" style="width:100%;">
-              <el-option v-for="(item,index) in subject" :key="index" :label="item.subject_text" :value="item.subject_id" />
-            </el-select>
+          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="demo-ruleForm">
+            <el-form-item label="班级名：" prop="name">
+              <el-input v-model="ruleForm.name" />
+            </el-form-item>
+            <el-form-item label="教室号：" prop="region" style="margin-top:10px;">
+              <el-select v-model="ruleForm.region" placeholder="请选择教室号" style="width:100%;">
+                <el-option v-for="(item,index) in room" :key="index" :label="item.room_text" :value="item.room_id" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="课程名：" prop="course" style="margin-top:10px;">
+              <el-select v-model="ruleForm.course" placeholder="课程名" style="width:100%;">
+                <el-option v-for="(item,index) in subject" :key="index" :label="item.subject_text" :value="item.subject_id" />
+              </el-select>
+            </el-form-item>
+            <el-form-item style="margin-top:15px;text-align:center;">
+              <el-button @click="hidemask">取 消</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm',ruleForm)">提 交</el-button>
+            </el-form-item>
           </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="hidemask">取 消</el-button>
-            <el-button type="primary" @click="submitForm(ruleForm)">提 交</el-button>
-          </div>
         </el-dialog>
 
         <!-- 修改 -->
-        <el-dialog title="添加班级" :visible.sync="modal">
-          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="班级名：" prop="name" style="margin-left:-20px" />
-            <el-input
-              v-model="input"
-              placeholder="请输入内容"
-              :disabled="true"
-            />
-            <el-form-item label="教室号：" prop="region" style="margin-left:-20px" />
+        <el-dialog title="修改班级" :visible.sync="modal">
+          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="demo-ruleForm">
+            <el-form-item label="班级名：" prop="name">
+              <el-input
+                v-model="input"
+                placeholder="请输入内容"
+                :disabled="true"
+              />
+            </el-form-item>
+            <el-form-item label="教室号：" prop="region" />
             <el-select v-model="roomId" placeholder="请选择教室号" style="width:100%;">
               <el-option v-for="(item,index) in room" :key="index" :label="item.room_text" :value="item.room_id" />
             </el-select>
-            <el-form-item label="课程名：" prop="course" style="margin-left:-20px" />
+            <el-form-item label="课程名：" prop="course" />
             <el-select v-model="subjectId" placeholder="课程名" style="width:100%;">
               <el-option v-for="(item,index) in subject" :key="index" :label="item.subject_text" :value="item.subject_id" />
             </el-select>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="modal = false">取 消</el-button>
-            <el-button type="primary" @click="addgrade">提 交</el-button>
+            <el-button type="primary" @click="addgrade(roomId,subjectId)">提 交</el-button>
           </div>
         </el-dialog>
       </div>
@@ -80,14 +84,14 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { required: true, message: '请添加班级', trigger: 'blur' },
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
         region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          { required: true, message: '请选择教室号', trigger: 'change' }
         ],
         course: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          { required: true, message: '请选择课程名', trigger: 'change' }
         ]
       },
       input: '',
@@ -127,31 +131,69 @@ export default {
     hidemask() {
       this.dialogFormVisible = false
     },
-    async submitForm(formName) {
-      this.dialogFormVisible = false
-      await this.set_grade({ grade_name: formName.name, room_id: formName.region, subject_id: formName.course })
-      await this.getgrade()
+    // 添加班级
+    submitForm(formName, item) {
+      this.$refs[formName].validate(async(valid) => {
+        if (valid) {
+          this.dialogFormVisible = false
+          console.log('666....', item)
+          await this.set_grade({ grade_name: item.name, room_id: item.region, subject_id: item.course })
+          await this.getgrade()
+          setTimeout(() => {
+            this.ruleForm = {
+              name: '',
+              region: '',
+              course: ''
+            }
+          }, 200)
+          return false
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
+    // 显示修改弹窗
     showModal(row) {
       this.modal = true
       this.input = row.grade_name
       this.roomId = row.room_id
       this.subjectId = row.subject_id
       this.gradeId = row.grade_id
-      // console.log(row)
+      // console.log('66...', this.subjectId)
     },
     // 修改班级
-    async addgrade() {
+    async addgrade(rId, sId) {
+      // console.log(rId, this.roomId)
       this.modal = false
-      // console.log(this.input, this.roomId, this.subjectId, this.gradeId)
       await this.update_grade({ grade_id: this.gradeId, grade_name: this.input, subject_id: this.ubjectId, room_id: this.roomId })
       await this.getgrade()
+      // if (rId === this.roomId && sId === this.subjectId) {
+      //   alert('你没有更改班级')
+      //   return false
+      // } else {
+
+      // }
     },
     // 删除班级
-    async deletegrade(id) {
-      console.log(id)
-      await this.delete_grade({ grade_id: id })
-      await this.getgrade()
+    deletegrade(id) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        await this.delete_grade({ grade_id: id })
+        await this.getgrade()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }

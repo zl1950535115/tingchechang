@@ -31,16 +31,25 @@
           width="30%"
           :before-close="handleClose"
         >
-          <p>教室号</p>
+          <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="demo-ruleForm">
+            <el-form-item label="添加教室" prop="name">
+              <el-input v-model="ruleForm.name" />
+            </el-form-item>
+            <el-form-item style="text-align:center;">
+              <el-button @click="dialogVisible = false">取 消</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm',ruleForm.name)">确 定</el-button>
+            </el-form-item>
+          </el-form>
+          <!-- <p>教室号</p>
           <el-input
             v-model="input"
             placeholder="教室号"
             clearable
-          />
-          <span slot="footer" class="dialog-footer">
+          /> -->
+          <!-- <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="hidemask">确 定</el-button>
-          </span>
+          </span> -->
         </el-dialog>
       </div>
     </div>
@@ -55,7 +64,16 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      input: ''
+      input: '',
+      ruleForm: {
+        name: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入教室名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ]
+      }
     }
   },
   computed: {
@@ -110,11 +128,18 @@ export default {
     showmask() {
       this.dialogVisible = true
     },
-    // 隐藏教室弹窗
-    async hidemask() {
-      this.dialogVisible = false
-      await this.setroom({ room_text: this.input })
-      await this.getroom()
+    submitForm(formName, value) {
+      this.$refs[formName].validate(async(valid) => {
+        if (valid) {
+          this.dialogVisible = false
+          await this.setroom({ room_text: value })
+          await this.getroom()
+          this.ruleForm
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
   }
 }

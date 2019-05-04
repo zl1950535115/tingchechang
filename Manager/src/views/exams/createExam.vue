@@ -68,7 +68,7 @@ export default {
       this.$message({
         type: 'success',
         message: '添加成功!'
-      });
+      })
     },
     mask() {
       this.flag = false
@@ -99,7 +99,7 @@ export default {
         this.$message({
           type: 'success',
           message: '删除成功!'
-        });
+        })
         this.pageDetail.questions.splice(index, 1)
         window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
       }).catch(() => {
@@ -124,7 +124,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .add /deep/ .el-button.el-button--primary.el-button--medium{
     display: block;
     margin: 0 auto;

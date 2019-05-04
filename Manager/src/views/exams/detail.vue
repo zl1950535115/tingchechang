@@ -6,13 +6,13 @@
         <div class="content">
           <div v-for="(item,index) in this.detail.questions" :key="index" class="style_questionitem__3ETlC">
             <h4>{{ index+1 }}、{{ item.questions_type_text }}</h4>
-            <VueMarkdown :source="item.questions_stem" ></VueMarkdown>
+            <VueMarkdown :source="item.questions_stem"/>
           </div>
         </div>
         <div class="content">
           <div v-for="(item,index) in this.detail.questions" :key="index" class="style_questionitem__3ETlC">
             <h4>{{ index+1 }}、{{ item.questions_type_text }}</h4>
-            <VueMarkdown :source="item.questions_answer" ></VueMarkdown>
+            <VueMarkdown :source="item.questions_answer"/>
           </div>
         </div>
       </div>
@@ -24,8 +24,8 @@
 import { mapActions, mapState } from 'vuex'
 import VueMarkdown from 'vue-markdown'
 export default {
-  components:{
-VueMarkdown
+  components: {
+    VueMarkdown
   },
   computed: {
     ...mapState({
